@@ -1,0 +1,76 @@
+version: '3.8'
+
+# Services
+services:
+
+  # Nginx Service
+  nginx:
+    build: ./.docker/nginx
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./src:/var/www/php
+      - phpmyadmindata:/var/www/phpmyadmin
+      - ./.docker/nginx/conf.d:/etc/nginx/conf.d
+      - ./.docker/nginx/certs:/etc/nginx/certs
+    depends_on:
+      - php
+      - phpmyadmin
+
+  # PHP Service
+  php:
+    build: ./.docker/php
+    working_dir: /var/www/php
+    env_file:
+      - ./.env
+    environment:
+      PHP_HOST: ${PHP_HOST}
+      PHP_DB_NAME: ${PHP_DB_NAME}
+      PHP_USER: ${PHP_USER}
+      PHP_PASSWORD: ${PHP_PASSWORD}
+    volumes:
+      - ./src:/var/www/php
+    depends_on:
+      mysql:
+        condition: service_healthy
+  
+  # MySQL Service
+  mysql:
+    image: mysql/mysql-server:8.0
+    env_file:
+      - ./.env
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_ROOT_HOST: ${MYSQL_ROOT_HOST}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - 3306:3306
+    volumes:
+      - ./.docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+      - mysqldata:/var/lib/mysql
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 -u root --password=${MYSQL_ROOT_PASSWORD}
+      interval: 5s
+      retries: 10
+  
+  # PhpMyAdmin Service
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:5-fpm-alpine
+    # Might have to remove later
+    platform: linux/amd64/v8
+    environment:
+      PMA_HOST: mysql
+    volumes:
+      - phpmyadmindata:/var/www/html
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+# Volumes
+volumes:
+  mysqldata:
+
+  phpmyadmindata:

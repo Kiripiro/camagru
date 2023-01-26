@@ -1,0 +1,11 @@
+{
+    "autoloadFolder": [
+        "Framework",
+        "Controller",
+        "Model",
+        "Framework/Exception",
+        "Model/Manager",
+        "Model/Entite"
+    ],
+    "basepath": "https://camagru.fr/"
+}

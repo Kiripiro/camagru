@@ -1,0 +1,39 @@
+[
+    {
+        "path": "/",
+        "controller": "Home",
+        "action": "Home",
+        "method": "GET",
+        "param": [],
+        "manager": []
+    },
+    {
+        "path": "/Login",
+        "controller": "User",
+        "action": "Login",
+        "method": "GET",
+        "param": [],
+        "manager": []
+    },
+    {
+        "path": "/Authenticate",
+        "controller": "User",
+        "action": "Authenticate",
+        "method": "POST",
+        "param": [
+            "login",
+            "password"
+        ],
+        "manager": [
+            "UserManager"
+        ]
+    },
+    {
+        "path": "/Error",
+        "controller": "Error",
+        "action": "Show",
+        "method": "GET",
+        "param": [],
+        "manager": []
+    }
+]

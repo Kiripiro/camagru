@@ -6,10 +6,10 @@ class userManager extends BaseManager
         parent::__construct("users", "User", $datasource);
     }
 
-    public function getByMail($mail)
+    public function getByEmail($email)
     {
         $req = $this->_bdd->prepare("SELECT * FROM users WHERE email=?");
-        $req->execute(array($mail));
+        $req->execute(array($email));
         $req->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "User");
         return $req->fetch();
     }

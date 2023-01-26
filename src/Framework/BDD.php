@@ -2,7 +2,7 @@
 class BDD
 {
     private $_bdd;
-    private static $_instance;
+    private static $_instance = null;
 
     public static function getInstance($datasource)
     {
@@ -18,5 +18,6 @@ class BDD
             $datasource['user'],
             $datasource['password']
         );
+
     }
 }

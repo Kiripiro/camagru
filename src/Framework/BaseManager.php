@@ -30,22 +30,22 @@ class BaseManager
 
     public function create($obj, $param)
     {
-
         $paramNumber = count($param);
         $valueArray = array_fill(1, $paramNumber, "?");
-        $valueString = implode($valueArray, ", ");
-        $sql = "INSERT INTO " . $this->_table . "(" . implode($param, ", ") . ") VALUES(" . $valueString . ")";
+        $valueString = implode(", ", $valueArray);
+        $sql = "INSERT INTO " . $this->_table . "(" . implode(", ", $param) . ") VALUES(" . $valueString . ")";
         $req = $this->_bdd->prepare($sql);
         $boundParam = array();
         foreach ($param as $paramName) {
-            if (property_exists($obj, $paramName)) {
-                $boundParam[$paramName] = $obj->$paramName;
+            if (method_exists($obj, 'get' . ucfirst($paramName))) {
+                $boundParam[] = $obj->{'get' . ucfirst($paramName)}();
             } else {
                 throw new PropertyNotFoundException($this->_object, $paramName);
             }
         }
         $req->execute($boundParam);
     }
+
 
     public function update($obj, $param)
     {

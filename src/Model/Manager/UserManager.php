@@ -6,6 +6,16 @@ class userManager extends BaseManager
         parent::__construct("users", "User", $datasource);
     }
 
+    public function addUser($user)
+    {
+        $userObj = new User();
+        $userObj->setFirstname($user["firstname"]);
+        $userObj->setLastname($user["lastname"]);
+        $userObj->setLogin($user["login"]);
+        $userObj->setEmail($user["email"]);
+        $userObj->setPassword($user["password"]);
+        $this->create($userObj, ["firstname", "lastname", "login", "email", "password"]);
+    }
     public function getByEmail($email)
     {
         $req = $this->_bdd->prepare("SELECT * FROM users WHERE email=?");

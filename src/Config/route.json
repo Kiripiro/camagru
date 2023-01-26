@@ -8,7 +8,7 @@
         "manager": []
     },
     {
-        "path": "/Login",
+        "path": "/login",
         "controller": "User",
         "action": "Login",
         "method": "GET",
@@ -16,13 +16,38 @@
         "manager": []
     },
     {
-        "path": "/Authenticate",
+        "path": "/login",
         "controller": "User",
         "action": "Authenticate",
         "method": "POST",
         "param": [
             "login",
             "password"
+        ],
+        "manager": [
+            "UserManager"
+        ]
+    },
+    {
+        "path": "/register",
+        "controller": "User",
+        "action": "Register",
+        "method": "GET",
+        "param": [],
+        "manager": []
+    },
+    {
+        "path": "/register",
+        "controller": "User",
+        "action": "RegisterNewUser",
+        "method": "POST",
+        "param": [
+            "firstname",
+            "lastname",
+            "email",
+            "login",
+            "password",
+            "confirmPassword"
         ],
         "manager": [
             "UserManager"

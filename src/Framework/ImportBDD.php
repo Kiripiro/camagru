@@ -23,7 +23,6 @@ try {
     }
     if ($count > 0) {
         $pdo->exec($sql);
-        echo "Import done successfully";
     }
 } catch (PDOException $e) {
     die("Error occurred:" . $e->getMessage());

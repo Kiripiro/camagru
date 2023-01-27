@@ -24,7 +24,7 @@ class BaseController
         $this->_fileManager = new FileManager();
     }
 
-    protected function view($filename)
+    protected function view($filename, $title = "", $description = "")
     {
         if (file_exists("View/" . $this->_httpRequest->getRoute()->getController() . "/css/" . $filename . ".css")) {
             $this->addCss("View/" . $this->_httpRequest->getRoute()->getController() . "/css/" . $filename . ".css");
@@ -37,10 +37,20 @@ class BaseController
             extract($this->_param);
             include("View/" . $this->_httpRequest->getRoute()->getController() . "/" . $filename . ".php");
             $content = ob_get_clean();
+            $this->addParam("title", $title);
+            $this->addParam("description", $description);
+            $cssContent = $this->_fileManager->generateCss();
+            $jsContent = $this->_fileManager->generateJs();
             include("View/layout.php");
         } else {
             throw new ViewNotFoundException();
         }
+    }
+
+    public function redirect($url)
+    {
+        header("Location: " . $url);
+        exit();
     }
 
     public function bindManager()

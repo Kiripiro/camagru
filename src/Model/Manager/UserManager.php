@@ -23,4 +23,20 @@ class userManager extends BaseManager
         $req->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "User");
         return $req->fetch();
     }
+
+    public function getByLogin($login)
+    {
+        $req = $this->_bdd->prepare("SELECT * FROM users WHERE login=?");
+        $req->execute(array($login));
+        $req->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "User");
+        return $req->fetch();
+    }
+
+    public function getBy($key, $value)
+    {
+        $req = $this->_bdd->prepare("SELECT * FROM users WHERE $key=?");
+        $req->execute(array($value));
+        $req->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "User");
+        return $req->fetch();
+    }
 }

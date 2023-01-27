@@ -44,8 +44,8 @@
         "param": [
             "firstname",
             "lastname",
-            "email",
             "login",
+            "email",
             "password",
             "confirmPassword"
         ],

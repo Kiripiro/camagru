@@ -1,11 +1,13 @@
 {
     "autoloadFolder": [
         "Framework",
+        "Framework/Exception",
+        "Framework/Exception/Password",
         "Controller",
         "Model",
-        "Framework/Exception",
         "Model/Manager",
-        "Model/Entite"
+        "Model/Entite",
+        "Validation"
     ],
     "basepath": "https://camagru.fr/"
 }

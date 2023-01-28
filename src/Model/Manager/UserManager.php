@@ -14,7 +14,8 @@ class userManager extends BaseManager
         $userObj->setLogin($user["login"]);
         $userObj->setEmail($user["email"]);
         $userObj->setPassword($user["password"]);
-        $this->create($userObj, ["firstname", "lastname", "login", "email", "password"]);
+        $userObj->setVerificationToken($user["verificationToken"]);
+        $this->create($userObj, ["firstname", "lastname", "login", "email", "password", "verificationToken"]);
     }
     public function getByEmail($email)
     {

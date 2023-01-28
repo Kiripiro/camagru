@@ -22,7 +22,8 @@ class UserController extends BaseController
             "lastname" => $lastname,
             "login" => $login,
             "email" => $email,
-            "password" => $password
+            "password" => $password,
+            "verificationToken" => $verificationToken = bin2hex(random_bytes(16))
         );
         $emptyFields = array_filter($user, function ($field) {
             return empty($field);
@@ -41,7 +42,7 @@ class UserController extends BaseController
         PasswordValidator::validate($password, $confirmPassword);
         $user['password'] = (password_hash($password, PASSWORD_BCRYPT));
         $this->UserManager->addUser($user);
-        $this->redirect('login');
+        //$this->redirect('login');
     }
 
     public function Authenticate($login, $password)

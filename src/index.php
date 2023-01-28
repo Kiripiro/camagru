@@ -1,5 +1,4 @@
 <?php
-require_once("Framework/ImportBDD.php");
 $configFile = file_get_contents("Config/config.json");
 $config = json_decode($configFile);
 

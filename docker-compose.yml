@@ -34,10 +34,10 @@ services:
     depends_on:
       mysql:
         condition: service_healthy
-  
+
   # MySQL Service
   mysql:
-    image: mysql/mysql-server:8.0
+    build: ./.docker/mysql
     env_file:
       - ./.env
     environment:
@@ -55,7 +55,7 @@ services:
       test: mysqladmin ping -h 127.0.0.1 -u root --password=${MYSQL_ROOT_PASSWORD}
       interval: 5s
       retries: 10
-  
+
   # PhpMyAdmin Service
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:5-fpm-alpine

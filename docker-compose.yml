@@ -5,7 +5,9 @@ services:
 
   # Nginx Service
   nginx:
-    build: ./.docker/nginx
+    #build: ./.docker/nginx
+    image: nginx:1.21-alpine
+    restart: unless-stopped
     ports:
       - 80:80
       - 443:443
@@ -21,6 +23,7 @@ services:
   # PHP Service
   php:
     build: ./.docker/php
+    restart: unless-stopped
     working_dir: /var/www/php
     env_file:
       - ./.env
@@ -31,6 +34,7 @@ services:
       PHP_PASSWORD: ${PHP_PASSWORD}
     volumes:
       - ./src:/var/www/php
+    #  - ./.docker/php/config/php.ini:/usr/local/etc/php/php.ini
     depends_on:
       mysql:
         condition: service_healthy
@@ -38,6 +42,7 @@ services:
   # MySQL Service
   mysql:
     build: ./.docker/mysql
+    restart: unless-stopped
     env_file:
       - ./.env
     environment:
@@ -59,6 +64,7 @@ services:
   # PhpMyAdmin Service
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:5-fpm-alpine
+    restart: unless-stopped
     # Might have to remove later
     platform: linux/amd64/v8
     environment:
@@ -69,7 +75,6 @@ services:
       mysql:
         condition: service_healthy
 
-# Volumes
 volumes:
   mysqldata:
 

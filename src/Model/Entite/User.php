@@ -10,6 +10,7 @@ class User
     private $biography;
     private $notifs;
     private $verificationToken;
+    private $active;
 
     public function __construct()
     {
@@ -53,6 +54,10 @@ class User
     {
         return $this->verificationToken;
     }
+    public function getActive()
+    {
+        return $this->active;
+    }
     public function setFirstname($firstname)
     {
         $this->firstname = $firstname;
@@ -90,5 +95,10 @@ class User
     public function setVerificationToken($verificationToken)
     {
         $this->verificationToken = $verificationToken;
+    }
+
+    public function setActive($active)
+    {
+        $this->active = $active;
     }
 }

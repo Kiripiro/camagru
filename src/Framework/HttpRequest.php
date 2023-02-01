@@ -23,7 +23,7 @@ class HttpRequest
         return $this->_method;
     }
 
-    public function getParams()
+    public function getParam()
     {
         return $this->_param;
     }
@@ -56,11 +56,6 @@ class HttpRequest
     public function getRoute()
     {
         return $this->_route;
-    }
-
-    public function getParam()
-    {
-        return $this->_param;
     }
 
     public function run($config)

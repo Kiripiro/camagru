@@ -17,6 +17,7 @@ class userManager extends BaseManager
         $userObj->setVerificationToken($user["verificationToken"]);
         $this->create($userObj, ["firstname", "lastname", "login", "email", "password", "verificationToken"]);
     }
+
     public function getByEmail($email)
     {
         $req = $this->_bdd->prepare("SELECT * FROM users WHERE email=?");
@@ -39,5 +40,11 @@ class userManager extends BaseManager
         $req->execute(array($value));
         $req->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "User");
         return $req->fetch();
+    }
+
+    public function setActive($id)
+    {
+        $req = $this->_bdd->prepare("UPDATE users SET active = 1 WHERE id = ?");
+        $req->execute(array($id));
     }
 }

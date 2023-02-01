@@ -1,6 +1,4 @@
 <?php
-
-//UserAlreadyExistsException for login and email
 class UserAlreadyExistsException extends Exception
 {
     public function __construct($key, $value)

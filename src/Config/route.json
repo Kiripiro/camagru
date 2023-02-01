@@ -1,6 +1,6 @@
 [
     {
-        "path": "/",
+        "path": "/home",
         "controller": "Home",
         "action": "Home",
         "method": "GET",
@@ -48,6 +48,18 @@
             "email",
             "password",
             "confirmPassword"
+        ],
+        "manager": [
+            "UserManager"
+        ]
+    },
+    {
+        "path": "/verify",
+        "controller": "User",
+        "action": "Verify",
+        "method": "GET",
+        "param": [
+            "token"
         ],
         "manager": [
             "UserManager"

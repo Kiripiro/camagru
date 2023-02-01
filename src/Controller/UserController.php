@@ -42,12 +42,34 @@ class UserController extends BaseController
         PasswordValidator::validate($password, $confirmPassword);
         $user['password'] = (password_hash($password, PASSWORD_BCRYPT));
         $this->UserManager->addUser($user);
-        //$this->redirect('login');
+        $mail = new Mail();
+        $mail->sendVerificationMail($firstname, $lastname, $email, $verificationToken);
+    }
+
+    public function Verify($token)
+    {
+        $user = $this->UserManager->getBy("verificationToken", $token);
+        if (!$user) {
+            throw new UserNotFoundException($user['firstname'], $user['lastname']);
+        } else if ($user->getActive()) {
+            throw new UserAlreadyVerifiedException($user->getFirstname(), $user->getLastname());
+        }
+        $user->setActive(true);
+        $this->UserManager->setActive($user->getId());
+        $this->redirect("login");
     }
 
     public function Authenticate($login, $password)
     {
-        $user = $this->UserManager->getByEmail($login);
-        var_dump($user);
+        $user = $this->UserManager->getBy("login", $login);
+        if (!$user) {
+            throw new UserNotFoundException($user->getFirstname(), $user->getLastname());
+        } else if (!password_verify($password, $user->getPassword())) {
+            throw new WrongPasswordException();
+        } else if (!$user->getActive()) {
+            throw new UserNotVerifiedException($user->getFirstname(), $user->getLastname());
+        }
+        //$this->Session->set("user", $user);
+        $this->view("home");
     }
 }

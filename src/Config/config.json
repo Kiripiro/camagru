@@ -3,11 +3,13 @@
         "Framework",
         "Framework/Exception",
         "Framework/Exception/Password",
+        "Framework/Exception/User",
+        "Framework/Mail",
+        "Framework/Validation",
         "Controller",
         "Model",
         "Model/Manager",
-        "Model/Entite",
-        "Validation"
+        "Model/Entite"
     ],
     "basepath": "https://camagru.fr/"
 }

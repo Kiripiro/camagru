@@ -3,9 +3,21 @@ class UserController extends BaseController
 {
     public function Login()
     {
+        $session = new Session();
+        date_default_timezone_set("Europe/Paris");
+        if ($session->get("user") && $session->get("token_exp") > date("Y-m-d H:i:s")) {
+            $this->redirect("home");
+        }
         $this->addParam('title', 'Login');
         $this->addParam('description', 'Login on our website');
         $this->view("login");
+    }
+
+    public function Logout()
+    {
+        $session = new Session();
+        $session->destroy();
+        $this->redirect("login");
     }
 
     public function Register()
@@ -43,14 +55,15 @@ class UserController extends BaseController
         $user['password'] = (password_hash($password, PASSWORD_BCRYPT));
         $this->UserManager->addUser($user);
         $mail = new Mail();
-        $mail->sendVerificationMail($firstname, $lastname, $email, $verificationToken);
+        if ($mail->sendVerificationMail($firstname, $lastname, $email, $verificationToken))
+            echo "We sent you an email to verify your account.";
     }
 
     public function Verify($token)
     {
         $user = $this->UserManager->getBy("verificationToken", $token);
         if (!$user) {
-            throw new UserNotFoundException($user['firstname'], $user['lastname']);
+            throw new UserNotFoundException();
         } else if ($user->getActive()) {
             throw new UserAlreadyVerifiedException($user->getFirstname(), $user->getLastname());
         }
@@ -61,15 +74,25 @@ class UserController extends BaseController
 
     public function Authenticate($login, $password)
     {
+        if (empty($login) || empty($password)) {
+            throw new EmptyFieldsException("login, password");
+        }
         $user = $this->UserManager->getBy("login", $login);
         if (!$user) {
-            throw new UserNotFoundException($user->getFirstname(), $user->getLastname());
+            throw new UserNotFoundException();
         } else if (!password_verify($password, $user->getPassword())) {
             throw new WrongPasswordException();
         } else if (!$user->getActive()) {
             throw new UserNotVerifiedException($user->getFirstname(), $user->getLastname());
         }
-        //$this->Session->set("user", $user);
-        $this->view("home");
+        $token = bin2hex(random_bytes(16));
+        date_default_timezone_set("Europe/Paris");
+        $token_exp = date("Y-m-d H:i:s", strtotime("+1 day"));
+        $session = new Session();
+        $session->set("user", $user);
+        $session->set("token", $token);
+        $session->set("token_exp", $token_exp);
+        $this->UserManager->setToken($user->getId(), $token, $token_exp);
+        $this->redirect("home");
     }
 }

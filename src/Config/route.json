@@ -1,5 +1,13 @@
 [
     {
+        "path": "/",
+        "controller": "Home",
+        "action": "Home",
+        "method": "GET",
+        "param": [],
+        "manager": []
+    },
+    {
         "path": "/home",
         "controller": "Home",
         "action": "Home",
@@ -11,6 +19,14 @@
         "path": "/login",
         "controller": "User",
         "action": "Login",
+        "method": "GET",
+        "param": [],
+        "manager": []
+    },
+    {
+        "path": "/logout",
+        "controller": "User",
+        "action": "Logout",
         "method": "GET",
         "param": [],
         "manager": []

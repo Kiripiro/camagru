@@ -18,8 +18,8 @@ class Mail
         $this->_mail->SMTPAuth = true;
         $this->_mail->SMTPSecure = "tls";
         $this->_mail->Port = 587;
-        $this->_mail->Username = 'atourret42.camagru@gmail.com';
-        $this->_mail->Password = 'ggoaysrqszpaxkgx';
+        $this->_mail->Username = $_ENV["PHP_MAIL_USER"];
+        $this->_mail->Password = $_ENV["PHP_MAIL_PASSWORD"];
     }
 
     public function sendVerificationMail($firstname, $lastname, $email, $verificationToken)
@@ -32,5 +32,6 @@ class Mail
             throw new MailHasNotBeenSentException();
         }
         $this->_mail->smtpClose();
+        return true;
     }
 }

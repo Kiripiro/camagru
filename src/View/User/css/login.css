@@ -16,7 +16,7 @@ body {
     box-sizing: border-box;
 }
 
-.register {
+.login {
     width: 100%;
     max-width: 30vw;
     margin-top: 5vh;
@@ -28,7 +28,7 @@ body {
     background-color: white;
 }
 
-.already-registered {
+.not-registered {
     width: 100%;
     max-width: 30vw;
     margin: 0 auto;
@@ -69,7 +69,21 @@ p {
 
 a {
     text-decoration: none;
+    font-weight: bold;
     color: rgb(0, 149, 246);
+}
+
+hr {
+    border: 1px solid rgba(130, 130, 130, 0.35);
+    width: 25vw;
+    margin-top: 1vh;
+}
+
+.forgot-password a {
+    font-size: 0.8em;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    color: rgb(120, 120, 120);
 }
 
 input[type="text"],

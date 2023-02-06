@@ -11,6 +11,13 @@
             <input type="password" name="confirmPassword" placeholder="Confirmez votre mot de passe" />
             <input type="submit" placeholder="register" value="S'inscrire" />
         </form>
+        <?php if (isset($message)): ?>
+            <div class="message">
+                <p>
+                    <?= $message ?>
+                </p>
+            </div>
+        <?php endif; ?>
     </div>
     <div class="already-registered">
         <p class="message">Vous avez un compte ? <a href="login">Connectez-vous</a></p>

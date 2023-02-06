@@ -8,20 +8,57 @@
         "manager": []
     },
     {
-        "path": "/home",
-        "controller": "Home",
-        "action": "Home",
-        "method": "GET",
-        "param": [],
-        "manager": []
-    },
-    {
         "path": "/login",
         "controller": "User",
         "action": "Login",
         "method": "GET",
         "param": [],
         "manager": []
+    },
+    {
+        "path": "/forgot-password",
+        "controller": "User",
+        "action": "ForgotPasswordView",
+        "method": "GET",
+        "param": [],
+        "manager": []
+    },
+    {
+        "path": "/forgot-password",
+        "controller": "User",
+        "action": "ForgotPassword",
+        "method": "POST",
+        "param": [
+            "email"
+        ],
+        "manager": [
+            "UserManager"
+        ]
+    },
+    {
+        "path": "/reset-password",
+        "controller": "User",
+        "action": "resetPasswordView",
+        "method": "GET",
+        "param": [
+            "token"
+        ],
+        "manager": [
+            "UserManager"
+        ]
+    },
+    {
+        "path": "/reset-password",
+        "controller": "User",
+        "action": "resetPassword",
+        "method": "POST",
+        "param": [
+            "password",
+            "confirmPassword"
+        ],
+        "manager": [
+            "UserManager"
+        ]
     },
     {
         "path": "/logout",

@@ -9,7 +9,8 @@
         "Controller",
         "Model",
         "Model/Manager",
-        "Model/Entite"
+        "Model/Entite",
+        "Js"
     ],
     "basepath": "https://camagru.fr/"
 }

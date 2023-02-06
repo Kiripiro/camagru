@@ -53,4 +53,10 @@ class userManager extends BaseManager
         $req = $this->_bdd->prepare("UPDATE users SET token = ?, token_exp = ? WHERE id = ?");
         $req->execute(array($token, $token_exp, $id));
     }
+
+    public function setPassword($id, $password)
+    {
+        $req = $this->_bdd->prepare("UPDATE users SET password = ? WHERE id = ?");
+        $req->execute(array($password, $id));
+    }
 }

@@ -6,7 +6,7 @@ class UserController extends BaseController
         $session = new Session();
         date_default_timezone_set("Europe/Paris");
         if ($session->get("user") && $session->get("token_exp") > date("Y-m-d H:i:s")) {
-            $this->redirect("home");
+            $this->redirect("/");
         }
         $this->addParam('title', 'Login');
         $this->addParam('description', 'Login on our website');
@@ -41,7 +41,7 @@ class UserController extends BaseController
             return empty($field);
         });
         if (!empty($emptyFields)) {
-            throw new EmptyFieldsException(implode(',', array_keys($emptyFields)));
+            throw new EmptyFieldsException(implode(', ', array_keys($emptyFields)));
         }
         if ($this->UserManager->getBy($key = "login", $login)) {
             throw new UserAlreadyExistsException($key, $login);
@@ -52,11 +52,17 @@ class UserController extends BaseController
             throw new InvalidEmailException();
         }
         PasswordValidator::validate($password, $confirmPassword);
-        $user['password'] = (password_hash($password, PASSWORD_BCRYPT));
+        $user['password'] = password_hash($password, PASSWORD_BCRYPT);
         $this->UserManager->addUser($user);
         $mail = new Mail();
-        if ($mail->sendVerificationMail($firstname, $lastname, $email, $verificationToken))
-            echo "We sent you an email to verify your account.";
+        $status = $mail->sendVerificationMail($firstname, $lastname, $email, $verificationToken);
+        if ($status) {
+            $success = "Nous vous avons envoyé un email de vérification. Merci de suivre les instructions pour activer votre compte.";
+        } else {
+            $failed = "Nous n'avons pas pu vous envoyer l'email de vérification. Merci d'utiliser un autre email.";
+        }
+        $this->addParam('message', $status ? $success : $failed);
+        $this->view("register");
     }
 
     public function Verify($token)
@@ -93,6 +99,55 @@ class UserController extends BaseController
         $session->set("token", $token);
         $session->set("token_exp", $token_exp);
         $this->UserManager->setToken($user->getId(), $token, $token_exp);
-        $this->redirect("home");
+        $this->redirect("/");
+    }
+
+    public function ForgotPasswordView()
+    {
+        $this->addParam('title', 'Forgot Password');
+        $this->addParam('description', 'Forgot your password?');
+        $this->view("forgotPassword");
+    }
+
+    public function ForgotPassword($email)
+    {
+        if (isset($email)) {
+            $user = $this->UserManager->getBy("email", $email);
+            if (!$user) {
+                throw new UserNotFoundException();
+            }
+            $mail = new Mail();
+            $status = $mail->sendResetPasswordMail($user->getFirstname(), $user->getLastname(), $user->getEmail(), $user->getVerificationToken());
+            if ($status) {
+                $success = "Nous vous avons envoyé un email. Merci de suivre les instructions pour changer votre mot de passe.";
+            } else {
+                $failed = "Nous n'avons pas pu vous envoyer l'email. Merci d'utiliser un autre email.";
+            }
+            $this->addParam('message', $status ? $success : $failed);
+            $this->view("forgotPassword");
+        }
+    }
+
+    public function resetPasswordView($token)
+    {
+        $session = new Session();
+        $session->set("token", $token);
+        $this->addParam('title', 'Reset Password');
+        $this->addParam('description', 'Reset your password');
+        $this->view("resetPassword");
+    }
+
+    public function resetPassword($password, $confirmPassword)
+    {
+        $session = new Session();
+        $token = $session->get("token");
+        $user = $this->UserManager->getBy("verificationToken", $token);
+        if (!$user) {
+            throw new UserNotFoundException();
+        }
+        PasswordValidator::validate($password, $confirmPassword);
+        $user->setPassword(password_hash($password, PASSWORD_BCRYPT));
+        $this->UserManager->setPassword($user->getId(), $user->getPassword());
+        $this->redirect("login");
     }
 }

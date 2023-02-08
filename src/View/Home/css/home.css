@@ -1,0 +1,13 @@
+.home {
+    background-color: #f5f5f5;
+    padding: 10vh;
+    margin: 2vw;
+    margin-top: 10vh;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px #ccc;
+}
+
+.home h1 {
+    color: blueviolet;
+}

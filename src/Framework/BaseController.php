@@ -35,6 +35,10 @@ class BaseController
         if (file_exists("View/" . $this->_httpRequest->getRoute()->getController() . "/" . $filename . ".php")) {
             ob_start();
             extract($this->_param);
+            if (isset($this->_param["navbar"])) {
+                include($this->_param["navbar"]);
+                $this->addCss("View/Navbar/css/navbar.css");
+            }
             include("View/" . $this->_httpRequest->getRoute()->getController() . "/" . $filename . ".php");
             $content = ob_get_clean();
             $this->addParam("title", $title);

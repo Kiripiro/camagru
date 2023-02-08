@@ -148,6 +148,7 @@ class UserController extends BaseController
         PasswordValidator::validate($password, $confirmPassword);
         $user->setPassword(password_hash($password, PASSWORD_BCRYPT));
         $this->UserManager->setPassword($user->getId(), $user->getPassword());
+        $session->destroy();
         $this->redirect("login");
     }
 }

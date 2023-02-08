@@ -33,6 +33,7 @@ class FileManager
     {
         $cssContent = '';
         foreach ($this->_listCssFile as $cssFile) {
+            $cssContent .= '<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.css"/>';
             $cssContent .= '<link rel="stylesheet" type="text/css" href="' . $cssFile . '" />';
         }
         return $cssContent;

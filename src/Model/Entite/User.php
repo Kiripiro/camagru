@@ -8,6 +8,7 @@ class User
     private $email;
     private $password;
     private $biography;
+    private $avatar;
     private $notifs;
     private $verificationToken;
     private $active;
@@ -45,6 +46,10 @@ class User
     public function getBiography()
     {
         return $this->biography;
+    }
+    public function getAvatar()
+    {
+        return $this->avatar;
     }
     public function getNotifs()
     {
@@ -87,7 +92,10 @@ class User
     {
         $this->biography = $biography;
     }
-
+    public function setAvatar($avatar)
+    {
+        $this->avatar = $avatar;
+    }
     public function setNotifs($notifs)
     {
         $this->notifs = $notifs;

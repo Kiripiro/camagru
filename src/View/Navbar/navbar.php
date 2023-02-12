@@ -1,51 +1,108 @@
-<nav class="navbar">
-    <div class="nav-wrapper">
-        <a href="/" class="logo">Camagru</a>
-        <form class="search-box-form" action="/search" method="post">
-            <input type="text" class="search-box" placeholder="Rechercher...">
-        </form>
-        <div class="nav-items">
-            <?php if (isset($user)): ?>
-                <a class="icon" href="/photo">
-                    <i class="fa-solid fa-camera"></i>
-                </a>
-                <a class="icon" href="/notifications">
-                    <i class="fa-solid fa-bell"></i>
-                </a>
-                <div class="dropdown">
-                    <a class="user_profile">
-                        <?php if ($user->getAvatar() == null): ?>
-                            <div class="icon">
-                                <i class="fa-solid fa-circle-user"></i>
-                            </div>
-                        <?php else: ?>
-                            <img src="<?php echo $user->getAvatar(); ?>" alt="icon">
-                        <?php endif; ?>
-                    </a>
-                    <div class="dropdown-content">
-                        <a href="/profile">
-                            <i class="fa-solid fa-user"></i>
-                            Profile
-                        </a>
-                        <a href="/settings">
-                            <i class="fa-solid fa-cog"></i>
-                            Paramètres
-                        </a>
-                        <a href="/logout">
-                            <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                            Déconnection
-                        </a>
+<nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+        <a class="navbar-item" href="/">
+            <img src="/Media/logo/logo.png">
+        </a>
+
+        <a role="button" id="navbar-search-button" class="navbar-search is-hidden-desktop" aria-label="search">
+            <i class="fas fa-search"></i>
+        </a>
+
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+    </div>
+    <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+            <a class="navbar-item">
+                Gallerie
+            </a>
+            <div class="navbar-item is-hidden-touch">
+                <form action="/search" method="post">
+                    <div class="navbar-searchbar field has-addons">
+                        <div class="control">
+                            <input id="searchbar" class="input" type="text" placeholder="Rechercher...">
+                        </div>
+                        <div class="control">
+                            <button class="button is-hoverable" type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
                     </div>
-                <?php else: ?>
-                    <div class="not-logged-in">
-                        <a class="login" href="/login">
-                            Se connecter
-                        </a>
-                        <a class="register" href="/register">
-                            Créer un compte
-                        </a>
-                    </div>
-                <?php endif; ?>
+                </form>
             </div>
         </div>
+
+        <div class="navbar-end">
+            <?php if (isset($user)) { ?>
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link">
+                        <?php if ($user->getAvatar() != null) { ?>
+                            <div
+                                style='background-image: url("/<?php echo $user->getAvatar(); ?>"); background-size: cover; background-position: 50% 50%; border-radius: 100%; height: 28px; width: 28px; margin-right:10px;'>
+                            <?php } else { ?>
+                                <div
+                                    style='background-image: url("../../Media/avatars/avatar.png"); background-size: cover; border-radius: 100%; background-position: 50% 50%; height: 28px; width: 28px; margin-right:10px;'>
+                                <?php } ?>
+                            </div>
+                            <?php echo $user->getLogin(); ?>
+                    </a>
+                    <div class="navbar-dropdown">
+                        <a class="navbar-item">
+                            Mon profil
+                        </a>
+                        <a href="/settings" class="navbar-item">
+                            Paramètres
+                        </a>
+                        <hr class="navbar-divider">
+                        <a href="/logout" class="navbar-item">
+                            Déconnexion
+                        </a>
+                    </div>
+                </div>
+                <?php if ($user->getAdmin() == '1') { ?>
+                    <div class="navbar-item">
+                        <div class="buttons">
+                            <a href="/admin" class="button is-primary">
+                                <strong>Admin</strong>
+                            </a>
+                        </div>
+                    </div>
+                <?php } ?>
+            <? } else { ?>
+                <div class="navbar-item">
+                    <div class="buttons">
+                        <a href="/login" class="button is-light">
+                            Se connecter
+                        </a>
+                        <a href="/register" class="button is-primary">
+                            <strong>Créer un compte</strong>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        <?php } ?>
+    </div>
 </nav>
+
+<div class="modal" id="search-modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <section class="modal-card-body">
+            <form action="/search" method="post">
+                <div class="field has-addons">
+                    <div class="control is-expanded">
+                        <input class="input" type="text" placeholder="Rechercher...">
+                    </div>
+                    <div class="control">
+                        <button class="button is-hoverable" type="submit">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </section>
+    </div>
+</div>

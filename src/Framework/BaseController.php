@@ -38,6 +38,7 @@ class BaseController
             if (isset($this->_param["navbar"])) {
                 include($this->_param["navbar"]);
                 $this->addCss("View/Navbar/css/navbar.css");
+                $this->addJs("View/Navbar/js/navbar.js");
             }
             include("View/" . $this->_httpRequest->getRoute()->getController() . "/" . $filename . ".php");
             $content = ob_get_clean();

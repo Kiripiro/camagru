@@ -8,8 +8,8 @@ class UserController extends BaseController
         if ($session->get("user") && $session->get("token_exp") > date("Y-m-d H:i:s")) {
             $this->redirect("/");
         }
-        $this->addParam('title', 'Login');
-        $this->addParam('description', 'Login on our website');
+        $this->addParam('title', 'Se connecter');
+        $this->addParam('description', 'Se connecter à votre compte sur notre site');
         $this->view("login");
     }
 
@@ -22,8 +22,8 @@ class UserController extends BaseController
 
     public function Register()
     {
-        $this->addParam('title', 'Register');
-        $this->addParam('description', 'Create a new account on our website');
+        $this->addParam('title', 'Créer un compte');
+        $this->addParam('description', 'Créer un compte sur notre site');
         $this->view("register");
     }
 
@@ -104,8 +104,8 @@ class UserController extends BaseController
 
     public function ForgotPasswordView()
     {
-        $this->addParam('title', 'Forgot Password');
-        $this->addParam('description', 'Forgot your password?');
+        $this->addParam('title', 'Mot de passe oublié');
+        $this->addParam('description', 'Mot de passe oublié ?');
         $this->view("forgotPassword");
     }
 
@@ -132,8 +132,8 @@ class UserController extends BaseController
     {
         $session = new Session();
         $session->set("token", $token);
-        $this->addParam('title', 'Reset Password');
-        $this->addParam('description', 'Reset your password');
+        $this->addParam('title', 'Changer de mot de passe');
+        $this->addParam('description', 'Changer de mot de passe sur note site');
         $this->view("resetPassword");
     }
 
@@ -150,5 +150,36 @@ class UserController extends BaseController
         $this->UserManager->setPassword($user->getId(), $user->getPassword());
         $session->destroy();
         $this->redirect("login");
+    }
+    public function SettingsView()
+    {
+        $session = new Session();
+        $user = $session->get("user");
+        $this->addParam('title', 'Paramètres');
+        $this->addParam('description', 'Paramètres de votre compte');
+        $this->addParam('user', $user);
+        $this->addParam('navbar', 'View/Navbar/navbar.php');
+        $this->view("settings");
+    }
+    public function updatePassword($oldPassword, $newPassword, $confirmPassword)
+    {
+        try {
+            $session = new Session();
+            $user = $session->get("user");
+            if (!password_verify($oldPassword, $user->getPassword())) {
+                throw new WrongPasswordException();
+            }
+            PasswordValidator::validate($newPassword, $confirmPassword);
+            $user->setPassword(password_hash($newPassword, PASSWORD_BCRYPT));
+            $this->UserManager->setPassword($user->getId(), $user->getPassword());
+            $success = "Votre mot de passe a bien été modifié.";
+        } catch (Exception $e) {
+            $failed = $e->getMessage();
+        }
+        $this->addParam('message', isset($success) ? $success : $failed);
+        $this->addParam('navbar', 'View/Navbar/navbar.php');
+        $this->addParam('title', 'Paramètres');
+        $this->addParam('description', 'Paramètres de votre compte');
+        $this->view("settings");
     }
 }

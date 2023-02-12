@@ -10,6 +10,7 @@ class User
     private $biography;
     private $avatar;
     private $notifs;
+    private $admin;
     private $verificationToken;
     private $active;
 
@@ -54,6 +55,10 @@ class User
     public function getNotifs()
     {
         return $this->notifs;
+    }
+    public function getAdmin()
+    {
+        return $this->admin;
     }
     public function getVerificationToken()
     {

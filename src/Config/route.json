@@ -61,6 +61,20 @@
         ]
     },
     {
+        "path": "/update-password",
+        "controller": "User",
+        "action": "updatePassword",
+        "method": "POST",
+        "param": [
+            "oldPassword",
+            "password",
+            "confirmPassword"
+        ],
+        "manager": [
+            "UserManager"
+        ]
+    },
+    {
         "path": "/logout",
         "controller": "User",
         "action": "Logout",
@@ -117,6 +131,14 @@
         "manager": [
             "UserManager"
         ]
+    },
+    {
+        "path": "/settings",
+        "controller": "User",
+        "action": "SettingsView",
+        "method": "GET",
+        "param": [],
+        "manager": []
     },
     {
         "path": "/Error",

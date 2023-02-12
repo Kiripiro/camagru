@@ -1,55 +1,50 @@
 /* @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap');
 
-body {
-    margin: 0;
-    padding: 0;
-    background-color: rgb(253, 253, 253);
-    box-sizing: border-box;
-}
-
 .wrapper {
     width: 100%;
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 1rem;
+    margin-top: 7vh;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.register {
+.settings {
     width: 100%;
-    max-width: 30vw;
-    margin-top: 5vh;
+    max-width: 50vw;
     margin: 5vh auto;
-    margin-bottom: 1vh;
     padding: 1rem;
     box-sizing: border-box;
     border: 1px solid rgba(130, 130, 130, 0.35);
     background-color: white;
 }
 
-.already-registered {
-    width: 100%;
-    max-width: 30vw;
-    margin: 0 auto;
-    box-sizing: border-box;
-    border: 1px solid rgba(130, 130, 130, 0.35);
-    background-color: white;
+.settings-header {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 20px;
+    position: relative;
 }
 
-h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 2.5rem;
-    text-align: center;
-    margin: 1rem 0;
-}
-
-h2 {
-    font-size: 1.3rem;
-    text-align: center;
-    margin: 1rem 0;
-    color: rgb(142, 142, 142);
+.settings-header h2 {
+    flex-grow: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
     font-family: 'Roboto', sans-serif;
+}
+
+.settings-header i {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.settings-body {
+    display: none;
+    padding: 20px;
 }
 
 form {
@@ -67,22 +62,14 @@ p {
     font-family: 'Roboto', sans-serif;
 }
 
-a {
-    text-decoration: none;
-    color: rgb(0, 149, 246);
+hr {
+    border: 1px solid rgba(130, 130, 130, 0.35);
+    width: 25vw;
+    margin-top: 1vh;
 }
 
-.message p {
-    font-size: 0.85rem;
-    text-align: center;
-    padding: 0.7rem;
-    margin: 0.5rem 0;
-    font-family: 'Roboto', sans-serif;
-}
-
-input[type="text"],
-input[type="email"],
-input[type="password"] {
+.settings input[type="text"],
+.settings input[type="password"] {
     width: 100%;
     padding: 0.7rem;
     margin-bottom: 1rem;
@@ -92,7 +79,7 @@ input[type="password"] {
     border-radius: 0.25rem;
 }
 
-input[type="submit"] {
+.settings input[type="submit"] {
     background-color: rgb(0, 149, 246);
     color: white;
     padding: 0.7rem 1rem;
@@ -103,7 +90,7 @@ input[type="submit"] {
     font-size: 0.9rem;
 }
 
-input[type="submit"]:hover {
+.settings input[type="submit"]:hover {
     background-color: rgb(4, 119, 242);
 }
 

@@ -137,13 +137,16 @@ class UserController extends BaseController
         $this->view("resetPassword");
     }
 
-    public function resetPassword($password, $confirmPassword)
+    public function resetPassword($oldPassword, $password, $confirmPassword)
     {
         $session = new Session();
         $token = $session->get("token");
         $user = $this->UserManager->getBy("verificationToken", $token);
         if (!$user) {
             throw new UserNotFoundException();
+        }
+        if (!password_verify($oldPassword, $user->getPassword())) {
+            throw new WrongPasswordException();
         }
         PasswordValidator::validate($password, $confirmPassword);
         $user->setPassword(password_hash($password, PASSWORD_BCRYPT));

@@ -17,4 +17,4 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO users (firstname, lastname, login, email, password, admin, active) 
-VALUES ('Alexandre', 'Tourret', 'atourret', 'atourret@student.42lyon.fr', 'password', 1, 1);
+VALUES ('Alexandre', 'Tourret', 'atourret', 'atourret@student.42lyon.fr', '$2y$10$PrWfnuRv7KCbwpssAvpjo..4rFkJuIzKLhMcQnHYW83SWALJ/oY36', 1, 1);

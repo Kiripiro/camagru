@@ -1,17 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+    const navbarBurger = document.querySelector('.navbar-burger');
+    const target = document.getElementById(navbarBurger.dataset.target);
 
-    $navbarBurgers.forEach(el => {
-        el.addEventListener('click', () => {
-
-            const target = el.dataset.target;
-            const $target = document.getElementById(target);
-
-            el.classList.toggle('is-active');
-            $target.classList.toggle('is-active');
-
-        });
+    navbarBurger.addEventListener('click', () => {
+        navbarBurger.classList.toggle('is-active');
+        target.classList.toggle('is-active');
     });
 
     const showModalButton = document.querySelector("#navbar-search-button");

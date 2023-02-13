@@ -1,25 +1,86 @@
-<div class="wrapper">
-    <div class="register">
-        <h1>Camagru</h1>
-        <h2>Créer un compte</h2>
-        <form class="register-form" action="register" method="post">
-            <input type="text" name="firstname" placeholder="Prénom" />
-            <input type="text" name="lastname" placeholder="Nom" />
-            <input type="text" name="login" placeholder="Login" />
-            <input type="text" name="email" placeholder="Email" />
-            <input type="password" name="password" placeholder="Mot de passe" />
-            <input type="password" name="confirmPassword" placeholder="Confirmez votre mot de passe" />
-            <input type="submit" placeholder="register" value="S'inscrire" />
-        </form>
-        <?php if (isset($message)): ?>
-            <div class="message">
-                <p>
-                    <?= $message ?>
-                </p>
+<section class="register">
+    <div class="hero is-fullheight is-light">
+        <div class="hero-body" style="height: 80vh; overflow: hidden;">
+            <div class="container has-text-centered">
+                <div class="column is-4 is-offset-4">
+                    <div class="box">
+                        <?php if (!isset($message)): ?>
+                            <div class="box">
+                                <img src="/Media/logo/logo.png" alt="Camagru">
+                            </div>
+                            <hr class="register-hr">
+                            <h3 class="title is-4 has-text-black">Créer un compte</h3>
+                            <hr class="register-hr">
+                            <div class="box">
+                                <div class="title has-text-grey is-5">Veuillez entrer votre login et votre mot de passe.
+                                </div>
+                                <form class="form" action="register" method="post">
+                                    <div class="field">
+                                        <div class="control">
+                                            <input class="input is-normal" type="text" name="firstname" placeholder="Prénom"
+                                                autofocus="">
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <div class="control">
+                                            <input class="input is-normal" type="text" name="lastname" placeholder="Nom"
+                                                autofocus="">
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <div class="control">
+                                            <input class="input is-normal" type="text" name="login" placeholder="Login"
+                                                autofocus="">
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <div class="control">
+                                            <input class="input is-normal" type="email" name="email" placeholder="Email"
+                                                autofocus="">
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <div class="control">
+                                            <input class="input is-normal" type="password" name="password"
+                                                placeholder="Mot de passe">
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <div class="control">
+                                            <input class="input is-normal" type="password" name="confirmPassword"
+                                                placeholder="Confirmez votre mot de passe">
+                                        </div>
+                                    </div>
+                                    <button class="button is-block is-info is-normal is-fullwidth">Se connecter</button>
+                                </form>
+                                <hr class="register-hr">
+                                <div class="title has-text-grey is-6">
+                                    Vous avez un compte ?
+                                    <a class="has-text-link" href="/login">Connectez-vous</a>
+                                </div>
+                            </div>
+                        <?php else: ?>
+                            <div class="title has-text-grey is-6">
+                                <img src="/Media/logo/logo.png" alt="Camagru">
+                                <hr class="register-hr">
+                                <div class="lds-grid">
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                </div>
+                                <div class="box">
+                                    <?php echo $message; ?>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
             </div>
-        <?php endif; ?>
-    </div>
-    <div class="already-registered">
-        <p class="message">Vous avez un compte ? <a href="login">Connectez-vous</a></p>
-    </div>
-</div>
+        </div>
+</section>

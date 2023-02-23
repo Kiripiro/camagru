@@ -1,3 +1,8 @@
+/* Navbar */
+.navbar-spacer {
+    height: 4.5rem;
+}
+
 /* Spinner */
 .lds-grid {
     display: inline-block;

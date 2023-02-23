@@ -19,37 +19,49 @@ window.onload = function () {
         });
     }
 
-    const form = document.querySelector('.form');
-    if (form) {
-        const inputs = form.querySelectorAll('input[type="text"], input[type="email"], input[type="password"]');
+    const forms = document.querySelectorAll('.form');
+    if (forms) {
+        forms.forEach(form => {
+            const inputs = form.querySelectorAll('input[type="text"], input[type="email"], input[type="password"], textarea');
 
-        const errorMessageContainer = document.createElement("div");
-        errorMessageContainer.style.marginTop = "3vh";
+            const errorMessageContainer = document.createElement("div");
+            errorMessageContainer.style.marginTop = "3vh";
 
-        const errorMessage = document.createElement("p");
-        errorMessage.style.color = "red";
+            const errorMessage = document.createElement("p");
+            errorMessage.style.color = "red";
 
-        errorMessageContainer.appendChild(errorMessage);
-        form.appendChild(errorMessageContainer);
+            errorMessageContainer.appendChild(errorMessage);
 
-        form.addEventListener('submit', (event) => {
-            event.preventDefault();
-            let isValid = true;
+            const modalBody = form.querySelector(".modal-card-body");
+            if (modalBody) {
+                modalBody.appendChild(errorMessageContainer);
+            } else {
+                form.appendChild(errorMessageContainer);
+            }
 
-            inputs.forEach(input => {
-                if (!input.value) {
-                    isValid = false;
-                    input.style.border = "1px solid red";
+            form.addEventListener('submit', (event) => {
+                event.preventDefault();
+                let isValid = true;
+
+                inputs.forEach(input => {
+                    if (!input.value) {
+                        isValid = false;
+                        input.style.border = "1px solid red";
+                    } else {
+                        input.style.border = "";
+                    }
+                });
+
+                if (isValid) {
+                    form.submit();
                 } else {
-                    input.style.border = "";
+                    if (inputs.length === 1) {
+                        errorMessage.textContent = "Ce champ est requis.";
+                    } else {
+                        errorMessage.textContent = "Tous les champs sont requis.";
+                    }
                 }
             });
-
-            if (isValid) {
-                form.submit();
-            } else {
-                errorMessage.textContent = "Tous les champs sont requis.";
-            }
         });
     }
 };

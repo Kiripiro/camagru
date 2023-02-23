@@ -7,7 +7,7 @@ CREATE TABLE `users` (
   `biography` varchar(255) DEFAULT NULL,
   `avatar` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
-  `notifs` int(11) NOT NULL DEFAULT '0',
+  `notifs` boolean NOT NULL DEFAULT '0',
   `admin` tinyint(1) NOT NULL DEFAULT '0',
   `token` varchar(255) DEFAULT NULL,
   `token_exp` timestamp NULL DEFAULT NULL,

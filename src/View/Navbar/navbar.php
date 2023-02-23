@@ -41,10 +41,10 @@
                     <a class="navbar-link">
                         <?php if ($user->getAvatar() != null) { ?>
                             <div
-                                style='background-image: url("/<?php echo $user->getAvatar(); ?>"); background-size: cover; background-position: 50% 50%; border-radius: 100%; height: 28px; width: 28px; margin-right:10px;'>
+                                style='background-image: url("/Media/avatars/<?php echo $user->getAvatar(); ?>"); background-size: cover; background-position: 50% 50%; border-radius: 100%; height: 28px; width: 28px; margin-right:10px;'>
                             <?php } else { ?>
                                 <div
-                                    style='background-image: url("../../Media/avatars/avatar.png"); background-size: cover; border-radius: 100%; background-position: 50% 50%; height: 28px; width: 28px; margin-right:10px;'>
+                                    style='background-image: url("/Media/avatars/avatar.png"); background-size: cover; border-radius: 100%; background-position: 50% 50%; height: 28px; width: 28px; margin-right:10px;'>
                                 <?php } ?>
                             </div>
                             <?php echo $user->getLogin(); ?>
@@ -87,10 +87,10 @@
     </div>
 </nav>
 
-<div class="modal" id="search-modal">
-    <div class="modal-background"></div>
+<div id="search-modal" class="modal">
+    <div id="navbar-modal-background" class="modal-background"></div>
     <div class="modal-card">
-        <section class="modal-card-body">
+        <section id="navbar-modal-card-body" class="modal-card-body">
             <form action="/search" method="post">
                 <div class="field has-addons">
                     <div class="control is-expanded">

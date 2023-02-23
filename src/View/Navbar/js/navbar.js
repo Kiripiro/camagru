@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
         modal.classList.add("is-active");
     });
 
-    const modalBackground = document.querySelector(".modal-background");
+    const modalBackground = document.querySelector("#navbar-modal-background");
 
     modalBackground.addEventListener("click", () => {
         modal.classList.remove("is-active");

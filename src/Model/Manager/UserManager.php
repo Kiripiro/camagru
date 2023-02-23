@@ -59,4 +59,81 @@ class userManager extends BaseManager
         $req = $this->_bdd->prepare("UPDATE users SET password = ? WHERE id = ?");
         $req->execute(array($password, $id));
     }
+
+    public function updateAvatar($user, $file)
+    {
+        try {
+            $user->setAvatar($file);
+            $this->update($user, ["avatar"]);
+            return true;
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return false;
+        }
+    }
+
+    public function updateLogin($user, $login)
+    {
+        try {
+            $user->setLogin($login);
+            $this->update($user, ["login"]);
+            return true;
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return false;
+        }
+    }
+
+    public function updateEmail($user, $email)
+    {
+        try {
+            $user->setEmail($email);
+            $this->update($user, ["email"]);
+            return true;
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return false;
+        }
+    }
+
+    public function updateBiography($user, $biography)
+    {
+        try {
+            $user->setBiography($biography);
+            $this->update($user, ["biography"]);
+            return true;
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return false;
+        }
+    }
+    public function updatePassword($user, $password)
+    {
+        try {
+            $user->setPassword(password_hash($password, PASSWORD_BCRYPT));
+            $this->update($user, ["password"]);
+            return true;
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return false;
+        }
+    }
+
+    public function updateNotifs($user, $value)
+    {
+        try {
+            if ($value == "activate") {
+                $user->setNotifs(1);
+                $this->update($user, ["notifs"]);
+                return true;
+            } else if ($value == "deactivate") {
+                $user->setNotifs(0);
+                $this->update($user, ["notifs"]);
+                return true;
+            }
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return false;
+        }
+    }
 }

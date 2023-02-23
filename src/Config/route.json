@@ -142,6 +142,90 @@
         "manager": []
     },
     {
+        "path": "/settings/login",
+        "controller": "User",
+        "action": "SettingsLogin",
+        "method": "POST",
+        "param": [
+            "login"
+        ],
+        "manager": [
+            "UserManager"
+        ]
+    },
+    {
+        "path": "/settings/email",
+        "controller": "User",
+        "action": "SettingsEmail",
+        "method": "POST",
+        "param": [
+            "email"
+        ],
+        "manager": [
+            "UserManager"
+        ]
+    },
+    {
+        "path": "/settings/biography",
+        "controller": "User",
+        "action": "SettingsBiography",
+        "method": "POST",
+        "param": [
+            "biography"
+        ],
+        "manager": [
+            "UserManager"
+        ]
+    },
+    {
+        "path": "/settings/delete",
+        "controller": "User",
+        "action": "SettingsDelete",
+        "method": "POST",
+        "param": [
+            "password"
+        ],
+        "manager": [
+            "UserManager"
+        ]
+    },
+    {
+        "path": "/settings/update-avatar",
+        "controller": "User",
+        "action": "SettingsUpdateAvatar",
+        "method": "POST",
+        "param": [],
+        "manager": [
+            "UserManager"
+        ]
+    },
+    {
+        "path": "/settings/update-password",
+        "controller": "User",
+        "action": "SettingsUpdatePassword",
+        "method": "POST",
+        "param": [
+            "password",
+            "newPassword",
+            "confirmPassword"
+        ],
+        "manager": [
+            "UserManager"
+        ]
+    },
+    {
+        "path": "/settings/update-notifications",
+        "controller": "User",
+        "action": "SettingsUpdateNotifications",
+        "method": "POST",
+        "param": [
+            "value"
+        ],
+        "manager": [
+            "UserManager"
+        ]
+    },
+    {
         "path": "/Error",
         "controller": "Error",
         "action": "Show",

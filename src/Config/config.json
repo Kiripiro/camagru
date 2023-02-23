@@ -5,6 +5,7 @@
         "Framework/Exception/Password",
         "Framework/Exception/User",
         "Framework/Mail",
+        "Framework/ImageResizer",
         "Framework/Validation",
         "Controller",
         "Model",

@@ -45,7 +45,7 @@
         width: 60% !important;
     }
 
-    .modal-card-body {
+    #navbar-modal-card-body {
         border-radius: 6px;
     }
 
@@ -59,7 +59,7 @@
         width: 80% !important;
     }
 
-    .modal-card-body {
+    #navbar-modal-card-body {
         border-radius: 6px;
     }
 

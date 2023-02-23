@@ -154,16 +154,6 @@ class UserController extends BaseController
         $session->destroy();
         $this->redirect("login");
     }
-    public function SettingsView()
-    {
-        $session = new Session();
-        $user = $session->get("user");
-        $this->addParam('title', 'Paramètres');
-        $this->addParam('description', 'Paramètres de votre compte');
-        $this->addParam('user', $user);
-        $this->addParam('navbar', 'View/Navbar/navbar.php');
-        $this->view("settings");
-    }
     public function updatePassword($oldPassword, $newPassword, $confirmPassword)
     {
         try {
@@ -184,5 +174,208 @@ class UserController extends BaseController
         $this->addParam('title', 'Paramètres');
         $this->addParam('description', 'Paramètres de votre compte');
         $this->view("settings");
+    }
+
+    public function SettingsView()
+    {
+        $session = new Session();
+        $user = $session->get("user");
+        if (!$user) {
+            throw new UserNotFoundException();
+        }
+        $message = $session->get("message");
+        $this->addParam('title', 'Paramètres');
+        $this->addParam('description', 'Paramètres de votre compte');
+        $this->addParam('user', $user);
+        $this->addParam('message', $message);
+        $this->addParam('navbar', 'View/Navbar/navbar.php');
+        $this->view("settings");
+    }
+
+    public function SettingsLogin($login)
+    {
+        $session = new Session();
+        $user = $session->get("user");
+        if (!$user) {
+            throw new UserNotFoundException();
+        }
+        $user = $this->UserManager->getById($user->getId());
+        if (!$user) {
+            throw new UserNotFoundException();
+        }
+        $userExists = $this->UserManager->getByLogin($login);
+        if ($userExists) {
+            throw new UserAlreadyExistsException('login', $login);
+        }
+        if ($this->UserManager->updateLogin($user, $login)) {
+            $user->setLogin($login);
+            $session->set("user", $user);
+            $success = "Votre login a bien été modifié.";
+        } else {
+            $failed = "Une erreur est survenue. Veuillez réessayer.";
+        }
+        $session->set("message", isset($success) ? $success : $failed);
+        $this->redirect("/settings");
+    }
+
+    public function SettingsEmail($email)
+    {
+
+        if (!isset($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            throw new InvalidEmailException();
+        }
+        $session = new Session();
+        $user = $session->get("user");
+        if (!$user) {
+            throw new UserNotFoundException();
+        }
+        $user = $this->UserManager->getById($user->getId());
+        if (!$user) {
+            throw new UserNotFoundException();
+        }
+        $userExists = $this->UserManager->getByEmail($email);
+        if ($userExists) {
+            throw new UserAlreadyExistsException('email', $email);
+        }
+        if ($this->UserManager->updateEmail($user, $email)) {
+            $user->setEmail($email);
+            $session->set("user", $user);
+            $success = "Votre email a bien été modifié.";
+        } else {
+            $failed = "Une erreur est survenue. Veuillez réessayer.";
+        }
+        $session->set("message", isset($success) ? $success : $failed);
+        $this->redirect("/settings");
+    }
+
+    public function SettingsBiography($biography)
+    {
+        $session = new Session();
+        $user = $session->get("user");
+        if (!$user) {
+            throw new UserNotFoundException();
+        }
+        $userExists = $this->UserManager->getById($user->getId()); // Vraiment utile ?
+        if (!$userExists) {
+            throw new UserNotFoundException();
+        }
+        if ($this->UserManager->updateBiography($user, $biography)) {
+            $user->setBiography($biography);
+            $session->set("user", $user);
+            $success = "Votre biographie a bien été modifiée.";
+        } else {
+            $failed = "Une erreur est survenue. Veuillez réessayer.";
+        }
+        $session->set("message", isset($success) ? $success : $failed);
+        $this->redirect("/settings");
+    }
+
+    public function SettingsDelete($password)
+    {
+        $session = new Session();
+        $user = $session->get("user");
+        if (!$user) {
+            throw new UserNotFoundException();
+        }
+        if (!password_verify($password, $user->getPassword())) {
+            throw new WrongPasswordException();
+        }
+        if ($this->UserManager->delete($user)) {
+            $session->destroy();
+            $success = "Votre compte a bien été supprimé.";
+        } else {
+            $failed = "Une erreur est survenue. Veuillez réessayer.";
+        }
+        $session->set("message", isset($success) ? $success : $failed);
+        $this->redirect("/");
+    }
+
+    public function SettingsUpdateAvatar()
+    {
+        if (isset($_FILES['upload'])) {
+            $session = new Session();
+            $user = $session->get("user");
+            if (!$user) {
+                throw new UserNotFoundException();
+            }
+            $userExists = $this->UserManager->getById($user->getId());
+            if (!$userExists) {
+                throw new UserNotFoundException();
+            }
+            $UPLOAD_DIR = __DIR__ . "/../Media/avatars/";
+            $ALLOWED_FILES = [
+                'image/png' => 'png',
+                'image/jpeg' => 'jpg'
+            ];
+            $filename = $_FILES["upload"]["name"];
+            $tmp = $_FILES['upload']['tmp_name'];
+            $mime_type = mime_content_type($tmp);
+            if (!in_array($mime_type, array_keys($ALLOWED_FILES))) {
+                throw new InvalidFileException($mime_type);
+            }
+            $uploaded_file = pathinfo($filename, PATHINFO_FILENAME) . '.' . $ALLOWED_FILES[$mime_type];
+            $filepath = $UPLOAD_DIR . '/' . $uploaded_file;
+            $success = move_uploaded_file($tmp, $filepath);
+            if ($success) {
+                $resizeObj = new imageResizer($filepath);
+                $resizeObj->resizeImage(128, 128, 'crop');
+                $resizeObj->saveImage($filepath, 100);
+            } else {
+                throw new FileUploadException();
+            }
+            if ($this->UserManager->updateAvatar($user, $uploaded_file)) {
+                $user->setAvatar($uploaded_file);
+                $session->set("user", $user);
+                $success = "Votre avatar a bien été modifié.";
+            } else {
+                $failed = "Une erreur est survenue. Veuillez réessayer.";
+            }
+            $session->set("message", isset($success) ? $success : $failed);
+        }
+        $this->redirect("/settings");
+    }
+
+    public function SettingsUpdatePassword($password, $newPassword, $confirmPassword)
+    {
+        $session = new Session();
+        $user = $session->get("user");
+        if (!$user) {
+            throw new UserNotFoundException();
+        }
+        $userExists = $this->UserManager->getById($user->getId());
+        if (!$userExists) {
+            throw new UserNotFoundException();
+        }
+        if (!password_verify($password, $user->getPassword())) {
+            throw new WrongPasswordException();
+        }
+        PasswordValidator::validate($newPassword, $confirmPassword);
+        if ($this->UserManager->updatePassword($user, $newPassword)) {
+            $success = "Votre mot de passe a bien été modifiée.";
+        } else {
+            $failed = "Une erreur est survenue. Veuillez réessayer.";
+        }
+        $session->set("message", isset($success) ? $success : $failed);
+        $this->redirect("/settings");
+    }
+
+    public function SettingsUpdateNotifications($value)
+    {
+        $session = new Session();
+        $user = $session->get("user");
+        if (!$user) {
+            throw new UserNotFoundException();
+        }
+        $userExists = $this->UserManager->getById($user->getId());
+        if (!$userExists) {
+            throw new UserNotFoundException();
+        }
+        if ($this->UserManager->updateNotifs($user, $value)) {
+            $success = "Les notifications par email ont bien été" . $value == "activate" ? "activées" : "désactivées";
+        } else {
+            $failed = "Une erreur est survenue. Veuillez réessayer.";
+        }
+        $session->set("message", isset($success) ? $success : $failed);
+        $this->redirect("/settings");
     }
 }

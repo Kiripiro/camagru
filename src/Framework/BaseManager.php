@@ -44,14 +44,16 @@ class BaseManager
             }
         }
         $req->execute($boundParam);
+        return true;
     }
 
 
     public function update($obj, $param)
     {
         $sql = "UPDATE " . $this->_table . " SET ";
+
         foreach ($param as $paramName) {
-            $sql = $sql . $paramName . " = ?, ";
+            $sql = $sql . $paramName . " = ?";
         }
         $sql = $sql . " WHERE id = ? ";
         $req = $this->_bdd->prepare($sql);
@@ -59,21 +61,21 @@ class BaseManager
         $param[] = 'id';
         $boundParam = array();
         foreach ($param as $paramName) {
-            if (property_exists($obj, $paramName)) {
-                $boundParam[$paramName] = $obj->$paramName;
+            if (method_exists($obj, 'get' . ucfirst($paramName))) {
+                $boundParam[] = $obj->{'get' . ucfirst($paramName)}();
             } else {
                 throw new PropertyNotFoundException($this->_object, $paramName);
             }
         }
-
         $req->execute($boundParam);
+        return true;
     }
 
     public function delete($obj)
     {
         if (property_exists($obj, "id")) {
             $req = $this->_bdd->prepare("DELETE FROM " . $this->_table . " WHERE id=?");
-            return $req->execute(array($obj->id));
+            return $req->execute(array($obj->getId()));
         } else {
             throw new PropertyNotFoundException($obj, "id");
         }

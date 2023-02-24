@@ -183,11 +183,14 @@ class UserController extends BaseController
         if (!$user) {
             throw new UserNotFoundException();
         }
-        $message = $session->get("message");
+        $success_message = $session->get("success_message");
+        $error_message = $session->get("error_message");
         $this->addParam('title', 'Paramètres');
         $this->addParam('description', 'Paramètres de votre compte');
+        $this->addParam('session', $session);
         $this->addParam('user', $user);
-        $this->addParam('message', $message);
+        $this->addParam('success_message', $success_message);
+        $this->addParam('error_message', $error_message);
         $this->addParam('navbar', 'View/Navbar/navbar.php');
         $this->view("settings");
     }
@@ -211,10 +214,11 @@ class UserController extends BaseController
             $user->setLogin($login);
             $session->set("user", $user);
             $success = "Votre login a bien été modifié.";
+            $session->set("success_message", $success);
         } else {
             $failed = "Une erreur est survenue. Veuillez réessayer.";
+            $session->set("error_message", $failed);
         }
-        $session->set("message", isset($success) ? $success : $failed);
         $this->redirect("/settings");
     }
 
@@ -241,10 +245,11 @@ class UserController extends BaseController
             $user->setEmail($email);
             $session->set("user", $user);
             $success = "Votre email a bien été modifié.";
+            $session->set('success_message', $success);
         } else {
-            $failed = "Une erreur est survenue. Veuillez réessayer.";
+            $error = "Une erreur est survenue. Veuillez réessayer.";
+            $session->set('error_message', $error);
         }
-        $session->set("message", isset($success) ? $success : $failed);
         $this->redirect("/settings");
     }
 
@@ -263,10 +268,11 @@ class UserController extends BaseController
             $user->setBiography($biography);
             $session->set("user", $user);
             $success = "Votre biographie a bien été modifiée.";
+            $session->set('success_message', $success);
         } else {
-            $failed = "Une erreur est survenue. Veuillez réessayer.";
+            $error = "Une erreur est survenue. Veuillez réessayer.";
+            $session->set('error_message', $error);
         }
-        $session->set("message", isset($success) ? $success : $failed);
         $this->redirect("/settings");
     }
 
@@ -282,18 +288,17 @@ class UserController extends BaseController
         }
         if ($this->UserManager->delete($user)) {
             $session->destroy();
-            $success = "Votre compte a bien été supprimé.";
         } else {
-            $failed = "Une erreur est survenue. Veuillez réessayer.";
+            $error = "Une erreur est survenue. Veuillez réessayer.";
+            $session->set('error_message', $error);
         }
-        $session->set("message", isset($success) ? $success : $failed);
         $this->redirect("/");
     }
 
     public function SettingsUpdateAvatar()
     {
-        if (isset($_FILES['upload'])) {
-            $session = new Session();
+        $session = new Session();
+        if (!empty($_FILES['upload']['name'])) {
             $user = $session->get("user");
             if (!$user) {
                 throw new UserNotFoundException();
@@ -327,10 +332,14 @@ class UserController extends BaseController
                 $user->setAvatar($uploaded_file);
                 $session->set("user", $user);
                 $success = "Votre avatar a bien été modifié.";
+                $session->set('success_message', $success);
             } else {
-                $failed = "Une erreur est survenue. Veuillez réessayer.";
+                $error = "Une erreur est survenue. Veuillez réessayer.";
+                $session->set('error_message', $error);
             }
-            $session->set("message", isset($success) ? $success : $failed);
+        } else {
+            $error = "Merci de choisir une photo de profil. Veuillez réessayer.";
+            $session->set('error_message', $error);
         }
         $this->redirect("/settings");
     }
@@ -352,10 +361,11 @@ class UserController extends BaseController
         PasswordValidator::validate($newPassword, $confirmPassword);
         if ($this->UserManager->updatePassword($user, $newPassword)) {
             $success = "Votre mot de passe a bien été modifiée.";
+            $session->set('success_message', $success);
         } else {
-            $failed = "Une erreur est survenue. Veuillez réessayer.";
+            $error = "Une erreur est survenue. Veuillez réessayer.";
+            $session->set('error_message', $error);
         }
-        $session->set("message", isset($success) ? $success : $failed);
         $this->redirect("/settings");
     }
 
@@ -371,11 +381,16 @@ class UserController extends BaseController
             throw new UserNotFoundException();
         }
         if ($this->UserManager->updateNotifs($user, $value)) {
-            $success = "Les notifications par email ont bien été" . $value == "activate" ? "activées" : "désactivées";
+            if ($value == "activated")
+                $value = "activées";
+            else if ($value == "deactivated")
+                $value = "désactivées";
+            $success = "Les notifications par email ont bien été " . $value . ".";
+            $session->set('success_message', $success);
         } else {
-            $failed = "Une erreur est survenue. Veuillez réessayer.";
+            $error = "Une erreur est survenue. Veuillez réessayer.";
+            $session->set('error_message', $error);
         }
-        $session->set("message", isset($success) ? $success : $failed);
         $this->redirect("/settings");
     }
 }

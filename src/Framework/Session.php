@@ -11,6 +11,11 @@ class Session
         $_SESSION[$key] = $value;
     }
 
+    public function remove($key)
+    {
+        unset($_SESSION[$key]);
+    }
+
     public function get($key)
     {
         if (isset($_SESSION[$key])) {

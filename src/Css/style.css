@@ -3,6 +3,38 @@
     height: 4.5rem;
 }
 
+/* Snackbar */
+#snackbar {
+    position: fixed;
+    bottom: 1vh;
+    right: 5vw;
+    z-index: 999;
+}
+
+.progress {
+    height: 0.5rem;
+    overflow: hidden;
+    background-color: #f5f5f5;
+    border-radius: 0.25rem;
+}
+
+.progress-bar {
+    background-color: white;
+    width: 0%;
+    height: 100%;
+    transition: width 0.6s ease-in-out;
+}
+
+@keyframes progress {
+    0% {
+        width: 0%;
+    }
+
+    100% {
+        width: 100%;
+    }
+}
+
 /* Spinner */
 .lds-grid {
     display: inline-block;

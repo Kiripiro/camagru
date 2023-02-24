@@ -15,6 +15,7 @@
 </head>
 
 <body>
+    <script src="../Js/snackbar.js"></script>
     <?= $content; ?>
     <?= $jsContent; ?>
     <script src="../Js/layout.js"></script>

@@ -80,13 +80,7 @@
                                 <div class="column is-3">
                                     <div class="field">
                                         <div class="control has-text-centered">
-                                            <button name="update" value="Upload"
-                                                class="button is-primary">Modifier</button>
-                                        </div>
-                                    </div>
-                                    <div class="field">
-                                        <div class="control has-text-centered">
-                                            <button name="delete" class="button is-danger">Supprimer</button>
+                                            <button name="update" class="button is-primary">Modifier</button>
                                         </div>
                                     </div>
                                 </div>
@@ -234,10 +228,10 @@
                                     <div class="field">
                                         <div class="control has-text-centered">
                                             <?php if ($user->getNotifs() == 0): ?>
-                                                <input type="hidden" name="value" value="activate">
+                                                <input type="hidden" name="value" value="activated">
                                                 <button class="button is-primary">Activer</button>
                                             <?php else: ?>
-                                                <input type="hidden" name="value" value="deactivate">
+                                                <input type="hidden" name="value" value="deactivated">
                                                 <button class="button is-danger">Désactiver</button>
                                             <?php endif; ?>
                                         </div>
@@ -275,3 +269,22 @@
         </form>
     </div>
 </div>
+<div id="snackbar" class="notification" hidden>
+    <button id="snackbar-delete" class="delete"></button>
+    <span id="snackbar-message"></span>
+</div>
+<?php
+if (isset($success_message)) {
+    $js_content = "showSnackbar('" . $success_message . "', '" . ('success') . "')";
+    $session->remove('success_message');
+} else if (isset($error_message)) {
+    $js_content = "showSnackbar('" . $error_message . "', '" . ('danger') . "')";
+    $session->remove($error_message);
+} else
+    $js_content = null;
+?>
+
+<script>
+    <?php if ($js_content)
+        echo $js_content; ?>
+</script>

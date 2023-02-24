@@ -122,11 +122,11 @@ class userManager extends BaseManager
     public function updateNotifs($user, $value)
     {
         try {
-            if ($value == "activate") {
+            if ($value == "activated") {
                 $user->setNotifs(1);
                 $this->update($user, ["notifs"]);
                 return true;
-            } else if ($value == "deactivate") {
+            } else if ($value == "deactivated") {
                 $user->setNotifs(0);
                 $this->update($user, ["notifs"]);
                 return true;

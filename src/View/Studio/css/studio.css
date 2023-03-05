@@ -1,0 +1,48 @@
+.photo-box {
+    border: 2px solid #ccc;
+    background-color: #f5f5f5;
+    background-size: cover;
+    background-position: center;
+}
+
+.studio-hr {
+    line-height: 1em;
+    position: relative;
+    border: 0;
+    color: black;
+    text-align: center;
+    height: 1.5em;
+    opacity: 0.5;
+    background-color: white;
+}
+
+.studio-hr:before {
+    content: '';
+    background: linear-gradient(to right, transparent, #818078, transparent);
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    height: 1px;
+}
+
+.studio-hr:after {
+    content: attr(data-content);
+    position: relative;
+    display: inline-block;
+    color: black;
+    padding: 0 0.5em;
+    line-height: 1.5em;
+    color: #818078;
+    background-color: white;
+}
+
+video {
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+}
+
+/* canvas {
+    width: 640px;
+    height: 480px;
+} */

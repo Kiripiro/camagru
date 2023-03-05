@@ -17,8 +17,13 @@
     <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
             <a class="navbar-item">
-                Gallerie
+                <i class="icon is-medium fas fa-images"></i>
             </a>
+            <?php if (isset($user)) { ?>
+                <a href="/studio" class="navbar-item">
+                    <i class="icon is-medium fas fa-camera-retro"></i>
+                </a>
+            <?php } ?>
             <div class="navbar-item is-hidden-touch">
                 <form action="/search" method="post">
                     <div class="navbar-searchbar field has-addons">
@@ -40,17 +45,17 @@
                 <div class="navbar-item has-dropdown is-hoverable">
                     <a class="navbar-link">
                         <?php if ($user->getAvatar() != null) { ?>
-                            <div
+                            <div class="navbar-avatar"
                                 style='background-image: url("/Media/avatars/<?php echo $user->getAvatar(); ?>"); background-size: cover; background-position: 50% 50%; border-radius: 100%; height: 28px; width: 28px; margin-right:10px;'>
                             <?php } else { ?>
-                                <div
+                                <div class="navbar-avatar"
                                     style='background-image: url("/Media/avatars/avatar.png"); background-size: cover; border-radius: 100%; background-position: 50% 50%; height: 28px; width: 28px; margin-right:10px;'>
                                 <?php } ?>
                             </div>
                             <?php echo $user->getLogin(); ?>
                     </a>
                     <div class="navbar-dropdown">
-                        <a class="navbar-item">
+                        <a href="/profile" class="navbar-item">
                             Mon profil
                         </a>
                         <a href="/settings" class="navbar-item">

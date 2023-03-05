@@ -226,6 +226,22 @@
         ]
     },
     {
+        "path": "/profile",
+        "controller": "Profile",
+        "action": "ProfileView",
+        "method": "GET",
+        "param": [],
+        "manager": []
+    },
+    {
+        "path": "/studio",
+        "controller": "Studio",
+        "action": "StudioView",
+        "method": "GET",
+        "param": [],
+        "manager": []
+    },
+    {
         "path": "/Error",
         "controller": "Error",
         "action": "Show",

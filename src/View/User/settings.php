@@ -8,7 +8,7 @@
                         Paramètres
                     </p>
                     <ul class="menu-list">
-                        <li><a class="my-profile-menu" href="#my-profile">Mon Profil</a>
+                        <li><a class="my-profile-menu" href="#my-profile">Modifier mon Profil</a>
                             <ul>
                                 <li><a class="profile-pic-menu" href="#profile-pic">Photo</a></li>
                                 <li><a class="login-menu" href="#login">Login</a></li>
@@ -35,7 +35,7 @@
                 <section class="settings is-light">
                     <div id="my-profile" class="box">
                         <div class="box">
-                            <h3 class="title is-4 has-text-black has-text-centered">Mon profil</h3>
+                            <h3 class="title is-4 has-text-black has-text-centered">Modifier mon profil</h3>
                         </div>
                         <hr id="profile-pic" class="hr">
                         <h5 class="title is-5 has-text-black">Photo</h5>

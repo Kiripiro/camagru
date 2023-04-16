@@ -31,7 +31,6 @@ class User
     {
         return $this->lastname;
     }
-
     public function getLogin()
     {
         return $this->login;

@@ -4,6 +4,7 @@
         "Framework/Exception",
         "Framework/Exception/Password",
         "Framework/Exception/User",
+        "Framework/Exception/Studio",
         "Framework/Mail",
         "Framework/ImageResizer",
         "Framework/Validation",

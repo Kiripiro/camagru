@@ -242,6 +242,31 @@
         "manager": []
     },
     {
+        "path": "/studio-preview",
+        "controller": "Studio",
+        "action": "StudioPreview",
+        "method": "POST",
+        "param": [
+            "imageDimensions",
+            "filters"
+        ],
+        "manager": [
+            "StudioManager"
+        ]
+    },
+    {
+        "path": "/studio-upload",
+        "controller": "Studio",
+        "action": "StudioUploadPost",
+        "method": "POST",
+        "param": [
+            "description"
+        ],
+        "manager": [
+            "StudioManager"
+        ]
+    },
+    {
         "path": "/Error",
         "controller": "Error",
         "action": "Show",

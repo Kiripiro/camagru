@@ -1,5 +1,5 @@
 <?php
-//phpinfo();
+// phpinfo();
 $configFile = file_get_contents("Config/config.json");
 $config = json_decode($configFile);
 

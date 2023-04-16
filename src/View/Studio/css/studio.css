@@ -37,12 +37,6 @@
     background-color: white;
 }
 
-video {
-    -webkit-transform: scaleX(-1);
-    transform: scaleX(-1);
+#video {
+    width: 100%;
 }
-
-/* canvas {
-    width: 640px;
-    height: 480px;
-} */

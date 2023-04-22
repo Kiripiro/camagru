@@ -21,14 +21,15 @@ VALUES ('Alexandre', 'Tourret', 'atourret', 'atourret@student.42lyon.fr', '$2y$1
 
 CREATE TABLE `pictures` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  `picture` varchar(255) NOT NULL,
+  `userId` int(11) NOT NULL,
+  `path` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
   `likes` int(11) NOT NULL DEFAULT '0',
   `comments` int(11) NOT NULL DEFAULT '0',
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`),
-  CONSTRAINT `pictures_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+  KEY `userId` (`userId`),
+  CONSTRAINT `pictures_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `likes` (

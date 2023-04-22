@@ -92,12 +92,13 @@ class UserController extends BaseController
             throw new UserNotVerifiedException($user->getFirstname(), $user->getLastname());
         }
         $token = bin2hex(random_bytes(16));
-        date_default_timezone_set("Europe/Paris");
-        $token_exp = date("Y-m-d H:i:s", strtotime("+1 day"));
+        $exp = new DateTime("+1 day");
+        $exp->setTimezone(new DateTimeZone("Europe/Paris"));
+        $token_exp = $exp->format("Y-m-d H:i:s");
+        $exp->add(new DateInterval("PT2H"));
         $session = new Session();
         $session->set("user", $user);
-        $session->set("token", $token);
-        $session->set("token_exp", $token_exp);
+        setcookie('token', $token, $exp->getTimestamp(), "/", "", false, false);
         $this->UserManager->setToken($user->getId(), $token, $token_exp);
         $this->redirect("/");
     }

@@ -267,6 +267,19 @@
         ]
     },
     {
+        "path": "/delete-post",
+        "controller": "Studio",
+        "action": "StudioDeletePost",
+        "method": "POST",
+        "param": [
+            "pictureId",
+            "token"
+        ],
+        "manager": [
+            "StudioManager"
+        ]
+    },
+    {
         "path": "/Error",
         "controller": "Error",
         "action": "Show",

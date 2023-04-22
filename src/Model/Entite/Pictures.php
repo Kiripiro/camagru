@@ -70,5 +70,4 @@ class Pictures
     {
         $this->date = $date;
     }
-
 }

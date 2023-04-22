@@ -8,7 +8,7 @@ if (isset($success_message)) {
     $session->remove('success_message');
 } else if (isset($error_message)) {
     $js_content = "showSnackbar('" . $error_message . "', '" . ('danger') . "')";
-    $session->remove($error_message);
+    $session->remove('error_message');
 } else
     $js_content = null;
 ?>

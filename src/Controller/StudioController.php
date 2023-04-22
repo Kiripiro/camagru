@@ -1,5 +1,4 @@
 <?php
-use PHPMailer\PHPMailer\Exception;
 
 class StudioController extends BaseController
 {
@@ -14,6 +13,7 @@ class StudioController extends BaseController
         $this->addParam("title", "Studio");
         $this->addParam("description", "Ajouter une image");
         $this->addParam('session', $session);
+        $this->addParam("posts", $session->get('posts'));
         $this->addParam("success_message", $session->get('success_message'));
         $this->addParam("error_message", $session->get('error_message'));
         $this->addParam("navbar", "View/Navbar/navbar.php");
@@ -128,11 +128,42 @@ class StudioController extends BaseController
         }
         $post = $this->StudioManager->addPost($latestImageId, $user->getId(), $description);
         if ($post) {
+            $session->addArray('posts', array($post->getPath()));
             $session->set('success_message', "Votre image a bien été publiée !");
-            $this->redirect("/studio");
         } else {
             $session->set('error_message', "Une erreur est survenue lors de la publication de votre image.");
+        }
+        $this->redirect("/studio");
+    }
+
+    public function StudioDeletePost($pictureID, $token)
+    {
+        if (empty($token || empty($pictureID))) {
             $this->redirect("/studio");
+        }
+        $session = new Session();
+        $user = $session->get('user');
+        if ($user == null) {
+            $this->redirect("/login");
+        }
+        $post = $this->StudioManager->getUsersPost($user->getId(), $pictureID);
+        if ($post) {
+            $this->StudioManager->deletePost($pictureID);
+            $session->removeFromArray('posts', $post->getPath());
+            unlink("Media/posts/" . $post->getPath() . ".png");
+            $response = array(
+                "success" => true
+            );
+
+            header('Content-Type: application/json');
+            echo json_encode($response);
+        } else {
+            $response = array(
+                "success" => false
+            );
+
+            header('Content-Type: application/json');
+            echo json_encode($response);
         }
     }
 }

@@ -10,6 +10,25 @@ class Session
     {
         $_SESSION[$key] = $value;
     }
+    public function addArray($key, $value)
+    {
+        if (isset($_SESSION[$key])) {
+            array_push($_SESSION[$key], $value);
+        } else {
+            $_SESSION[$key] = array($value);
+        }
+    }
+
+    public function removeFromArray($key, $value)
+    {
+        if (isset($_SESSION[$key])) {
+            $index = array_search($value, $_SESSION[$key]);
+            if ($index !== false) {
+                unset($_SESSION[$key][$index]);
+            }
+        }
+        session_write_close();
+    }
 
     public function remove($key)
     {

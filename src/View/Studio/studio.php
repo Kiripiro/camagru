@@ -1,3 +1,6 @@
+<?
+include_once('Utils/snackbar.php');
+?>
 <div class="navbar-spacer"></div>
 <div class="container">
     <div id="box" class="box">
@@ -48,6 +51,10 @@
                             <label class="label">Filtres</label>
                             <div class="filters-container" style="overflow-y: scroll; height: 100vh">
                                 <div class="is-one-quarter">
+                                    <?php
+                                    if (isset($latest_posts))
+                                        echo 'oui';
+                                    ?>
                                     <figure class="image">
                                         <img class="filter" src="/Media/filtres/issou.png" alt="Image"
                                             onclick="addFilter(this)" />
@@ -93,46 +100,26 @@
                         <div class="field">
                             <label class="label">Dernières prises</label>
                             <div class="recent-pics" style="overflow-y: scroll; height: 100vh">
-                                <div class="control">
-                                    <figure class="image is-4by3">
-                                        <img src="https://picsum.photos/300/300" alt="Image" />
-                                    </figure>
-                                </div>
-                                <div class="field">
-                                    <div class="control">
-                                        <button class="button is-danger is-fullwidth">Supprimer</button>
-                                    </div>
-                                </div>
-                                <div class="control">
-                                    <figure class="image is-4by3">
-                                        <img src="https://picsum.photos/300/200" alt="Image" />
-                                    </figure>
-                                </div>
-                                <div class="field">
-                                    <div class="control">
-                                        <button class="button is-danger is-fullwidth">Supprimer</button>
-                                    </div>
-                                </div>
-                                <div class="control">
-                                    <figure class="image is-4by3">
-                                        <img src="https://picsum.photos/100/100" alt="Image" />
-                                    </figure>
-                                </div>
-                                <div class="field">
-                                    <div class="control">
-                                        <button class="button is-danger is-fullwidth">Supprimer</button>
-                                    </div>
-                                </div>
-                                <div class="control">
-                                    <figure class="image is-4by3">
-                                        <img src="https://picsum.photos/300/300" alt="Image" />
-                                    </figure>
-                                </div>
-                                <div class="field">
-                                    <div class="control">
-                                        <button class="button is-danger is-fullwidth">Supprimer</button>
-                                    </div>
-                                </div>
+                                <?php if (isset($posts)) {
+                                    foreach ($posts as $post) {
+                                        $filename = "Media/posts/" . $post[0] . ".png";
+                                        if (file_exists($filename)) {
+                                            echo '<div class="control">
+                                                    <figure class="image is-4by3">
+                                                        <img src="/Media/posts/' . $post[0] . '.png" alt="Image" data-post-id="' . $post[0] . '"/>
+                                                    </figure>'
+                                                . '<div class="field">
+                                                        <div class="control">
+                                                            <button class="button is-danger is-fullwidth" onclick="deletePost(this)">Supprimer</button>
+                                                        </div>
+                                                    </div>
+                                                </div>';
+                                        }
+                                    }
+                                } else {
+                                    echo 'Aucune photo';
+                                }
+                                ?>
                             </div>
                         </div>
                     </div>
@@ -160,6 +147,3 @@
         </div>
     </div>
 </div>
-<?
-include_once('Utils/snackbar.php');
-?>

@@ -13,7 +13,7 @@ class Session
     public function addArray($key, $value)
     {
         if (isset($_SESSION[$key])) {
-            array_push($_SESSION[$key], $value);
+            $_SESSION[$key][] = $value;
         } else {
             $_SESSION[$key] = array($value);
         }
@@ -25,9 +25,9 @@ class Session
             $index = array_search($value, $_SESSION[$key]);
             if ($index !== false) {
                 unset($_SESSION[$key][$index]);
+                $_SESSION[$key] = array_values($_SESSION[$key]);
             }
         }
-        session_write_close();
     }
 
     public function remove($key)

@@ -58,6 +58,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const fileInput = document.querySelector('#file-upload input[type=file]');
     fileInput.onchange = () => {
+        if (fileInput.files[0].size > 2 * 1024 * 1024) {
+            alert('La taille de l\'image ne doit pas dépasser 2 Mo.');
+            fileInput.files[0].value = null;
+            return;
+        }
         if (fileInput.files.length > 0) {
             const fileName = document.querySelector('#file-upload .file-name');
             fileName.textContent = fileInput.files[0].name;

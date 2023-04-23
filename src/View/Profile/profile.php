@@ -50,7 +50,7 @@
                                                 <div class="column is-3">
                                                     <label class="label">Posts</label>
                                                     <p class="text is-6">
-                                                        125
+                                                        <?= $nb_posts ?>
                                                     </p>
                                                 </div>
                                             </div>
@@ -64,6 +64,71 @@
                                     </div>
                                 </div>
                             </div>
+                    </section>
+                    <section class="profile-posts is-light">
+                        <div class="box mt-5">
+                            <h3 class="title is-4 has-text-black has-text-centered">Mes posts</h3>
+                            <?php if (isset($posts) && !empty($posts)) {
+                                $i = 0;
+                                foreach ($posts as $post) {
+                                    $i++;
+                                    $filename = "Media/posts/" . $post["path"] . ".png";
+                                    if (file_exists($filename)) {
+                                        echo '
+                                                <div id="box_' . $i . '" class="box post mb-2">
+                                                    <div id="post_' . $i . '" class="post-container">
+                                                        <div class="control">
+                                                            <figure class="image is-4by3">
+                                                                <img src="/Media/posts/' . $post["path"] . '.png" alt="Image" data-post-id="' . $post["path"] . '"/>
+                                                            </figure>
+                                                        </div>
+                                                        <div class="control">
+                                                            <div class="level is-mobile">
+                                                                <div class="level-left mt-2">
+                                                                    <button class="button mt-2 mr-1">
+                                                                        <i class="fa-solid fa-heart is-hidden"></i>
+                                                                        <i class="fa-regular fa-heart"></i>
+                                                                    </button>
+                                                                    <button class="button mt-2" onclick="showComments(' . $i . ')">
+                                                                        <i class="fa-regular fa-comment"></i>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="level-right mt-2">
+                                                                    <button class="button trash" onclick="deletePostProfile(' . $i . ', \'' . $post["path"] . '\')">
+                                                                        <i class="fa-solid fa-trash"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="control">
+                                                            <div class="level">
+                                                                <div class="level-left mt-2">
+                                                                    <label class="text is-6 pr-1">' . $post['likes'] . '</label>
+                                                                    <label class="text is-6">Likes</label>
+                                                                </div>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                        <div class="control">
+                                                            <label class="label mt-2">Description</label>
+                                                            <label class="text is-6">' . $post["description"] . '</label>
+                                                        </div>
+                                                    </div>
+                                                    <div id="comments_' . $i . '" class="comments is-hidden">
+                                                        <button class="button" onclick="hideComments(' . $i . ')">
+                                                           <i class="fa-solid fa-arrow-left" ></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            ';
+                                    } else
+                                        echo 'Aucune photo';
+                                }
+                            } else {
+                                echo 'Aucune photo';
+                            }
+                            ?>
+                        </div>
                     </section>
                 </div>
             </div>

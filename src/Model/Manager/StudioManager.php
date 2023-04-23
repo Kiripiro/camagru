@@ -40,6 +40,14 @@ class StudioManager extends BaseManager
         return $req->fetch();
     }
 
+    public function getAllUsersPosts($userId)
+    {
+        $req = $this->_bdd->prepare("SELECT * FROM pictures WHERE userId=?");
+        $req->execute(array($userId));
+        $req->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "Pictures");
+        return $req->fetchAll();
+    }
+
     public function deletePost($pictureID)
     {
         try {

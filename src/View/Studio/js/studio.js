@@ -393,6 +393,7 @@ const deletePost = (button) => {
     xhr.send(formData);
     xhr.onload = function () {
         if (xhr.status === 200) {
+            // const response = xhr.responseText;
             const response = JSON.parse(xhr.responseText);
             if (response.success) {
                 button.parentElement.parentElement.parentElement.remove();

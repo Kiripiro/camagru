@@ -128,7 +128,7 @@ class StudioController extends BaseController
         }
         $post = $this->StudioManager->addPost($latestImageId, $user->getId(), $description);
         if ($post) {
-            $session->addArray('posts', array($post->getPath()));
+            $session->addArray('posts', $post->getPath());
             $session->set('success_message', "Votre image a bien été publiée !");
         } else {
             $session->set('error_message', "Une erreur est survenue lors de la publication de votre image.");
@@ -145,6 +145,15 @@ class StudioController extends BaseController
         $user = $session->get('user');
         if ($user == null) {
             $this->redirect("/login");
+        }
+        if (!$this->UserManager->verifyToken($user->getId(), $token)) {
+            $response = array(
+                "success" => false,
+                "message" => "Token invalide"
+            );
+
+            header('Content-Type: application/json');
+            echo json_encode($response);
         }
         $post = $this->StudioManager->getUsersPost($user->getId(), $pictureID);
         if ($post) {

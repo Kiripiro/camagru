@@ -100,13 +100,13 @@ include_once('Utils/snackbar.php');
                         <div class="field">
                             <label class="label">Dernières prises</label>
                             <div class="recent-pics" style="overflow-y: scroll; height: 100vh">
-                                <?php if (isset($posts)) {
+                                <?php if (isset($posts) && !empty($posts)) {
                                     foreach ($posts as $post) {
-                                        $filename = "Media/posts/" . $post[0] . ".png";
+                                        $filename = "Media/posts/" . $post . ".png";
                                         if (file_exists($filename)) {
                                             echo '<div class="control">
                                                     <figure class="image is-4by3">
-                                                        <img src="/Media/posts/' . $post[0] . '.png" alt="Image" data-post-id="' . $post[0] . '"/>
+                                                        <img src="/Media/posts/' . $post . '.png" alt="Image" data-post-id="' . $post . '"/>
                                                     </figure>'
                                                 . '<div class="field">
                                                         <div class="control">
@@ -114,7 +114,8 @@ include_once('Utils/snackbar.php');
                                                         </div>
                                                     </div>
                                                 </div>';
-                                        }
+                                        } else
+                                            echo 'Aucune photo';
                                     }
                                 } else {
                                     echo 'Aucune photo';

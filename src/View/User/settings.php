@@ -40,7 +40,7 @@
                         <hr id="profile-pic" class="hr">
                         <h5 class="title is-5 has-text-black">Photo</h5>
                         <form id="profile-form" action="/settings/update-avatar" method="post" class="form"
-                            enctype="multipart/form-data" accept="image/*">
+                            enctype="multipart/form-data" accept="image/*" maxlength="2097152">
                             <div class="columns is-vcentered">
                                 <div class="column is-3">
                                     <?php if ($user->getAvatar() != null): ?>

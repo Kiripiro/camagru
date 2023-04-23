@@ -300,6 +300,10 @@ class UserController extends BaseController
     {
         $session = new Session();
         if (!empty($_FILES['upload']['name'])) {
+            $fileSize = $_FILES['upload']['size'];
+            if ($fileSize > 2097152) {
+                throw new FileUploadException();
+            }
             $user = $session->get("user");
             if (!$user) {
                 throw new UserNotFoundException();

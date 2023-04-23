@@ -231,7 +231,10 @@
         "action": "ProfileView",
         "method": "GET",
         "param": [],
-        "manager": []
+        "manager": [
+            "UserManager",
+            "StudioManager"
+        ]
     },
     {
         "path": "/studio",
@@ -276,7 +279,8 @@
             "token"
         ],
         "manager": [
-            "StudioManager"
+            "StudioManager",
+            "UserManager"
         ]
     },
     {

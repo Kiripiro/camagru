@@ -233,7 +233,8 @@
         "param": [],
         "manager": [
             "UserManager",
-            "StudioManager"
+            "StudioManager",
+            "CommentManager"
         ]
     },
     {
@@ -281,6 +282,20 @@
         "manager": [
             "StudioManager",
             "UserManager"
+        ]
+    },
+    {
+        "path": "/add-comment",
+        "controller": "Profile",
+        "action": "AddComment",
+        "method": "POST",
+        "param": [
+            "pictureId",
+            "comment"
+        ],
+        "manager": [
+            "UserManager",
+            "CommentManager"
         ]
     },
     {

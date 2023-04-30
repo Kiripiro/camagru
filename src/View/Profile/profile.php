@@ -71,6 +71,7 @@
                             <?php if (isset($posts) && !empty($posts)) {
                                 $i = 0;
                                 foreach ($posts as $post) {
+                                    // var_dump($post);
                                     $i++;
                                     $filename = "Media/posts/" . $post["path"] . ".png";
                                     if (file_exists($filename)) {
@@ -115,9 +116,37 @@
                                                         </div>
                                                     </div>
                                                     <div id="comments_' . $i . '" class="comments is-hidden">
-                                                        <button class="button" onclick="hideComments(' . $i . ')">
-                                                           <i class="fa-solid fa-arrow-left" ></i>
-                                                        </button>
+                                                        <div class="container">
+                                                            <div class="columns">
+                                                                <div class="column">
+                                                                    <label class="label is-pulled-left">Commentaires</label>
+                                                                </div>
+                                                                <div class="column is-2">
+                                                                    <button class="button is-pulled-right" onclick="hideComments(' . $i . ')">
+                                                                        <i class="fa-solid fa-times"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="container">
+                                                            <form action="/add-comment" method="POST">
+                                                                <div class="columns">
+                                                                    <div class="column">
+                                                                        <div class="field">
+                                                                            <div class="control">
+                                                                                <input type="hidden" name="pictureId" value="' . $post["id"] . '" />
+                                                                                <input id="comment_' . $i . '" class="input" name="comment" type="text" placeholder="Commentaire">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="column is-2">
+                                                                        <button class="button is-fullwidth" type="submit">
+                                                                            <i class="fa-solid fa-plus"></i>
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             ';
@@ -128,7 +157,6 @@
                                 echo 'Aucune photo';
                             }
                             ?>
-                        </div>
                     </section>
                 </div>
             </div>

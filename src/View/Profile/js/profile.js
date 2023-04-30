@@ -6,6 +6,7 @@ const showComments = (index) => {
 }
 
 const hideComments = (index) => {
+    console.log('hideComments');
     const post = document.getElementById(`post_${index}`);
     const comments = document.getElementById(`comments_${index}`);
     post.classList.remove('is-hidden');

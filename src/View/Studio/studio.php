@@ -17,21 +17,19 @@ include_once('Utils/snackbar.php');
                         </div>
                         <div class="field is-grouped is-flex is-justify-content-center">
                             <div id="use-image" class="control is-hidden">
-                                <button class="button is-link is-fullwidth is-size-7-mobile"
-                                    onclick="useImage()">Utiliser la
+                                <button class="button is-link is-mobile-responsive" onclick="useImage()">Utiliser la
                                     photo</button>
                             </div>
                             <div class="control take-snapshot">
-                                <button id="take-snapshot" class="button is-primary is-fullwidth is-size-7-mobile"
-                                    onclick="takeSnapshot()">Prendre
-                                    la photo</button>
+                                <button id="take-snapshot" class="button is-primary is-mobile-responsive"
+                                    onclick="takeSnapshot()">Prendre la photo</button>
                             </div>
                             <div class="control">
-                                <button id="delete-filter" class="button is-warning is-fullwidth is-size-7-mobile"
+                                <button id="delete-filter" class="button is-warning is-mobile-responsive"
                                     onclick="deleteFilter()" disabled>Supprimer le filtre</button>
                             </div>
                             <div class="control">
-                                <button id="delete-photo" class="button is-danger is-fullwidth is-size-7-mobile"
+                                <button id="delete-photo" class="button is-danger is-mobile-responsive"
                                     onclick="deletePhoto()" disabled>Supprimer la photo</button>
                             </div>
                         </div>

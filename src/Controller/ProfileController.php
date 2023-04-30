@@ -16,6 +16,7 @@ class ProfileController extends BaseController
         $posts = array();
         foreach ($allUsersPosts as $post) {
             $posts[] = array(
+                "id" => $post->getId(),
                 "path" => $post->getPath(),
                 "description" => $post->getDescription(),
                 "likes" => $post->getLikes()
@@ -25,5 +26,22 @@ class ProfileController extends BaseController
         $this->addParam("nb_posts", count($posts));
         $this->addParam('navbar', 'View/Navbar/navbar.php');
         $this->view("profile");
+    }
+
+    public function AddComment($postId, $comment)
+    {
+        $session = new Session();
+        $user = $session->get("user");
+        if (!$user) {
+            throw new UserNotFoundException();
+        }
+        if ($this->CommentManager->addComment($comment, $postId, $user->getId())) {
+            $success = "Commentaire ajouté";
+            $session->set("success_message", $success);
+        } else {
+            $error = "Une erreur est survenue. Veuillez réessayer.";
+            $session->set('error_message', $error);
+        }
+        $this->redirect("/profile");
     }
 }

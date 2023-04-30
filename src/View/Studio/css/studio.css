@@ -40,3 +40,23 @@
 #video {
     width: 100%;
 }
+
+/* Bouttons studio-container */
+@media (max-width: 280px) {
+    .is-mobile-responsive {
+        font-size: .40rem !important;
+    }
+}
+
+@media (min-width: 281px) and (max-width: 560px) {
+    .is-mobile-responsive {
+        font-size: .55rem !important;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+
+    .is-mobile-responsive {
+        font-size: .75rem !important;
+    }
+}

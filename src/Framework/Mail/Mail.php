@@ -47,4 +47,17 @@ class Mail
         $this->_mail->smtpClose();
         return true;
     }
+
+    public function sendNewCommentMail($firstname, $lastname, $email, $pictureId)
+    {
+        $this->_mail->Subject = 'Camagru - Nouveau commentaire';
+        $this->_mail->setFrom("atourret42@gmail.com");
+        $this->_mail->Body = "Bonjour $firstname $lastname,\nUn nouveau commentaire a été posté sur l'une de vos photos.";
+        $this->_mail->addAddress($email);
+        if (!$this->_mail->send()) {
+            throw new MailHasNotBeenSentException();
+        }
+        $this->_mail->smtpClose();
+        return true;
+    }
 }

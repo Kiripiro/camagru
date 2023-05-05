@@ -1,3 +1,6 @@
+<?
+include_once('Utils/snackbar.php');
+?>
 <div class="navbar-spacer"></div>
 <section class="profile">
     <div class="container">
@@ -71,7 +74,6 @@
                             <?php if (isset($posts) && !empty($posts)) {
                                 $i = 0;
                                 foreach ($posts as $post) {
-                                    // var_dump($post);
                                     $i++;
                                     $filename = "Media/posts/" . $post["path"] . ".png";
                                     if (file_exists($filename)) {
@@ -86,18 +88,23 @@
                                                         <div class="control">
                                                             <div class="level is-mobile">
                                                                 <div class="level-left mt-2">
-                                                                    <button class="button mt-2 mr-1">
-                                                                        <i class="fa-solid fa-heart is-hidden"></i>
-                                                                        <i class="fa-regular fa-heart"></i>
-                                                                    </button>
+                                                                    <form action="/like" method="post">
+                                                                        <button class="button mt-2 mr-1" action="submit">
+                                                                            <i class="fa-regular fa-heart"></i>
+                                                                        </button>
+                                                                        <input type="hidden" name="pictureId" value="' . $post["id"] . '">
+                                                                    </form>
                                                                     <button class="button mt-2" onclick="showComments(' . $i . ')">
                                                                         <i class="fa-regular fa-comment"></i>
                                                                     </button>
                                                                 </div>
                                                                 <div class="level-right mt-2">
-                                                                    <button class="button trash" onclick="deletePostProfile(' . $i . ', \'' . $post["path"] . '\')">
-                                                                        <i class="fa-solid fa-trash"></i>
-                                                                    </button>
+                                                                    <form action="/profile-delete-post" method="post">
+                                                                        <button class="button trash" action="submit">
+                                                                            <i class="fa-solid fa-trash"></i>
+                                                                        </button>
+                                                                        <input type="hidden" name="pictureId" value="' . $post["id"] . '">
+                                                                    </form>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -119,7 +126,7 @@
                                                         <div class="container">
                                                             <div class="columns">
                                                                 <div class="column">
-                                                                    <label class="label is-pulled-left">Commentaires</label>
+                                                                    <label class="label is-pulled-left mt-3">Commentaires</label>
                                                                 </div>
                                                                 <div class="column is-2">
                                                                     <button class="button is-pulled-right" onclick="hideComments(' . $i . ')">
@@ -127,6 +134,25 @@
                                                                     </button>
                                                                 </div>
                                                             </div>
+                                                        </div>
+                                                        <hr>
+                                                        <div class="container">
+                                            ';
+                                        foreach ($post["comments"] as $comment) {
+                                            echo '
+                                                    <div class="columns">
+                                                        <div class="column is-2">
+                                                            <label class="label">' . $comment->getUserLogin() . ':</label>
+                                                        </div>
+                                                        <div class="column is-8">
+                                                            <p class="text">' . $comment->getComment() . '</p>
+                                                        </div>
+                                                    </div>
+                                                    <hr>
+                                                ';
+                                        }
+                                        ;
+                                        echo ' 
                                                         </div>
                                                         <div class="container">
                                                             <form action="/add-comment" method="POST">
@@ -150,8 +176,7 @@
                                                     </div>
                                                 </div>
                                             ';
-                                    } else
-                                        echo 'Aucune photo';
+                                    }
                                 }
                             } else {
                                 echo 'Aucune photo';

@@ -14,6 +14,14 @@ class StudioManager extends BaseManager
         return $req->fetch();
     }
 
+    public function postExistsById($id)
+    {
+        $req = $this->_bdd->prepare("SELECT * FROM pictures WHERE id=?");
+        $req->execute(array($id));
+        $req->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "Pictures");
+        return $req->fetch();
+    }
+
     public function addPost($pictureID, $userId, $description)
     {
         try {
@@ -34,8 +42,16 @@ class StudioManager extends BaseManager
 
     public function getUsersPost($userId, $pictureID)
     {
-        $req = $this->_bdd->prepare("SELECT * FROM pictures WHERE userId=? AND path=?");
+        $req = $this->_bdd->prepare("SELECT * FROM pictures WHERE userId=? AND id=?");
         $req->execute(array($userId, $pictureID));
+        $req->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "Pictures");
+        return $req->fetch();
+    }
+
+    public function getUsersPostByPath($userId, $picturePath)
+    {
+        $req = $this->_bdd->prepare("SELECT * FROM pictures WHERE userId=? AND path=?");
+        $req->execute(array($userId, $picturePath));
         $req->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "Pictures");
         return $req->fetch();
     }
@@ -48,14 +64,22 @@ class StudioManager extends BaseManager
         return $req->fetchAll();
     }
 
-    public function deletePost($pictureID)
+    public function getAllPosts()
+    {
+        $req = $this->_bdd->prepare("SELECT * FROM pictures ORDER BY id DESC");
+        $req->execute();
+        $req->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "Pictures");
+        return $req->fetchAll();
+    }
+
+    public function deletePost($postId)
     {
         try {
-            if (!$this->postExists($pictureID)) {
+            if (!$this->postExistsById($postId)) {
                 throw new Exception("Post doesn't exists");
             }
-            $req = $this->_bdd->prepare("DELETE FROM pictures WHERE path=?");
-            $req->execute(array($pictureID));
+            $req = $this->_bdd->prepare("DELETE FROM pictures WHERE id=?");
+            $req->execute(array($postId));
             return true;
         } catch (Exception $e) {
             echo $e->getMessage();

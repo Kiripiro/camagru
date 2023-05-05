@@ -1,12 +1,9 @@
 <?php
-class Comments
+class Likes
 {
     private $id;
     private $user_id;
     private $picture_id;
-    private $comment;
-    private $date;
-    private $user_login;
 
     public function __construct()
     {
@@ -26,18 +23,6 @@ class Comments
     {
         return $this->picture_id;
     }
-    public function getComment()
-    {
-        return $this->comment;
-    }
-    public function getDate()
-    {
-        return $this->date;
-    }
-    public function getUserLogin()
-    {
-        return $this->user_login;
-    }
 
     public function setId($id)
     {
@@ -50,18 +35,5 @@ class Comments
     public function setPictureId($picture_id)
     {
         $this->picture_id = $picture_id;
-    }
-    public function setComment($comment)
-    {
-        $this->comment = $comment;
-    }
-    public function setDate($date)
-    {
-        $this->date = $date;
-    }
-
-    public function setUserLogin($login)
-    {
-        $this->user_login = $login;
     }
 }

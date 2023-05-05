@@ -15,15 +15,23 @@ class ProfileController extends BaseController
         $allUsersPosts = $this->StudioManager->getAllUsersPosts($user->getId());
         $posts = array();
         foreach ($allUsersPosts as $post) {
+            $comments = $this->CommentsManager->getPostComments($post->getId());
+            foreach ($comments as $comment) {
+                $comment->setUserLogin($this->UserManager->getById($comment->getUser_id())->getLogin());
+            }
+            $likes = $this->LikesManager->getPostLikes($post->getId());
             $posts[] = array(
                 "id" => $post->getId(),
                 "path" => $post->getPath(),
                 "description" => $post->getDescription(),
-                "likes" => $post->getLikes()
+                "likes" => count($likes),
+                "comments" => $comments
             );
         }
         $this->addParam("posts", $posts);
         $this->addParam("nb_posts", count($posts));
+        $this->addParam("success_message", $session->get('success_message'));
+        $this->addParam("error_message", $session->get('error_message'));
         $this->addParam('navbar', 'View/Navbar/navbar.php');
         $this->view("profile");
     }
@@ -35,8 +43,61 @@ class ProfileController extends BaseController
         if (!$user) {
             throw new UserNotFoundException();
         }
-        if ($this->CommentManager->addComment($comment, $postId, $user->getId())) {
+        if ($this->StudioManager->postExistsById($postId) == false) {
+            throw new PostNotFoundException();
+        }
+        if ($this->CommentsManager->addComment($comment, $postId, $user->getId())) {
             $success = "Commentaire ajouté";
+            $session->set("success_message", $success);
+        } else {
+            $error = "Une erreur est survenue. Veuillez réessayer.";
+            $session->set('error_message', $error);
+        }
+        $this->redirect("/profile");
+    }
+
+    public function AddLike($postId)
+    {
+        $session = new Session();
+        $user = $session->get("user");
+        if (!$user) {
+            throw new UserNotFoundException();
+        }
+        if ($this->StudioManager->postExistsById($postId) == false) {
+            throw new PostNotFoundException();
+        }
+        $return = $this->LikesManager->addLike($postId, $user->getId());
+        if ($return == "Like removed") {
+            $success = "Like retiré";
+            $session->set("success_message", $success);
+        } else if ($return == "Like added") {
+            $success = "Like ajouté";
+            $session->set("success_message", $success);
+        } else {
+            $error = "Une erreur est survenue. Veuillez réessayer.";
+            $session->set('error_message', $error);
+        }
+        $this->redirect("/profile");
+    }
+
+    public function ProfileDeletePost($pictureID)
+    {
+        if (empty($pictureID)) {
+            $this->redirect("/profile");
+        }
+        $session = new Session();
+        $user = $session->get('user');
+        if ($user == null) {
+            $this->redirect("/login");
+        }
+        $post = $this->StudioManager->getUsersPost($user->getId(), $pictureID);
+        if ($post) {
+            $this->CommentsManager->deleteComments($post->getId());
+            $this->LikesManager->deleteLikes($post->getId());
+            $this->StudioManager->deletePost($post->getId());
+            $session->removeFromArray('posts', $post->getPath());
+            unlink("Media/posts/" . $post->getPath() . ".png");
+            $success = "Post supprimé";
             $session->set("success_message", $success);
         } else {
             $error = "Une erreur est survenue. Veuillez réessayer.";

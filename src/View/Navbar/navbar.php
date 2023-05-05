@@ -16,7 +16,7 @@
     </div>
     <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
-            <a class="navbar-item">
+            <a href="/gallery" class="navbar-item">
                 <i class="icon is-medium fas fa-images"></i>
             </a>
             <?php if (isset($user)) { ?>

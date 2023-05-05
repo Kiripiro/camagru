@@ -1,5 +1,5 @@
 <?php
-class CommentManager extends BaseManager
+class CommentsManager extends BaseManager
 {
     public function __construct($datasource)
     {
@@ -25,10 +25,28 @@ class CommentManager extends BaseManager
         }
     }
 
-    function getPostComments($picture_id)
+    public function getPostComments($picture_id)
     {
         try {
+            $req = $this->_bdd->prepare("SELECT * FROM comments WHERE picture_id=?");
+            $req->execute(array($picture_id));
+            $req->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "Comments");
+            return $req->fetchAll();
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return false;
+        }
+    }
 
+    public function deleteComments($pictureId)
+    {
+        try {
+            $req = $this->_bdd->prepare("DELETE FROM comments WHERE picture_id=?");
+            $req->execute(array($pictureId));
+            return true;
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return false;
         }
     }
 }

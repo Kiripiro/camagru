@@ -18,6 +18,14 @@ class userManager extends BaseManager
         $this->create($userObj, ["firstname", "lastname", "login", "email", "password", "verificationToken"]);
     }
 
+    public function getById($id)
+    {
+        $req = $this->_bdd->prepare("SELECT * FROM users WHERE id=?");
+        $req->execute(array($id));
+        $req->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "User");
+        return $req->fetch();
+    }
+
     public function getByEmail($email)
     {
         $req = $this->_bdd->prepare("SELECT * FROM users WHERE email=?");
@@ -139,17 +147,14 @@ class userManager extends BaseManager
 
     public function verifyToken($userId, $token)
     {
-        //check if the token sent is the same as the one in the database and if the token is not expired
         try {
             $req = $this->_bdd->prepare("SELECT * FROM users WHERE id=? AND token=? AND token_exp > NOW()");
             $req->execute(array($userId, $token));
             $req->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "User");
             $user = $req->fetch();
-            if ($user) {
-                return true;
-            } else {
+            if (!$user)
                 return false;
-            }
+            return true;
         } catch (Exception $e) {
             echo $e->getMessage();
             return false;

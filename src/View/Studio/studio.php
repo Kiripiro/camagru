@@ -106,7 +106,7 @@ include_once('Utils/snackbar.php');
                                                     <figure class="image is-4by3">
                                                         <img src="/Media/posts/' . $post . '.png" alt="Image" data-post-id="' . $post . '"/>
                                                     </figure>'
-                                                . '<div class="field">
+                                                . '<div class="field mb-2">
                                                         <div class="control">
                                                             <button class="button is-danger is-fullwidth" onclick="deletePost(this)">Supprimer</button>
                                                         </div>

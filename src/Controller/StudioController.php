@@ -155,11 +155,13 @@ class StudioController extends BaseController
             header('Content-Type: application/json');
             echo json_encode($response);
         }
-        $post = $this->StudioManager->getUsersPost($user->getId(), $pictureID);
+        $post = $this->StudioManager->getUsersPostByPath($user->getId(), $pictureID);
         if ($post) {
-            $this->StudioManager->deletePost($pictureID);
-            $session->removeFromArray('posts', $post->getPath());
+            $this->CommentsManager->deleteComments($post->getId());
+            $this->LikesManager->deleteLikes($post->getId());
+            $this->StudioManager->deletePost($post->getId());
             unlink("Media/posts/" . $post->getPath() . ".png");
+            $session->removeFromArray('posts', $post->getPath());
             $response = array(
                 "success" => true
             );

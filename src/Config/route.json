@@ -234,7 +234,8 @@
         "manager": [
             "UserManager",
             "StudioManager",
-            "CommentManager"
+            "CommentsManager",
+            "LikesManager"
         ]
     },
     {
@@ -281,7 +282,24 @@
         ],
         "manager": [
             "StudioManager",
+            "CommentsManager",
+            "LikesManager",
             "UserManager"
+        ]
+    },
+    {
+        "path": "/profile-delete-post",
+        "controller": "Profile",
+        "action": "ProfileDeletePost",
+        "method": "POST",
+        "param": [
+            "pictureId"
+        ],
+        "manager": [
+            "UserManager",
+            "LikesManager",
+            "StudioManager",
+            "CommentsManager"
         ]
     },
     {
@@ -295,7 +313,49 @@
         ],
         "manager": [
             "UserManager",
-            "CommentManager"
+            "CommentsManager",
+            "StudioManager"
+        ]
+    },
+    {
+        "path": "/like",
+        "controller": "Profile",
+        "action": "AddLike",
+        "method": "POST",
+        "param": [
+            "pictureId"
+        ],
+        "manager": [
+            "UserManager",
+            "StudioManager",
+            "LikesManager"
+        ]
+    },
+    {
+        "path": "/like-gallery",
+        "controller": "Gallery",
+        "action": "AddLike",
+        "method": "POST",
+        "param": [
+            "post_id"
+        ],
+        "manager": [
+            "UserManager",
+            "StudioManager",
+            "LikesManager"
+        ]
+    },
+    {
+        "path": "/gallery",
+        "controller": "Gallery",
+        "action": "GalleryView",
+        "method": "GET",
+        "param": [],
+        "manager": [
+            "StudioManager",
+            "LikesManager",
+            "CommentsManager",
+            "UserManager"
         ]
     },
     {

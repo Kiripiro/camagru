@@ -67,7 +67,10 @@ class UserController extends BaseController
 
     public function Verify($token)
     {
-        $user = $this->UserManager->getBy("verificationToken", $token);
+        if (empty($token)) {
+            throw new EmptyFieldsException("token");
+        }
+        $user = $this->UserManager->getBy("verificationToken", $token["token"]);
         if (!$user) {
             throw new UserNotFoundException();
         } else if ($user->getActive()) {
@@ -397,5 +400,47 @@ class UserController extends BaseController
             $session->set('error_message', $error);
         }
         $this->redirect("/settings");
+    }
+
+    public function SearchUser($token, $userLogin)
+    {
+        $session = new Session();
+        $user = $session->get("user");
+        if (!$user) {
+            throw new UserNotFoundException();
+        }
+        $userExists = $this->UserManager->getById($user->getId());
+        if (!$userExists) {
+            throw new UserNotFoundException();
+        }
+        if ($token == $userExists->getToken()) {
+            $user = $this->UserManager->getByLogin($userLogin);
+            if (!$user) {
+                $response = array(
+                    "success" => false,
+                    "error" => "L'utilisateur n'existe pas."
+                );
+
+                header('Content-Type: application/json');
+                echo json_encode($response);
+                return;
+            }
+            $response = array(
+                "success" => true,
+            );
+
+            header('Content-Type: application/json');
+            echo json_encode($response);
+            return;
+        } else {
+            $response = array(
+                "success" => false,
+                "error" => "Vous n'êtes pas autorisé à effectuer cette action."
+            );
+
+            header('Content-Type: application/json');
+            echo json_encode($response);
+            return;
+        }
     }
 }

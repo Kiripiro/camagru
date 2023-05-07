@@ -25,6 +25,7 @@ class GalleryController extends BaseController
                 "date" => $post->getDate(),
                 "likes" => count($likes),
                 "comments" => $comments,
+                "liked" => ($user) ? $this->LikesManager->likeExists($post->getId(), $user->getId()) : null,
                 "user_avatar" => $postUser->getAvatar(),
                 "user_login" => $postUser->getLogin(),
                 "user_firstname" => $postUser->getFirstname(),

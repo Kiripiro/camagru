@@ -25,6 +25,7 @@ class ProfileController extends BaseController
                 "path" => $post->getPath(),
                 "description" => $post->getDescription(),
                 "likes" => count($likes),
+                "liked" => $this->LikesManager->likeExists($post->getId(), $user->getId()),
                 "comments" => $comments
             );
         }
@@ -36,7 +37,48 @@ class ProfileController extends BaseController
         $this->view("profile");
     }
 
-    public function AddComment($postId, $comment)
+    public function ProfileUserView($userId)
+    {
+        $session = new Session();
+        $user = $session->get("user");
+        if (!$user) {
+            throw new UserNotFoundException();
+        }
+        $this->addParam('user', $user);
+        $this->addParam("title", "Profile");
+        $this->addParam("description", "Profile");
+        $this->addParam('session', $session);
+        $userProfile = $this->UserManager->getBy("login", $userId["login"]);
+        if (!$userProfile) {
+            throw new UserNotFoundException();
+        }
+        $allUsersPosts = $this->StudioManager->getAllUsersPosts($userProfile->getId());
+        $posts = array();
+        foreach ($allUsersPosts as $post) {
+            $comments = $this->CommentsManager->getPostComments($post->getId());
+            foreach ($comments as $comment) {
+                $comment->setUserLogin($this->UserManager->getById($comment->getUser_id())->getLogin());
+            }
+            $likes = $this->LikesManager->getPostLikes($post->getId());
+            $posts[] = array(
+                "id" => $post->getId(),
+                "path" => $post->getPath(),
+                "description" => $post->getDescription(),
+                "likes" => count($likes),
+                "liked" => $this->LikesManager->likeExists($post->getId(), $user->getId()),
+                "comments" => $comments
+            );
+        }
+        $this->addParam("posts", $posts);
+        $this->addParam("nb_posts", count($posts));
+        $this->addParam("success_message", $session->get('success_message'));
+        $this->addParam("error_message", $session->get('error_message'));
+        $this->addParam('navbar', 'View/Navbar/navbar.php');
+        $this->addParam('userProfile', $userProfile);
+        $this->view("usersProfile");
+    }
+
+    public function AddComment($postId, $comment, $userLogin = null)
     {
         $session = new Session();
         $user = $session->get("user");
@@ -68,10 +110,13 @@ class ProfileController extends BaseController
             $error = "Une erreur est survenue. Veuillez réessayer.";
             $session->set('error_message', $error);
         }
-        $this->redirect("/profile");
+        if ($userLogin == null)
+            $this->redirect("/profile");
+        else
+            $this->redirect("/userProfile?login=" . $userLogin);
     }
 
-    public function AddLike($postId)
+    public function AddLike($postId, $userLogin = null)
     {
         $session = new Session();
         $user = $session->get("user");
@@ -92,7 +137,10 @@ class ProfileController extends BaseController
             $error = "Une erreur est survenue. Veuillez réessayer.";
             $session->set('error_message', $error);
         }
-        $this->redirect("/profile");
+        if ($userLogin == null)
+            $this->redirect("/profile");
+        else
+            $this->redirect("/userProfile?login=" . $userLogin);
     }
 
     public function ProfileDeletePost($pictureID)

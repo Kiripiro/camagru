@@ -37,3 +37,55 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+function getCookie(cookieName) {
+    var cookies = document.cookie.split(";");
+    for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i].trim();
+        if (cookie.indexOf(cookieName + "=") === 0) {
+            return cookie.substring(cookieName.length + 1);
+        }
+    }
+    return "";
+}
+
+const searchInput = document.getElementById("searchbar");
+const searchInputMobile = document.getElementById("searchbar-mobile");
+const searchUser = () => {
+    const userLogin = searchInput.value || searchInputMobile.value;
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', '/search-user', true);
+    var token = getCookie("token");
+
+    if (token === "") {
+        console.log("No token found");
+        return;
+    }
+    var formData = new FormData();
+    formData.append('userLogin', userLogin);
+    formData.append('token', token);
+
+    xhr.send(formData);
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            const response = JSON.parse(xhr.responseText);
+            if (response.success) {
+                window.location.href = "https://camagru.fr/userProfile?login=" + userLogin;
+            } else {
+                searchInput.value = "";
+                searchInput.classList.add("is-danger") || searchInputMobile.classList.add("is-danger");
+                setTimeout(() => {
+                    searchInput.classList.remove("is-danger") || searchInputMobile.classList.remove("is-danger");
+                }, 2000);
+            }
+        } else {
+            console.log(response.error);
+        }
+    }
+}
+
+function handleKeyPress(event) {
+    if (event.key === "Enter") {
+        searchUser();
+    }
+}

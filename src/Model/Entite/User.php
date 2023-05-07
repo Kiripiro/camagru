@@ -11,6 +11,7 @@ class User
     private $avatar;
     private $notifs;
     private $admin;
+    private $token;
     private $verificationToken;
     private $active;
 
@@ -59,6 +60,10 @@ class User
     {
         return $this->admin;
     }
+    public function getToken()
+    {
+        return $this->token;
+    }
     public function getVerificationToken()
     {
         return $this->verificationToken;
@@ -103,6 +108,10 @@ class User
     public function setNotifs($notifs)
     {
         $this->notifs = $notifs;
+    }
+    public function setToken($token)
+    {
+        $this->token = $token;
     }
     public function setVerificationToken($verificationToken)
     {

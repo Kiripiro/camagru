@@ -25,18 +25,17 @@
                 </a>
             <?php } ?>
             <div class="navbar-item is-hidden-touch">
-                <form action="/search" method="post">
-                    <div class="navbar-searchbar field has-addons">
-                        <div class="control">
-                            <input id="searchbar" class="input" type="text" placeholder="Rechercher...">
-                        </div>
-                        <div class="control">
-                            <button class="button is-hoverable" type="submit">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </div>
+                <div id="test" class="navbar-searchbar field has-addons">
+                    <div class="control">
+                        <input id="searchbar" name="input" class="input" type="text" placeholder="Rechercher..."
+                            onkeypress="handleKeyPress(event)">
                     </div>
-                </form>
+                    <div class="control">
+                        <button class=" button is-hoverable" onclick="searchUser()">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -96,18 +95,17 @@
     <div id="navbar-modal-background" class="modal-background"></div>
     <div class="modal-card">
         <section id="navbar-modal-card-body" class="modal-card-body">
-            <form action="/search" method="post">
-                <div class="field has-addons">
-                    <div class="control is-expanded">
-                        <input class="input" type="text" placeholder="Rechercher...">
-                    </div>
-                    <div class="control">
-                        <button class="button is-hoverable" type="submit">
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </div>
+            <div class="field has-addons">
+                <div class="control is-expanded">
+                    <input id="searchbar-mobile" name="input" class="input" type="text" placeholder="Rechercher..."
+                        onkeypress="handleKeyPress(event)">
                 </div>
-            </form>
+                <div class="control">
+                    <button class=" button is-hoverable" onclick="searchUser()">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
         </section>
     </div>
 </div>

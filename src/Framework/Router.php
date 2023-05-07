@@ -16,8 +16,10 @@ class Router
 
         $urlHasParam = str_contains($url, "?");
         if ($urlHasParam && $method == "GET") {
-            $param = substr($url, strpos($url, "=") + 1);
+            $key = substr($url, strpos($url, "?") + 1, strpos($url, "=") - strpos($url, "?") - 1);
+            $value = substr($url, strpos($url, "=") + 1);
             $url = substr($url, 0, strpos($url, "?"));
+            $param = array($key => $value);
             $httpRequest->addParam($param);
         }
 

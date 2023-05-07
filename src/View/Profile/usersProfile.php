@@ -10,7 +10,7 @@ include_once('Utils/snackbar.php');
                     <section class="profile-info is-light">
                         <div class="box">
                             <div class="box">
-                                <h3 class="title is-4 has-text-black has-text-centered">Mon profil</h3>
+                                <h3 class="title is-4 has-text-black has-text-centered">Profil</h3>
                             </div>
                             <div class="box">
                                 <div class="columns">
@@ -18,9 +18,10 @@ include_once('Utils/snackbar.php');
                                         <div class="profile-avatar-container">
                                             <div class="has-text-centered">
                                                 <figure class="image is-128x128 is-inline-block">
-                                                    <?php if (isset($user) && $user->getAvatar() != null): ?>
+                                                    <?php if (isset($userProfile) && $userProfile->getAvatar() != null): ?>
                                                         <img class="image is-rounded"
-                                                            src="/Media/avatars/<?= $user->getAvatar() ?>" alt="Logo">
+                                                            src="/Media/avatars/<?= $userProfile->getAvatar() ?>"
+                                                            alt="Logo">
                                                     <?php else: ?>
                                                         <img class="image is-rounded" src="/Media/avatars/avatar.png"
                                                             alt="Logo">
@@ -35,19 +36,19 @@ include_once('Utils/snackbar.php');
                                                 <div class="column is-3">
                                                     <label class="label">Login</label>
                                                     <p class="text is-6">
-                                                        <?= $user->getLogin() ?>
+                                                        <?= $userProfile->getLogin() ?>
                                                     </p>
                                                 </div>
                                                 <div class="column is-3">
                                                     <label class="label">Prénom</label>
                                                     <p class="text is-6">
-                                                        <?= $user->getFirstname() ?>
+                                                        <?= $userProfile->getFirstname() ?>
                                                     </p>
                                                 </div>
                                                 <div class="column is-3">
                                                     <label class="label">Nom</label>
                                                     <p class="text is-6">
-                                                        <?= $user->getLastname() ?>
+                                                        <?= $userProfile->getLastname() ?>
                                                     </p>
                                                 </div>
                                                 <div class="column is-3">
@@ -60,7 +61,7 @@ include_once('Utils/snackbar.php');
                                             <div class="profile-infos-bis-container">
                                                 <label class="label">Biographie</label>
                                                 <p class="text is-6">
-                                                    <?= $user->getBiography() ?>
+                                                    <?= $userProfile->getBiography() ?>
                                                 </p>
                                             </div>
                                         </div>
@@ -70,7 +71,7 @@ include_once('Utils/snackbar.php');
                     </section>
                     <section class="profile-posts is-light">
                         <div class="box mt-5">
-                            <h3 class="title is-4 has-text-black has-text-centered">Mes posts</h3>
+                            <h3 class="title is-4 has-text-black has-text-centered">Posts</h3>
                             <?php if (isset($posts) && !empty($posts)) {
                                 $i = 0;
                                 foreach ($posts as $post) {
@@ -97,18 +98,11 @@ include_once('Utils/snackbar.php');
                                         }
                                         echo '</button>
                                                                         <input type="hidden" name="pictureId" value="' . $post["id"] . '">
+                                                                        <input type="hidden" name="userLogin" value="' . $userProfile->getLogin() . '">
                                                                     </form>
                                                                     <button class="button mt-2" onclick="showComments(' . $i . ')">
                                                                         <i class="fa-regular fa-comment"></i>
                                                                     </button>
-                                                                </div>
-                                                                <div class="level-right mt-2">
-                                                                    <form action="/profile-delete-post" method="post">
-                                                                        <button class="button trash" action="submit">
-                                                                            <i class="fa-solid fa-trash"></i>
-                                                                        </button>
-                                                                        <input type="hidden" name="pictureId" value="' . $post["id"] . '">
-                                                                    </form>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -167,6 +161,7 @@ include_once('Utils/snackbar.php');
                                                                         <div class="field">
                                                                             <div class="control">
                                                                                 <input type="hidden" name="pictureId" value="' . $post["id"] . '" />
+                                                                                <input type="hidden" name="userLogin" value="' . $userProfile->getLogin() . '" />
                                                                                 <input id="comment_' . $i . '" class="input" name="comment" type="text" placeholder="Commentaire">
                                                                             </div>
                                                                         </div>

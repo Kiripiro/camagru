@@ -40,9 +40,13 @@ include_once('Utils/snackbar.php');
                                             <div class="level-left">
                                                 <?php if ($user != NULL) {
                                                     echo '<form action="/like-gallery" method="POST">
-                                                    <button class="button mr-2" action="submit">
-                                                        <i class="fa-regular fa-heart"></i>
-                                                    </button>
+                                                    <button class="button mr-2" action="submit">';
+                                                    if ($post['liked']) {
+                                                        echo '<i class="fa-solid fa-heart"></i>';
+                                                    } else {
+                                                        echo '<i class="fa-regular fa-heart"></i>';
+                                                    }
+                                                    echo '</button>
                                                         <input type="hidden" name="post_id" value="' . $post["id"] . '">
                                                 </form>';
                                                 }
@@ -53,7 +57,12 @@ include_once('Utils/snackbar.php');
                                             </div>
                                         </div>
                                         <div class="media-likes-count mb-3">
-                                            <?php echo '<p class="text is-6">' . $post["likes"] . ' Likes' . '</p>'; ?>
+                                            <?php
+                                            if ($post["likes"] < 2)
+                                                echo '<p class="text is-6">' . $post["likes"] . ' Like' . '</p>';
+                                            else
+                                                echo '<p class="text is-6">' . $post["likes"] . ' Likes' . '</p>';
+                                            ?>
                                         </div>
                                     </div>
                                 </div>
@@ -92,10 +101,10 @@ include_once('Utils/snackbar.php');
                                 echo '
                                     <div class="container">
                                         <div class="columns">
-                                            <div class="column">
+                                            <div class="column is-4">
                                                 <label class="label">' . $comment->getUserLogin() . ':</label>
                                             </div>
-                                            <div class="column">
+                                            <div class="column is-6">
                                                 <p class="text">' . $comment->getComment() . '</p>
                                             </div>
                                         </div>

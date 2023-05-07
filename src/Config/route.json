@@ -346,6 +346,21 @@
         ]
     },
     {
+        "path": "/add-comment-gallery",
+        "controller": "Gallery",
+        "action": "AddComment",
+        "method": "POST",
+        "param": [
+            "pictureId",
+            "comment"
+        ],
+        "manager": [
+            "UserManager",
+            "CommentsManager",
+            "StudioManager"
+        ]
+    },
+    {
         "path": "/gallery",
         "controller": "Gallery",
         "action": "GalleryView",

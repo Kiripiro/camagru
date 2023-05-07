@@ -48,7 +48,7 @@ class Mail
         return true;
     }
 
-    public function sendNewCommentMail($firstname, $lastname, $email, $pictureId)
+    public function sendNewCommentMail($firstname, $lastname, $email)
     {
         $this->_mail->Subject = 'Camagru - Nouveau commentaire';
         $this->_mail->setFrom("atourret42@gmail.com");

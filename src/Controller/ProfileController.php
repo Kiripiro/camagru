@@ -40,15 +40,30 @@ class ProfileController extends BaseController
     {
         $session = new Session();
         $user = $session->get("user");
+        if (empty($comment)) {
+            $error = "Veuillez entrer un commentaire.";
+            $session->set('error_message', $error);
+            $this->redirect("/profile");
+        }
         if (!$user) {
             throw new UserNotFoundException();
         }
-        if ($this->StudioManager->postExistsById($postId) == false) {
+        $post = $this->StudioManager->postExistsById($postId);
+        if ($post == false) {
             throw new PostNotFoundException();
         }
+        $userIdPost = $post->getUserId();
+        $userPost = $this->UserManager->getById($userIdPost);
         if ($this->CommentsManager->addComment($comment, $postId, $user->getId())) {
             $success = "Commentaire ajouté";
             $session->set("success_message", $success);
+            if ($userPost->getNotifs() == 1) {
+                $mail = new Mail();
+                if (!$mail->sendNewCommentMail($userPost->getFirstname(), $user->getLastname(), $userPost->getEmail())) {
+                    $error = "Une erreur est survenue. Veuillez réessayer.";
+                    $session->set('error_message', $error);
+                }
+            }
         } else {
             $error = "Une erreur est survenue. Veuillez réessayer.";
             $session->set('error_message', $error);

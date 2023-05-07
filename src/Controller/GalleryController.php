@@ -5,9 +5,6 @@ class GalleryController extends BaseController
     {
         $session = new Session();
         $user = $session->get("user");
-        if (!$user) {
-            throw new UserNotFoundException();
-        }
         $this->addParam('user', $user);
         $this->addParam("title", "Profile");
         $this->addParam("description", "Profile");
@@ -20,6 +17,7 @@ class GalleryController extends BaseController
                 $comment->setUserLogin($this->UserManager->getById($comment->getUser_id())->getLogin());
             }
             $likes = $this->LikesManager->getPostLikes($post->getId());
+            $postUser = $this->UserManager->getById($post->getUserId());
             $posts[] = array(
                 "id" => $post->getId(),
                 "path" => $post->getPath(),
@@ -27,10 +25,10 @@ class GalleryController extends BaseController
                 "date" => $post->getDate(),
                 "likes" => count($likes),
                 "comments" => $comments,
-                "user_avatar" => $this->UserManager->getById($post->getUserId())->getAvatar(),
-                "user_login" => $this->UserManager->getById($post->getUserId())->getLogin(),
-                "user_firstname" => $this->UserManager->getById($post->getUserId())->getFirstname(),
-                "user_lastname" => $this->UserManager->getById($post->getUserId())->getLastname(),
+                "user_avatar" => $postUser->getAvatar(),
+                "user_login" => $postUser->getLogin(),
+                "user_firstname" => $postUser->getFirstname(),
+                "user_lastname" => $postUser->getLastname(),
             );
         }
         $this->addParam("posts", $posts);
@@ -57,6 +55,41 @@ class GalleryController extends BaseController
         } else if ($return == "Like added") {
             $success = "Like ajouté";
             $session->set("success_message", $success);
+        } else {
+            $error = "Une erreur est survenue. Veuillez réessayer.";
+            $session->set('error_message', $error);
+        }
+        $this->redirect("/gallery");
+    }
+
+    public function AddComment($postId, $comment)
+    {
+        $session = new Session();
+        $user = $session->get("user");
+        if (empty($comment)) {
+            $error = "Veuillez entrer un commentaire.";
+            $session->set('error_message', $error);
+            $this->redirect("/gallery");
+        }
+        if (!$user) {
+            throw new UserNotFoundException();
+        }
+        $post = $this->StudioManager->postExistsById($postId);
+        if ($post == false) {
+            throw new PostNotFoundException();
+        }
+        $userIdPost = $post->getUserId();
+        $userPost = $this->UserManager->getById($userIdPost);
+        if ($this->CommentsManager->addComment($comment, $postId, $user->getId())) {
+            $success = "Commentaire ajouté";
+            $session->set("success_message", $success);
+            if ($userPost->getNotifs() == 1) {
+                $mail = new Mail();
+                if (!$mail->sendNewCommentMail($userPost->getFirstname(), $user->getLastname(), $userPost->getEmail())) {
+                    $error = "Une erreur est survenue. Veuillez réessayer.";
+                    $session->set('error_message', $error);
+                }
+            }
         } else {
             $error = "Une erreur est survenue. Veuillez réessayer.";
             $session->set('error_message', $error);

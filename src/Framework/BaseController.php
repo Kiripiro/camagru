@@ -47,6 +47,7 @@ class BaseController
             $cssContent = $this->_fileManager->generateCss();
             $jsContent = $this->_fileManager->generateJs();
             include("View/layout.php");
+            include("View/Footer/footer.php");
         } else {
             throw new ViewNotFoundException();
         }

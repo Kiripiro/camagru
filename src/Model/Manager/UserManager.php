@@ -50,6 +50,14 @@ class userManager extends BaseManager
         return $req->fetch();
     }
 
+    public function getUserSession($login)
+    {
+        $req = $this->_bdd->prepare("SELECT id, firstname, lastname, login, email, biography, avatar, notifs, admin, token, token_exp, verificationToken, active FROM users WHERE login=?");
+        $req->execute(array($login));
+        $req->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "User");
+        return $req->fetch();
+    }
+
     public function setActive($id)
     {
         $req = $this->_bdd->prepare("UPDATE users SET active = 1 WHERE id = ?");

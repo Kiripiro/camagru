@@ -186,7 +186,10 @@
             "password"
         ],
         "manager": [
-            "UserManager"
+            "UserManager",
+            "StudioManager",
+            "CommentsManager",
+            "LikesManager"
         ]
     },
     {

@@ -6,8 +6,8 @@ class GalleryController extends BaseController
         $session = new Session();
         $user = $session->get("user");
         $this->addParam('user', $user);
-        $this->addParam("title", "Profile");
-        $this->addParam("description", "Profile");
+        $this->addParam("title", "Gallery");
+        $this->addParam("description", "Gallery");
         $this->addParam('session', $session);
         $allPosts = $this->StudioManager->getAllPosts();
         $posts = array();
@@ -86,7 +86,7 @@ class GalleryController extends BaseController
             $session->set("success_message", $success);
             if ($userPost->getNotifs() == 1) {
                 $mail = new Mail();
-                if (!$mail->sendNewCommentMail($userPost->getFirstname(), $user->getLastname(), $userPost->getEmail())) {
+                if (!$mail->sendNewCommentMail($userPost->getFirstname(), $userPost->getLastname(), $userPost->getEmail())) {
                     $error = "Une erreur est survenue. Veuillez réessayer.";
                     $session->set('error_message', $error);
                 }

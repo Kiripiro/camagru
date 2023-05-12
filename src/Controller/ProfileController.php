@@ -101,7 +101,7 @@ class ProfileController extends BaseController
             $session->set("success_message", $success);
             if ($userPost->getNotifs() == 1) {
                 $mail = new Mail();
-                if (!$mail->sendNewCommentMail($userPost->getFirstname(), $user->getLastname(), $userPost->getEmail())) {
+                if (!$mail->sendNewCommentMail($userPost->getFirstname(), $userPost->getLastname(), $userPost->getEmail())) {
                     $error = "Une erreur est survenue. Veuillez réessayer.";
                     $session->set('error_message', $error);
                 }

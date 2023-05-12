@@ -12,6 +12,7 @@ class User
     private $notifs;
     private $admin;
     private $token;
+    private $token_exp;
     private $verificationToken;
     private $active;
 
@@ -64,6 +65,10 @@ class User
     {
         return $this->token;
     }
+    public function getTokenExp()
+    {
+        return $this->token_exp;
+    }
     public function getVerificationToken()
     {
         return $this->verificationToken;
@@ -112,6 +117,10 @@ class User
     public function setToken($token)
     {
         $this->token = $token;
+    }
+    public function setTokenExp($token_exp)
+    {
+        $this->token_exp = $token_exp;
     }
     public function setVerificationToken($verificationToken)
     {

@@ -73,4 +73,29 @@ class LikesManager extends BaseManager
             return false;
         }
     }
+
+    public function getById($id)
+    {
+        try {
+            $req = $this->_bdd->prepare("SELECT * FROM likes WHERE id=?");
+            $req->execute(array($id));
+            $req->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "Likes");
+            return $req->fetch();
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return false;
+        }
+    }
+
+    public function deleteByUser($id)
+    {
+        try {
+            $req = $this->_bdd->prepare("DELETE FROM likes WHERE user_id=?");
+            $req->execute(array($id));
+            return true;
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return false;
+        }
+    }
 }

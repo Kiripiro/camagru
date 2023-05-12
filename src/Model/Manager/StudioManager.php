@@ -58,7 +58,7 @@ class StudioManager extends BaseManager
 
     public function getAllUsersPosts($userId)
     {
-        $req = $this->_bdd->prepare("SELECT * FROM pictures WHERE userId=?");
+        $req = $this->_bdd->prepare("SELECT * FROM pictures WHERE userId=? ORDER BY id DESC");
         $req->execute(array($userId));
         $req->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "Pictures");
         return $req->fetchAll();
@@ -80,6 +80,18 @@ class StudioManager extends BaseManager
             }
             $req = $this->_bdd->prepare("DELETE FROM pictures WHERE id=?");
             $req->execute(array($postId));
+            return true;
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return false;
+        }
+    }
+
+    public function deleteByUser($id)
+    {
+        try {
+            $req = $this->_bdd->prepare("DELETE FROM pictures WHERE userId=?");
+            $req->execute(array($id));
             return true;
         } catch (Exception $e) {
             echo $e->getMessage();

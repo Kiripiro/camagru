@@ -70,8 +70,10 @@ const searchUser = () => {
         if (xhr.status === 200) {
             const response = JSON.parse(xhr.responseText);
             if (response.success) {
+                console.log(response);
                 window.location.href = "https://camagru.fr/userProfile?login=" + userLogin;
             } else {
+                console.log(response);
                 searchInput.value = "";
                 searchInput.classList.add("is-danger") || searchInputMobile.classList.add("is-danger");
                 setTimeout(() => {

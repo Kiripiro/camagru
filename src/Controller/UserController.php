@@ -81,7 +81,7 @@ class UserController extends BaseController
         $this->redirect("login");
     }
 
-    public function Authenticate($login, $password)
+    public function authenticate($login, $password)
     {
         if (empty($login) || empty($password)) {
             throw new EmptyFieldsException("login, password");
@@ -94,15 +94,20 @@ class UserController extends BaseController
         } else if (!$user->getActive()) {
             throw new UserNotVerifiedException($user->getFirstname(), $user->getLastname());
         }
-        $token = bin2hex(random_bytes(16));
-        $exp = new DateTime("+1 day");
-        $exp->setTimezone(new DateTimeZone("Europe/Paris"));
-        $token_exp = $exp->format("Y-m-d H:i:s");
-        $exp->add(new DateInterval("PT2H"));
         $session = new Session();
-        $session->set("user", $user);
-        setcookie('token', $token, $exp->getTimestamp(), "/", "", false, false);
-        $this->UserManager->setToken($user->getId(), $token, $token_exp);
+        if (!$user->getToken() || $user->getTokenExp() < date('Y-m-d H:i:s')) {
+            $token = bin2hex(random_bytes(16));
+            $exp = new DateTime("+1 day", new DateTimeZone("Europe/Paris"));
+            $exp->add(new DateInterval("PT2H"));
+            $token_exp = $exp->format("Y-m-d H:i:s");
+            setcookie('token', $token, $exp->getTimestamp(), "/", "", false, false);
+            $this->UserManager->setToken($user->getId(), $token, $token_exp);
+        } else {
+            $exp = new DateTime($user->getTokenExp(), new DateTimeZone("Europe/Paris"));
+            setcookie('token', $user->getToken(), $exp->getTimestamp(), "/", "", false, false);
+        }
+        $userData = $this->UserManager->getUserSession($login);
+        $session->set("user", $userData);
         $this->redirect("/");
     }
 
@@ -287,9 +292,22 @@ class UserController extends BaseController
         if (!$user) {
             throw new UserNotFoundException();
         }
+        $user = $this->UserManager->getById($user->getId());
+        if (!$user) {
+            throw new UserNotFoundException();
+        }
         if (!password_verify($password, $user->getPassword())) {
             throw new WrongPasswordException();
         }
+        if ($this->CommentsManager->getById($user->getId()))
+            $this->CommentsManager->deleteByUser($user->getId());
+
+        if ($this->LikesManager->getById($user->getId()))
+            $this->LikesManager->deleteByUser($user->getId());
+
+        if ($this->StudioManager->getAllUsersPosts($user->getId()))
+            $this->StudioManager->deleteByUser($user->getId());
+
         if ($this->UserManager->delete($user)) {
             $session->destroy();
         } else {

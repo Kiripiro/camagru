@@ -23,20 +23,20 @@
                 <a href="/studio" class="navbar-item">
                     <i class="icon is-medium fas fa-camera-retro"></i>
                 </a>
-            <?php } ?>
-            <div class="navbar-item is-hidden-touch">
-                <div id="test" class="navbar-searchbar field has-addons">
-                    <div class="control">
-                        <input id="searchbar" name="input" class="input" type="text" placeholder="Rechercher..."
-                            onkeypress="handleKeyPress(event)">
-                    </div>
-                    <div class="control">
-                        <button class=" button is-hoverable" onclick="searchUser()">
-                            <i class="fas fa-search"></i>
-                        </button>
+                <div class="navbar-item is-hidden-touch">
+                    <div class="navbar-searchbar field has-addons">
+                        <div class="control">
+                            <input id="searchbar" name="input" class="input" type="text" placeholder="Rechercher..."
+                                onkeypress="handleKeyPress(event)">
+                        </div>
+                        <div class="control">
+                            <button class=" button is-hoverable" onclick="searchUser()">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
+            <?php } ?>
         </div>
 
         <div class="navbar-end">

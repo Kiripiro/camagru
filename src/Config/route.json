@@ -407,6 +407,14 @@
         ]
     },
     {
+        "path": "/NotFound",
+        "controller": "Error",
+        "action": "Show404",
+        "method": "GET",
+        "param": [],
+        "manager": []
+    },
+    {
         "path": "/Error",
         "controller": "Error",
         "action": "Show",

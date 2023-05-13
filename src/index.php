@@ -18,9 +18,17 @@ try {
     $httpRequest->setRoute($router->findRoute($httpRequest, $config->basepath));
     $httpRequest->run($config);
 } catch (Exception $e) {
-    $httpRequest = new HttpRequest("/Error", "GET");
-    $router = new Router();
-    $httpRequest->setRoute($router->findRoute($httpRequest, $config->basepath));
-    $httpRequest->addParam($e);
-    $httpRequest->run($config);
+    if ($e instanceof NoRouteFoundException) {
+        $httpRequest = new HttpRequest("/NotFound", "GET");
+        $router = new Router();
+        $httpRequest->setRoute($router->findRoute($httpRequest, $config->basepath));
+        $httpRequest->addParam($e);
+        $httpRequest->run($config);
+    } else {
+        $httpRequest = new HttpRequest("/Error", "GET");
+        $router = new Router();
+        $httpRequest->setRoute($router->findRoute($httpRequest, $config->basepath));
+        $httpRequest->addParam($e);
+        $httpRequest->run($config);
+    }
 }

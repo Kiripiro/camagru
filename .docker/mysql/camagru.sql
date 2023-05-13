@@ -30,6 +30,7 @@ CREATE TABLE `pictures` (
   PRIMARY KEY (`id`),
   KEY `userId` (`userId`),
   CONSTRAINT `pictures_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`id`)
+  ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `likes` (
@@ -39,8 +40,10 @@ CREATE TABLE `likes` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `picture_id` (`picture_id`),
-  CONSTRAINT `likes_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `likes_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+  ON DELETE CASCADE,
   CONSTRAINT `likes_ibfk_2` FOREIGN KEY (`picture_id`) REFERENCES `pictures` (`id`)
+  ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `comments` (
@@ -52,6 +55,8 @@ CREATE TABLE `comments` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `picture_id` (`picture_id`),
-  CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+  ON DELETE CASCADE,
   CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`picture_id`) REFERENCES `pictures` (`id`)
+  ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -1,0 +1,23 @@
+.hero {
+    height: 100vh !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-direction: column !important;
+}
+
+.title {
+    font-size: 4rem !important;
+    font-weight: bold !important;
+    margin-top: 15rem !important;
+    margin-bottom: 2rem !important;
+}
+
+.subtitle {
+    font-size: 2rem !important;
+    margin-bottom: 1rem !important;
+}
+
+.button {
+    margin-top: 2rem !important;
+}

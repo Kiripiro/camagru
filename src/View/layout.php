@@ -16,7 +16,9 @@
 
 <body>
     <script src="../Js/snackbar.js"></script>
-    <?= $content; ?>
+    <div class="wrapper">
+        <?= $content; ?>
+    </div>
     <?= $jsContent; ?>
     <script src="../Js/layout.js"></script>
 </body>

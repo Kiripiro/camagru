@@ -47,7 +47,7 @@ include_once('Utils/snackbar.php');
                     <div class="filters">
                         <div class="field">
                             <label class="label">Filtres</label>
-                            <div class="filters-container" style="overflow-y: scroll; height: 100vh">
+                            <div class="filters-container" style="overflow-y: scroll; height: 75vh">
                                 <div class="is-one-quarter">
                                     <?php
                                     if (isset($latest_posts))

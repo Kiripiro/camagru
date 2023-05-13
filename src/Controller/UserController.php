@@ -299,15 +299,20 @@ class UserController extends BaseController
         if (!password_verify($password, $user->getPassword())) {
             throw new WrongPasswordException();
         }
-        if ($this->CommentsManager->getById($user->getId()))
-            $this->CommentsManager->deleteByUser($user->getId());
-
-        if ($this->LikesManager->getById($user->getId()))
-            $this->LikesManager->deleteByUser($user->getId());
-
-        if ($this->StudioManager->getAllUsersPosts($user->getId()))
-            $this->StudioManager->deleteByUser($user->getId());
-
+        $posts = $this->StudioManager->getAllUsersPosts($user->getId());
+        foreach ($posts as $post) {
+            if (file_exists("Media/posts/" . $post->getPath() . ".png"))
+                unlink("Media/posts/" . $post->getPath() . ".png");
+            else if (file_exists("Media/posts/" . $post->getPath() . ".jpg"))
+                unlink("Media/posts/" . $post->getPath() . ".jpg");
+            else if (file_exists("Media/posts/" . $post->getPath() . ".jpeg"))
+                unlink("Media/posts/" . $post->getPath() . ".jpeg");
+            else {
+                $error = "Une erreur est survenue. Veuillez réessayer.";
+                $session->set('error_message', $error);
+                return;
+            }
+        }
         if ($this->UserManager->delete($user)) {
             $session->destroy();
         } else {

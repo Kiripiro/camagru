@@ -105,7 +105,9 @@ class StudioController extends BaseController
             }
 
             imagepng($image, $path);
+            http_response_code(200);
             $response = array(
+                "success" => true,
                 "id" => $id,
                 "path" => $path
             );

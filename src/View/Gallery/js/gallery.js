@@ -15,8 +15,8 @@ const hideComments = (index) => {
 
 const redirect = (login, isProfile) => {
     if (isProfile == 1) {
-        window.location.href = `https://camagru.fr/profile`;
+        window.location.href = `/profile`;
     } else {
-        window.location.href = `https://camagru.fr/userProfile?login=${login}`;
+        window.location.href = `/userProfile?login=${login}`;
     }
 }

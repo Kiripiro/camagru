@@ -71,7 +71,7 @@ const searchUser = () => {
             const response = JSON.parse(xhr.responseText);
             if (response.success) {
                 console.log(response);
-                window.location.href = "https://camagru.fr/userProfile?login=" + userLogin;
+                window.location.href = "/userProfile?login=" + userLogin;
             } else {
                 console.log(response);
                 searchInput.value = "";

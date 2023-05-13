@@ -149,10 +149,11 @@ canvas.addEventListener("mousedown", function (event) {
     const offsetX = event.offsetX;
     const offsetY = event.offsetY;
 
-    for (let i = 0; i < filters.length; i++) {
+    for (let i = filters.length - 1; i >= 0; i--) {
         if (offsetX >= filters[i].x && offsetX <= filters[i].x + filters[i].width &&
             offsetY >= filters[i].y && offsetY <= filters[i].y + filters[i].height) {
-            filter = filters[i];
+            filter = filters.splice(i, 1)[0];
+            filters.push(filter);
             isDragging = true;
             isFilterClicked = true;
             prevX = offsetX;
@@ -196,14 +197,15 @@ canvas.addEventListener("mouseup", function (event) {
 
 canvas.addEventListener("touchstart", function (event) {
     event.preventDefault();
-    for (let i = 0; i < filters.length; i++) {
+    for (let i = filters.length - 1; i >= 0; i--) {
         const touch = event.touches[0];
         const rect = canvas.getBoundingClientRect();
         const x = touch.clientX - rect.left;
         const y = touch.clientY - rect.top;
         if (x >= filters[i].x && x <= filters[i].x + filters[i].width &&
             y >= filters[i].y && y <= filters[i].y + filters[i].height) {
-            filter = filters[i];
+            filter = filters.splice(i, 1)[0];
+            filters.push(filter);
             isDragging = true;
             isFilterClicked = true;
             prevX = x;
@@ -354,8 +356,8 @@ const useImage = () => {
     const xhr = new XMLHttpRequest();
     xhr.open('POST', '/studio-preview', true);
     xhr.onload = function () {
-        if (xhr.status === 200) {
-            const response = JSON.parse(xhr.responseText);
+        const response = JSON.parse(xhr.responseText);
+        if (response.success) {
             image.src = response.path;
         } else {
             console.log('Error:', xhr.status);

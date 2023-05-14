@@ -8,20 +8,20 @@
             <i class="fas fa-search"></i>
         </a>
 
-        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar-menu">
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
         </a>
     </div>
-    <div id="navbarBasicExample" class="navbar-menu">
+    <div id="navbar-menu" class="navbar-menu">
         <div class="navbar-start">
             <a href="/gallery" class="navbar-item">
-                <i class="icon is-medium fas fa-images"></i>
+                <i class="icon is-flex is-centered is-medium fas fa-images"></i>
             </a>
             <?php if (isset($user)) { ?>
                 <a href="/studio" class="navbar-item">
-                    <i class="icon is-medium fas fa-camera-retro"></i>
+                    <i class="icon is-flex is-centered is-medium fas fa-camera-retro"></i>
                 </a>
                 <div class="navbar-item is-hidden-touch">
                     <div class="navbar-searchbar field has-addons">

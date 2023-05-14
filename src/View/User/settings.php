@@ -98,135 +98,164 @@
                                 <div class="column is-6">
                                     <div class="field">
                                         <div class="control">
-                                            <input class="input" name="login" type="text" placeholder="Nouveau login">
+                                            <input class="input" name="login" type="text" value="<?php if ($user)
+                                                echo $user->getLogin() ?>">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="column is-3">
+                                        <div class="field">
+                                            <div class="control has-text-centered">
+                                                <button class="button is-primary">Modifier</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="column is-3">
-                                    <div class="field">
-                                        <div class="control has-text-centered">
-                                            <button class="button is-primary">Modifier</button>
+                            </form>
+                            <hr id="email" class="hr">
+                            <h5 class="title is-5 has-text-black">Email</h5>
+                            <form class="form" action="/settings/email" method="post">
+                                <div class="columns is-vcentered">
+                                    <div class="column is-6">
+                                        <div class="field">
+                                            <div class="control">
+                                                <input class="input" name="email" type="email" value="<?php if ($user)
+                                                echo $user->getEmail() ?>">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="column is-3">
+                                        <div class="field">
+                                            <div class="control has-text-centered">
+                                                <button class="button is-primary">Modifier</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
-                        <hr id="email" class="hr">
-                        <h5 class="title is-5 has-text-black">Email</h5>
-                        <form class="form" action="/settings/email" method="post">
+                            </form>
+                            <hr id="biography" class="hr">
+                            <h5 class="title is-5 has-text-black">Biographie</h5>
+                            <form class="form" action="/settings/biography" method="post">
+                                <div class="columns is-vcentered">
+                                    <div class="column is-6">
+                                        <div class="field">
+                                            <div class="control">
+                                                <textarea class="textarea" name="biography" type="text"><?php if ($user)
+                                                echo $user->getBiography() ?></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="column is-3">
+                                        <div class="field">
+                                            <div class="control has-text-centered">
+                                                <button class="button is-primary">Modifier</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <hr id="delete" class="hr">
+                            <h5 class="title is-5 has-text-black">Supprimer</h5>
                             <div class="columns is-vcentered">
                                 <div class="column is-6">
-                                    <div class="field">
-                                        <div class="control">
-                                            <input class="input" name="email" type="email" placeholder="Nouvel email">
-                                        </div>
+                                    <div class="notification">
+                                        Voulez-vous vraiment supprimer votre compte ?<br><br>
+                                        Attention, cette action est <strong class="has-text-danger">irréversible</strong>
+                                        !<br>
+                                        Une fois le compte supprimé, toutes les données seront effacées et ne
+                                        pourront pas être récupérées.
                                     </div>
                                 </div>
                                 <div class="column is-3">
                                     <div class="field">
                                         <div class="control has-text-centered">
-                                            <button class="button is-primary">Modifier</button>
+                                            <button id="delete-button" class="button is-danger">Supprimer</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </form>
-                        <hr id="biography" class="hr">
-                        <h5 class="title is-5 has-text-black">Biographie</h5>
-                        <form class="form" action="/settings/biography" method="post">
-                            <div class="columns is-vcentered">
-                                <div class="column is-6">
-                                    <div class="field">
-                                        <div class="control">
-                                            <textarea class="textarea" name="biography" type="text"
-                                                placeholder="Votre biographie"></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="column is-3">
-                                    <div class="field">
-                                        <div class="control has-text-centered">
-                                            <button class="button is-primary">Modifier</button>
-                                        </div>
-                                    </div>
-                                </div>
+                            <hr class="hr">
+                            <div class="box">
+                                <h3 id="security" class="title is-4 has-text-black has-text-centered">Sécurité</h3>
                             </div>
-                        </form>
-                        <hr id="delete" class="hr">
-                        <h5 class="title is-5 has-text-black">Supprimer</h5>
-                        <div class="columns is-vcentered">
-                            <div class="column is-6">
-                                <div class="notification">
-                                    Voulez-vous vraiment supprimer votre compte ?<br><br>
-                                    Attention, cette action est <strong class="has-text-danger">irréversible</strong>
-                                    !<br>
-                                    Une fois le compte supprimé, toutes les données seront effacées et ne
-                                    pourront pas être récupérées.
+                            <hr id="update-password" class="hr">
+                            <h5 class="title is-5 has-text-black">Modifier le mot de passe</h5>
+                            <form class="form" action="/settings/update-password" method="post">
+                                <div class="columns is-vcentered">
+                                    <div class="column is-6">
+                                        <div class="field">
+                                            <div class="control">
+                                                <div class="columns is-mobile">
+                                                    <div class="column is-10">
+                                                        <input class="input is-normal" type="password" name="password"
+                                                            placeholder="Mot de passe actuel">
+                                                    </div>
+                                                    <div class="column is-1 has-text-centered">
+                                                        <span class="icon is-small is-right toggle-password mt-3">
+                                                            <i class="fa-solid fa-eye"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <div class="control">
+                                                <div class="columns is-mobile">
+                                                    <div class="column is-10">
+                                                        <input class="input is-normal" type="password" name="newPassword"
+                                                            placeholder="Nouveau mot de passe">
+                                                    </div>
+                                                    <div class="column is-1 has-text-centered">
+                                                        <span class="icon is-small is-right toggle-password mt-3">
+                                                            <i class="fa-solid fa-eye"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <div class="control">
+                                                <div class="columns is-mobile">
+                                                    <div class="column is-10">
+                                                        <input class="input is-normal" type="password"
+                                                            name="confirmPassword" placeholder="Confirmez le mot de passe">
+                                                    </div>
+                                                    <div class="column is-1 has-text-centered">
+                                                        <span class="icon is-small is-right toggle-password mt-3">
+                                                            <i class="fa-solid fa-eye"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="column is-3">
+                                        <div class="field">
+                                            <div class="control has-text-centered">
+                                                <button class="button is-primary">Modifier</button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+                            </form>
+                            <hr class="hr">
+                            <div id="notifications" class="box">
+                                <h3 class="title is-4 has-text-black has-text-centered">
+                                    Notifications
+                                </h3>
                             </div>
-                            <div class="column is-3">
-                                <div class="field">
-                                    <div class="control has-text-centered">
-                                        <button id="delete-button" class="button is-danger">Supprimer</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <hr class="hr">
-                        <div class="box">
-                            <h3 id="security" class="title is-4 has-text-black has-text-centered">Sécurité</h3>
-                        </div>
-                        <hr id="update-password" class="hr">
-                        <h5 class="title is-5 has-text-black">Modifier le mot de passe</h5>
-                        <form class="form" action="/settings/update-password" method="post">
-                            <div class="columns is-vcentered">
-                                <div class="column is-6">
-                                    <div class="field">
-                                        <div class="control">
-                                            <input class="input" name="password" type="password"
-                                                placeholder="Ancien mot de passe">
+                            <hr id="email-notifications" class="hr">
+                            <h5 class="title is-5 has-text-black">Recevoir par email</h5>
+                            <form class="form" action="/settings/update-notifications" method="post">
+                                <div class="columns is-vcentered">
+                                    <div class="column is-6">
+                                        <div class="notification">Voulez-vous recevoir un email de notification pour chaque
+                                            nouveau commentaire sur vos photos ?
                                         </div>
                                     </div>
-                                    <div class="field">
-                                        <div class="control">
-                                            <input class="input" name="newPassword" type="password"
-                                                placeholder="Nouveau mot de passe">
-                                        </div>
-                                    </div>
-                                    <div class="field">
-                                        <div class="control">
-                                            <input class="input" name="confirmPassword" type="password"
-                                                placeholder="Confirmez le mot de passe">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="column is-3">
-                                    <div class="field">
-                                        <div class="control has-text-centered">
-                                            <button class="button is-primary">Modifier</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                        <hr class="hr">
-                        <div id="notifications" class="box">
-                            <h3 class="title is-4 has-text-black has-text-centered">
-                                Notifications
-                            </h3>
-                        </div>
-                        <hr id="email-notifications" class="hr">
-                        <h5 class="title is-5 has-text-black">Recevoir par email</h5>
-                        <form class="form" action="/settings/update-notifications" method="post">
-                            <div class="columns is-vcentered">
-                                <div class="column is-6">
-                                    <div class="notification">Voulez-vous recevoir un email de notification pour chaque
-                                        nouveau commentaire sur vos photos ?
-                                    </div>
-                                </div>
-                                <div class="column is-3">
-                                    <div class="field">
-                                        <div class="control has-text-centered">
+                                    <div class="column is-3">
+                                        <div class="field">
+                                            <div class="control has-text-centered">
                                             <?php if ($user->getNotifs() == 0): ?>
                                                 <input type="hidden" name="value" value="activated">
                                                 <button class="button is-primary">Activer</button>

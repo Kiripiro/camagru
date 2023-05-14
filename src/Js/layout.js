@@ -64,4 +64,22 @@ window.onload = function () {
             });
         });
     }
+
+    const togglePasswords = document.querySelectorAll('.toggle-password');
+    const passwords = document.querySelectorAll('input[type="password"]');
+    if (togglePasswords && passwords) {
+        togglePasswords.forEach(function (togglePassword) {
+            togglePassword.addEventListener('click', function () {
+                const passwordField = this.closest('.field');
+                let password = passwordField.querySelector('input[type="password"]');
+                if (!password)
+                    password = passwordField.querySelector('input[type="text"]');
+                const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+                password.setAttribute('type', type);
+                this.querySelector('i').classList.toggle('fa-eye');
+                this.querySelector('i').classList.toggle('fa-eye-slash');
+            });
+        });
+    }
+
 };

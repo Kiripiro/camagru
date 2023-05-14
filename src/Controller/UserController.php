@@ -386,11 +386,11 @@ class UserController extends BaseController
         if (!$userExists) {
             throw new UserNotFoundException();
         }
-        if (!password_verify($password, $user->getPassword())) {
+        if (!password_verify($password, $userExists->getPassword())) {
             throw new WrongPasswordException();
         }
         PasswordValidator::validate($newPassword, $confirmPassword);
-        if ($this->UserManager->updatePassword($user, $newPassword)) {
+        if ($this->UserManager->updatePassword($userExists, $newPassword)) {
             $success = "Votre mot de passe a bien été modifiée.";
             $session->set('success_message', $success);
         } else {

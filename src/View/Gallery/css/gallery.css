@@ -2,3 +2,55 @@
     overflow-y: scroll;
     height: 25vh;
 }
+
+/* Spinner */
+
+.spinner {
+    display: flex;
+    justify-content: center;
+    margin-top: 4vh;
+    height: 100%;
+    width: 100%;
+}
+
+.lds-ring-gallery {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+}
+
+.lds-ring-gallery div {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+    border: 8px solid #00d1b2;
+    border-radius: 50%;
+    animation: lds-ring-gallery 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: #00d1b2 transparent transparent transparent;
+}
+
+.lds-ring-gallery div:nth-child(1) {
+    animation-delay: -0.45s;
+}
+
+.lds-ring-gallery div:nth-child(2) {
+    animation-delay: -0.3s;
+}
+
+.lds-ring-gallery div:nth-child(3) {
+    animation-delay: -0.15s;
+}
+
+@keyframes lds-ring-gallery {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

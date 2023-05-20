@@ -394,6 +394,22 @@
         ]
     },
     {
+        "path": "/galleryLoad",
+        "controller": "Gallery",
+        "action": "InfiniteScrollLoad",
+        "method": "POST",
+        "param": [
+            "token",
+            "offset"
+        ],
+        "manager": [
+            "StudioManager",
+            "LikesManager",
+            "CommentsManager",
+            "UserManager"
+        ]
+    },
+    {
         "path": "/search-user",
         "controller": "User",
         "action": "SearchUser",

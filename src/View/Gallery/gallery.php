@@ -4,12 +4,12 @@ include_once('Utils/snackbar.php');
 <div class="navbar-spacer"></div>
 <section class="gallery-section">
     <div class="gallery container">
-        <div class="columns is-multiline">
+        <div id="gallery" class="columns is-multiline">
             <? if (isset($posts)) { ?>
                 <? $i = 0; ?>
                 <? foreach ($posts as $post) { ?>
                     <? $i++; ?>
-                    <div class="column  is-one-third">
+                    <div class="column is-one-third">
                         <div class="card">
                             <div class="card-image">
                                 <figure class="image is-4by3">
@@ -154,5 +154,14 @@ include_once('Utils/snackbar.php');
             </div>
         <?php } ?>
     <?php } ?>
+    </div>
+    <div id="sentinel" class="spinner">
+        <div class="lds-ring-gallery is-hidden">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
     </div>
 </section>

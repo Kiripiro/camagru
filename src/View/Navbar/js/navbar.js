@@ -53,27 +53,26 @@ const searchInput = document.getElementById("searchbar");
 const searchInputMobile = document.getElementById("searchbar-mobile");
 const searchUser = () => {
     const userLogin = searchInput.value || searchInputMobile.value;
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', '/search-user', true);
     var token = getCookie("token");
 
     if (token === "") {
         console.log("No token found");
         return;
     }
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', '/search-user', true);
     var formData = new FormData();
-    formData.append('userLogin', userLogin);
     formData.append('token', token);
+    formData.append('userLogin', userLogin);
 
     xhr.send(formData);
     xhr.onload = function () {
         if (xhr.status === 200) {
             const response = JSON.parse(xhr.responseText);
             if (response.success) {
-                console.log(response);
                 window.location.href = "/userProfile?login=" + userLogin;
             } else {
-                console.log(response);
                 searchInput.value = "";
                 searchInput.classList.add("is-danger") || searchInputMobile.classList.add("is-danger");
                 setTimeout(() => {

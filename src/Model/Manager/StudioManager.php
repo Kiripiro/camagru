@@ -64,6 +64,14 @@ class StudioManager extends BaseManager
         return $req->fetchAll();
     }
 
+    public function getNbPosts($offset, $limit)
+    {
+        $req = $this->_bdd->prepare("SELECT * FROM pictures ORDER BY id DESC LIMIT $offset, $limit");
+        $req->execute();
+        $req->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "Pictures");
+        return $req->fetchAll();
+    }
+
     public function getAllPosts()
     {
         $req = $this->_bdd->prepare("SELECT * FROM pictures ORDER BY id DESC");

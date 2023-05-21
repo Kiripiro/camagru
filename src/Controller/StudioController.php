@@ -59,7 +59,6 @@ class StudioController extends BaseController
                 exit;
             }
             $filters = json_decode($filters);
-
             foreach ($filters as $filter) {
                 $filterName = $filter->name;
                 $filterImagePath = __DIR__ . "/../Media/filtres/" . $filterName;
@@ -104,7 +103,10 @@ class StudioController extends BaseController
                 $session->set('latest_image_id', $id);
             }
 
-            imagepng($image, $path);
+            $imageResizer = new ImageResizer($path);
+            $imageResizer->resizeImage(800, 800, "crop");
+            $imageResizer->saveImage($path);
+            // imagepng($image, $path);
             http_response_code(200);
             $response = array(
                 "success" => true,
@@ -114,6 +116,9 @@ class StudioController extends BaseController
 
             header('Content-Type: application/json');
             echo json_encode($response);
+        } else {
+            http_response_code(400);
+            echo json_encode(array("error" => "Missing parameters"));
         }
     }
 

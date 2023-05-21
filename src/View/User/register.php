@@ -54,6 +54,21 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="field">
+                                        <div class="control">
+                                            <div class="columns is-mobile">
+                                                <div class="column is-10">
+                                                    <input class="input is-normal" type="password" name="confirmPassword"
+                                                        placeholder="Confirmez le mot de passe">
+                                                </div>
+                                                <div class="column is-1 has-text-centered">
+                                                    <span class="icon is-small is-right toggle-password mt-3">
+                                                        <i class="fa-solid fa-eye"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <button class="button is-block is-info is-normal is-fullwidth">Se connecter</button>
                                 </form>
                                 <hr class="register-hr">

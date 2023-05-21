@@ -12,7 +12,7 @@
                             Un projet simple pour apprendre les bases de PHP et Javascript.<br />
                         </p>
                         <button class="button is-primary is-rounded is-medium is-outlined mt-4"
-                            onclick="window.location.href = 'https://camagru.fr/gallery'">
+                            onclick="window.location.href = '/gallery'">
                             <span>Visiter la galerie</span>
                             <span class="icon is-small">
                                 <i class="fas fa-images"></i>

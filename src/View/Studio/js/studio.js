@@ -357,11 +357,15 @@ const useImage = () => {
     xhr.open('POST', '/studio-preview', true);
     xhr.onload = function () {
         const response = JSON.parse(xhr.responseText);
+        // console.log(xhr.responseText);
         if (response.success) {
             image.src = response.path;
         } else {
             console.log('Error:', xhr.status);
         }
+    };
+    xhr.onerror = function () {
+        console.log('Request error:', xhr.status);
     };
     xhr.responseType = 'text';
     xhr.send(formData);
@@ -380,7 +384,6 @@ function getCookie(cookieName) {
 
 const deletePost = (button) => {
     var postId = button.parentElement.parentElement.parentElement.querySelector('img').getAttribute('data-post-id');
-    console.log('Post ID:', postId);
     const xhr = new XMLHttpRequest();
     xhr.open('POST', '/delete-post', true);
     var token = getCookie("token");

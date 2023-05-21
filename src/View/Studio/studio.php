@@ -103,7 +103,7 @@ include_once('Utils/snackbar.php');
                                         $filename = "Media/posts/" . $post . ".png";
                                         if (file_exists($filename)) {
                                             echo '<div class="control">
-                                                    <figure class="image is-4by3">
+                                                    <figure class="image is-100x100">
                                                         <img src="/Media/posts/' . $post . '.png" alt="Image" data-post-id="' . $post . '"/>
                                                     </figure>'
                                                 . '<div class="field mb-2">
@@ -112,8 +112,7 @@ include_once('Utils/snackbar.php');
                                                         </div>
                                                     </div>
                                                 </div>';
-                                        } else
-                                            echo 'Aucune photo';
+                                        }
                                     }
                                 } else {
                                     echo 'Aucune photo';

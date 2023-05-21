@@ -81,7 +81,7 @@ include_once('Utils/snackbar.php');
                                                 <div id="box_' . $i . '" class="box post mb-2">
                                                     <div id="post_' . $i . '" class="post-container">
                                                         <div class="control">
-                                                            <figure class="image is-4by3">
+                                                            <figure class="image is-50x50">
                                                                 <img src="/Media/posts/' . $post["path"] . '.png" alt="Image" data-post-id="' . $post["path"] . '"/>
                                                             </figure>
                                                         </div>

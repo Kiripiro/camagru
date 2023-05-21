@@ -126,7 +126,7 @@ class imageResizer
         $cropStartY = ($optimalHeight / 2) - ($newHeight / 2);
         $crop = $this->imageResized;
         $this->imageResized = imagecreatetruecolor($newWidth, $newHeight);
-        imagecopyresampled($this->imageResized, $crop, 0, 0, $cropStartX, round($cropStartY), $newWidth, $newHeight, $newWidth, $newHeight);
+        imagecopyresampled($this->imageResized, $crop, 0, 0, round($cropStartX), round($cropStartY), $newWidth, $newHeight, $newWidth, $newHeight);
     }
 
     public function saveImage($savePath, $imageQuality = "100")

@@ -5,10 +5,10 @@ endif
 
 all: start
 
-start:
+start: check_directory
 	docker-compose up -d
 
-restart:
+restart: check_directory
 	docker-compose restart
 
 stop:
@@ -28,7 +28,11 @@ clean:
 
 fclean: clean
 	docker system prune --all --force --volumes
+	rm -rf src/Media/posts/*
 
 re : fclean all
 
 .PHONY: start restart list logs update stop clean fclean re
+
+check_directory:
+	@if [ ! -d "src/Media/posts" ]; then mkdir -p "src/Media/posts"; fi

@@ -12,7 +12,7 @@ include_once('Utils/snackbar.php');
                     <div class="column is-one-third">
                         <div class="card">
                             <div class="card-image">
-                                <figure class="image is-4by3">
+                                <figure class="image is-100x100">
                                     <?php echo '<img src="/Media/posts/' . $post["path"] . '.png">'; ?>
                                 </figure>
                             </div>

@@ -47,42 +47,38 @@ include_once('Utils/snackbar.php');
                     <div class="filters">
                         <div class="field">
                             <label class="label">Filtres</label>
-                            <div class="filters-container" style="overflow-y: scroll; height: 75vh">
-                                <div class="is-one-quarter">
-                                    <?php
-                                    if (isset($latest_posts))
-                                        echo 'oui';
-                                    ?>
+                            <div class="filters-container container" style="overflow-y: scroll; height: 75vh;">
+                                <div class="filter-item">
                                     <figure class="image">
                                         <img class="filter" src="/Media/filtres/issou.png" alt="Image"
                                             onclick="addFilter(this)" />
                                     </figure>
                                 </div>
-                                <div class="is-one-quarter">
+                                <div class="filter-item">
                                     <figure class="image">
                                         <img class="filter" src="/Media/filtres/booba.png" alt="Image"
                                             onclick="addFilter(this)" />
                                     </figure>
                                 </div>
-                                <div class="is-one-quarter">
+                                <div class="filter-item">
                                     <figure class="image">
                                         <img class="filter" src="/Media/filtres/troll.png" alt="Image"
                                             onclick="addFilter(this)" />
                                     </figure>
                                 </div>
-                                <div class="is-one-quarter">
+                                <div class="filter-item">
                                     <figure class="image">
                                         <img class="filter" src="/Media/filtres/doggo.png" alt="Image"
                                             onclick="addFilter(this)" />
                                     </figure>
                                 </div>
-                                <div class="is-one-quarter">
+                                <div class="filter-item">
                                     <figure class="image">
                                         <img class="filter" src="/Media/filtres/kappa.png" alt="Image"
                                             onclick="addFilter(this)" />
                                     </figure>
                                 </div>
-                                <div class="is-one-quarter">
+                                <div class="filter-item">
                                     <figure class="image">
                                         <img class="filter" src="/Media/filtres/monkey.png" alt="Image"
                                             onclick="addFilter(this)" />

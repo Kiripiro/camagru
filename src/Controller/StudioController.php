@@ -106,7 +106,7 @@ class StudioController extends BaseController
             $imageResizer = new ImageResizer($path);
             $imageResizer->resizeImage(800, 800, "crop");
             $imageResizer->saveImage($path);
-            // imagepng($image, $path);
+
             http_response_code(200);
             $response = array(
                 "success" => true,

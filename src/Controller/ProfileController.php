@@ -26,7 +26,8 @@ class ProfileController extends BaseController
                 "description" => $post->getDescription(),
                 "likes" => count($likes),
                 "liked" => $this->LikesManager->likeExists($post->getId(), $user->getId()),
-                "comments" => $comments
+                "comments" => $comments,
+                "comments_count" => count($comments)
             );
         }
         $this->addParam("posts", $posts);
@@ -66,7 +67,8 @@ class ProfileController extends BaseController
                 "description" => $post->getDescription(),
                 "likes" => count($likes),
                 "liked" => $this->LikesManager->likeExists($post->getId(), $user->getId()),
-                "comments" => $comments
+                "comments" => $comments,
+                "comments_count" => count($comments)
             );
         }
         $this->addParam("posts", $posts);

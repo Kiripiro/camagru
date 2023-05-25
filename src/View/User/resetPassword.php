@@ -17,12 +17,6 @@
                             <form class="form" action="reset-password" method="post">
                                 <div class="field">
                                     <div class="control">
-                                        <input class="input is-normal" type="password" name="oldPassword"
-                                            placeholder="Ancien mot de passe" autofocus="">
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <div class="control">
                                         <input class="input is-normal" type="password" name="password"
                                             placeholder="Nouveau mot de passe" autofocus="">
                                     </div>

@@ -107,15 +107,17 @@ include_once('Utils/snackbar.php');
                                                             </div>
                                                         </div>
                                                         <div class="control">
-                                                            <div class="level">
-                                                                <div class="level-left mt-2">';
+                                                                <div class="media-likes-comments-count mt-3">';
                                         if ($post["likes"] < 2)
                                             echo '<p class="text is-6">' . $post["likes"] . ' Like' . '</p>';
                                         else
-                                            echo '<p class="text is-6">' . $post["likes"] . ' Likes' . '</p>';
+                                            echo '<p class="text is-6">' . $post["likes"] . ' Likes' . '</p><';
+                                        if ($post["comments_count"] < 2)
+                                            echo '<p class="text is-6">' . $post["comments_count"] . ' Commentaire' . '</p>';
+                                        else
+                                            echo '<p class="text is-6">' . $post["comments_count"] . ' Commentaires' . '</p>';
                                         echo '</div>
                                                                 
-                                                            </div>
                                                         </div>
                                                         <div class="control">
                                                             <label class="label mt-2">Description</label>

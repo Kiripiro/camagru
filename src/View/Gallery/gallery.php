@@ -71,7 +71,12 @@ include_once('Utils/snackbar.php');
                                             echo '<p class="text is-6">' . $post["likes"] . ' Like' . '</p>';
                                         else
                                             echo '<p class="text is-6">' . $post["likes"] . ' Likes' . '</p>';
+                                        if ($post["comments_count"] < 2)
+                                            echo '<p class="text is-6">' . $post["comments_count"] . ' Comment' . '</p>';
+                                        else
+                                            echo '<p class="text is-6">' . $post["comments_count"] . ' Comments' . '</p>';
                                         ?>
+
                                     </div>
                                 </div>
                             </div>

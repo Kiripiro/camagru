@@ -66,15 +66,6 @@
                         </a>
                     </div>
                 </div>
-                <?php if ($user->getAdmin() == '1') { ?>
-                    <div class="navbar-item">
-                        <div class="buttons">
-                            <a href="/admin" class="button is-primary">
-                                <strong>Admin</strong>
-                            </a>
-                        </div>
-                    </div>
-                <?php } ?>
             <? } else { ?>
                 <div class="navbar-item">
                     <div class="buttons">

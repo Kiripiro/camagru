@@ -26,7 +26,7 @@ class Mail
     {
         $this->_mail->Subject = 'Camagru - Email verification';
         $this->_mail->setFrom("atourret42.camagru@gmail.com");
-        $this->_mail->Body = "Bonjour $firstname $lastname,\nMerci de cliquer sur le lien suivant pour activer votre compte:\nhttps://camagru.fr/verify?token=$verificationToken";
+        $this->_mail->Body = "Bonjour $firstname $lastname,\nMerci de cliquer sur le lien suivant pour activer votre compte:\nhttps://localhost/verify?token=$verificationToken";
         $this->_mail->addAddress($email);
         if (!$this->_mail->send()) {
             throw new MailHasNotBeenSentException();
@@ -37,9 +37,9 @@ class Mail
 
     public function sendResetPasswordMail($firstname, $lastname, $email, $verificationToken)
     {
-        $this->_mail->Subject = 'Camagru - Récupération de mot de passe';
+        $this->_mail->Subject = 'Camagru - Nouveau de mot de passe';
         $this->_mail->setFrom("atourret42.camagru@gmail.com");
-        $this->_mail->Body = "Bonjour $firstname $lastname,\nMerci de cliquer sur le lien suivant pour réinitialiser votre mot de passe:\nhttps://camagru.fr/reset-password?token=$verificationToken";
+        $this->_mail->Body = "Bonjour $firstname $lastname,\nMerci de cliquer sur le lien suivant pour réinitialiser votre mot de passe:\nhttps://localhost/reset-password?token=$verificationToken";
         $this->_mail->addAddress($email);
         if (!$this->_mail->send()) {
             throw new MailHasNotBeenSentException();

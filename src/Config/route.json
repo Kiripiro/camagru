@@ -356,6 +356,7 @@
         "action": "AddLike",
         "method": "POST",
         "param": [
+            "token",
             "post_id"
         ],
         "manager": [
@@ -365,12 +366,13 @@
         ]
     },
     {
-        "path": "/add-comment-gallery",
+        "path": "/comment-gallery",
         "controller": "Gallery",
         "action": "AddComment",
         "method": "POST",
         "param": [
-            "pictureId",
+            "token",
+            "post_id",
             "comment"
         ],
         "manager": [

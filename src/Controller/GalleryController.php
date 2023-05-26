@@ -40,63 +40,147 @@ class GalleryController extends BaseController
         $this->view("gallery");
     }
 
-    public function AddLike($postId)
+    public function AddLike($token, $postId)
     {
         $session = new Session();
         $user = $session->get("user");
+
+        if ($user) {
+            if (!$this->UserManager->verifyToken($user->getId(), $token)) {
+                $response = array(
+                    "success" => false,
+                    "message" => "Token invalide"
+                );
+                http_response_code(401);
+                header('Content-Type: application/json');
+                echo json_encode($response);
+                exit;
+            }
+        } else {
+            $response = array(
+                "success" => false,
+                "message" => "User not logged in"
+            );
+            http_response_code(401);
+            header('Content-Type: application/json');
+            echo json_encode($response);
+            exit;
+        }
         if (!$user) {
-            throw new UserNotFoundException();
+            http_response_code(401);
+            header('Content-Type: application/json');
+            echo json_encode(array("error" => "User not logged in"));
+            exit;
         }
         if ($this->StudioManager->postExistsById($postId) == false) {
-            throw new PostNotFoundException();
+            http_response_code(404);
+            header('Content-Type: application/json');
+            echo json_encode(array("error" => "Post not found"));
+            exit;
         }
         $return = $this->LikesManager->addLike($postId, $user->getId());
-        if ($return == "Like removed") {
-            $success = "Like retiré";
-            $session->set("success_message", $success);
-        } else if ($return == "Like added") {
-            $success = "Like ajouté";
-            $session->set("success_message", $success);
-        } else {
-            $error = "Une erreur est survenue. Veuillez réessayer.";
-            $session->set('error_message', $error);
+        if ($return === false) {
+            $return = "Une erreur est survenue. Veuillez réessayer.";
+            http_response_code(400);
+            echo json_encode(array("error" => $return));
+            exit;
         }
-        $this->redirect("/gallery");
+
+        $response = array(
+            "success" => true,
+            "message" => $return
+        );
+        header('Content-Type: application/json');
+        echo json_encode($response);
     }
 
-    public function AddComment($postId, $comment)
+    public function AddComment($token, $postId, $comment)
     {
         $session = new Session();
         $user = $session->get("user");
-        if (empty($comment)) {
-            $error = "Veuillez entrer un commentaire.";
-            $session->set('error_message', $error);
-            $this->redirect("/gallery");
+
+        if ($user) {
+            if (!$this->UserManager->verifyToken($user->getId(), $token)) {
+                $response = array(
+                    "success" => false,
+                    "message" => "Token invalide"
+                );
+                http_response_code(401);
+                header('Content-Type: application/json');
+                echo json_encode($response);
+                exit;
+            }
+        } else {
+            $response = array(
+                "success" => false,
+                "message" => "User not logged in"
+            );
+            http_response_code(401);
+            header('Content-Type: application/json');
+            echo json_encode($response);
+            exit;
         }
         if (!$user) {
-            throw new UserNotFoundException();
+            http_response_code(401);
+            header('Content-Type: application/json');
+            echo json_encode(array("error" => "User not logged in"));
+            exit;
         }
-        $post = $this->StudioManager->postExistsById($postId);
-        if ($post == false) {
-            throw new PostNotFoundException();
+        if ($this->StudioManager->postExistsById($postId) == false) {
+            http_response_code(404);
+            header('Content-Type: application/json');
+            echo json_encode(array("error" => "Post not found"));
+            exit;
         }
-        $userIdPost = $post->getUserId();
-        $userPost = $this->UserManager->getById($userIdPost);
-        if ($this->CommentsManager->addComment($comment, $postId, $user->getId())) {
-            $success = "Commentaire ajouté";
-            $session->set("success_message", $success);
+        if (empty($comment)) {
+            http_response_code(400);
+            header('Content-Type: application/json');
+            echo json_encode(array("error" => "Veuillez entrer un commentaire."));
+            exit;
+        }
+        $return = $this->CommentsManager->addComment($comment, $postId, $user->getId());
+        if ($return === false) {
+            $return = "Une erreur est survenue. Veuillez réessayer.";
+            http_response_code(400);
+            header('Content-Type: application/json');
+            echo json_encode(array("error" => $return));
+            exit;
+        } else if ($return === "Commentaire ajouté") {
+            $post = $this->StudioManager->getById($postId);
+            $userPost = $this->UserManager->getById($post->getUserId());
             if ($userPost->getNotifs() == 1) {
                 $mail = new Mail();
                 if (!$mail->sendNewCommentMail($userPost->getFirstname(), $userPost->getLastname(), $userPost->getEmail())) {
-                    $error = "Une erreur est survenue. Veuillez réessayer.";
-                    $session->set('error_message', $error);
+                    http_response_code(400);
+                    header('Content-Type: application/json');
+                    echo json_encode(array("error" => "Une erreur est survenue. Veuillez réessayer."));
+                    exit;
+                } else {
+                    $response = array(
+                        "success" => true,
+                        "message" => $return,
+                        "mail" => "Mail sent",
+                        "user" => $userPost->getLogin(),
+                        "comment" => $comment
+                    );
+                    http_response_code(200);
+                    header('Content-Type: application/json');
+                    echo json_encode($response);
+                    exit;
                 }
+            } else {
+                $response = array(
+                    "success" => true,
+                    "message" => $return,
+                    "user" => $userPost->getLogin(),
+                    "comment" => $comment
+                );
+                http_response_code(200);
+                header('Content-Type: application/json');
+                echo json_encode($response);
+                exit;
             }
-        } else {
-            $error = "Une erreur est survenue. Veuillez réessayer.";
-            $session->set('error_message', $error);
         }
-        $this->redirect("/gallery");
     }
 
     public function InfiniteScrollLoad($token, $offset)

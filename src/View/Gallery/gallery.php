@@ -6,9 +6,8 @@ include_once('Utils/snackbar.php');
     <div class="gallery container">
         <div id="gallery" class="columns is-multiline">
             <? if (isset($posts)) { ?>
-                <? $i = 0; ?>
+                <? $i = count($posts); ?>
                 <? foreach ($posts as $post) { ?>
-                    <? $i++; ?>
                     <div class="column is-one-third">
                         <div class="card">
                             <div class="card-image">
@@ -42,25 +41,24 @@ include_once('Utils/snackbar.php');
                                     <?php echo '<p class="subtitle is-6">@' . $post["user_login"] . '</p>'; ?>
                                 </div>
                             </div>
-                            <? echo '<div id="media-bottom-' . $i . '" class="media-bottom">'; ?>
+                            <? echo '<div id="media-bottom-' . $post['id'] . '" class="media-bottom">'; ?>
                             <div class="media-likes">
                                 <div class="media-likes-content">
                                     <div class="level is-mobile mb-1">
                                         <div class="level-left">
                                             <?php if ($user != NULL) {
-                                                echo '<form action="/like-gallery" method="POST">
-                                                    <button class="button mr-2" action="submit">';
+                                                echo '<button class="button mr-2" onclick="likePost(' . $post['id'] . ')">';
                                                 if ($post['liked']) {
-                                                    echo '<i class="fa-solid fa-heart"></i>';
+                                                    echo '<i id="unlike-' . $post['id'] . '" class="fa-solid fa-heart"></i>'
+                                                        . '<i id="like-' . $post['id'] . '" class="fa-regular fa-heart is-hidden"></i>';
                                                 } else {
-                                                    echo '<i class="fa-regular fa-heart"></i>';
+                                                    echo '<i id="like-' . $post['id'] . '" class="fa-regular fa-heart"></i>'
+                                                        . '<i id="unlike-' . $post['id'] . '" class="fa-solid fa-heart is-hidden"></i>';
                                                 }
-                                                echo '</button>
-                                                        <input type="hidden" name="post_id" value="' . $post["id"] . '">
-                                                </form>';
+                                                echo '</button>';
                                             }
                                             ?>
-                                            <?php echo '<button class="button" onclick="showComments(' . $i . ')">'; ?>
+                                            <?php echo '<button class="button" onclick="showComments(' . $post['id'] . ')">'; ?>
                                             <i class="fa-regular fa-comment"></i>
                                             </button>
                                         </div>
@@ -68,13 +66,13 @@ include_once('Utils/snackbar.php');
                                     <div class="media-likes-count mb-3">
                                         <?php
                                         if ($post["likes"] < 2)
-                                            echo '<p class="text is-6">' . $post["likes"] . ' Like' . '</p>';
+                                            echo '<p id="like-count-' . $post['id'] . '" class="text is-6">' . $post["likes"] . ' Like' . '</p>';
                                         else
-                                            echo '<p class="text is-6">' . $post["likes"] . ' Likes' . '</p>';
+                                            echo '<p id="like-count-' . $post['id'] . '" class="text is-6">' . $post["likes"] . ' Likes' . '</p>';
                                         if ($post["comments_count"] < 2)
-                                            echo '<p class="text is-6">' . $post["comments_count"] . ' Comment' . '</p>';
+                                            echo '<p id="comment-count-' . $post['id'] . '" class="text is-6">' . $post["comments_count"] . ' Comment' . '</p>';
                                         else
-                                            echo '<p class="text is-6">' . $post["comments_count"] . ' Comments' . '</p>';
+                                            echo '<p id="comment-count-' . $post['id'] . '" class="text is-6">' . $post["comments_count"] . ' Comments' . '</p>';
                                         ?>
 
                                     </div>
@@ -96,67 +94,64 @@ include_once('Utils/snackbar.php');
                             </div>
                         </div>
                         <?
-                        echo '<div id="media-comments-' . $i . '" class="media-comments is-hidden">
+                        echo '<div id="media-comments-' . $post['id'] . '" class="media-comments is-hidden">
                                     <div class="container">
                                         <div class="columns">
                                             <div class="column">
                                                 <label class="label is-pulled-left mt-2">Commentaires</label>
                                             </div>
                                             <div class="column">
-                                                <button class="button is-pulled-right" onclick="hideComments(' . $i . ')">
+                                                <button class="button is-pulled-right" onclick="hideComments(' . $post['id'] . ')">
                                                     <i class="fa-solid fa-times"></i>
                                                 </button>
                                             </div>
                                         </div>
                                     </div>
                                     <hr>
-                                    <div class="media-comments-content">';
+                                    <div id="comments-' . $post['id'] . '" class="media-comments-content">';
                         foreach ($post["comments"] as $comment) {
                             echo '
-                                        <div class="container">
-                                            <div class="columns">
-                                                <div class="column is-4">
-                                                    <label class="label">' . $comment->getUserLogin() . ':</label>
-                                                </div>
-                                                <div class="column is-6">
-                                                    <p class="text">' . $comment->getComment() . '</p>
-                                                </div>
+                                    <div class="container">
+                                        <div class="columns">
+                                            <div class="column is-4">
+                                                <label id="comment-user-' . $post['id'] . '" class="label">' . $comment->getUserLogin() . ':</label>
+                                            </div>
+                                            <div class="column is-6">
+                                                <p id="comment-' . $post['id'] . '" class="text">' . $comment->getComment() . '</p>
                                             </div>
                                         </div>
-                                        <hr>
+                                    </div>
+                                    <hr>
                                 ';
                         }
-                        echo '
-                                    </div>
-                                    <div class="container">';
+                        echo '  </div>
+                                <div class="container">';
                         if ($user != NULL) {
-                            echo '
-                                        <form action="/add-comment-gallery" method="POST">
-                                            <div class="columns">
-                                                <div class="column">
-                                                    <div class="field">
-                                                        <div class="control">
-                                                            <input type="hidden" name="pictureId" value="' . $post["id"] . '" />
-                                                            <input id="comment_' . $i . '" class="input" name="comment" type="text" placeholder="Commentaire">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="column is-2">
-                                                    <button class="button is-fullwidth" type="submit">
-                                                        <i class="fa-solid fa-plus"></i>
-                                                    </button>
-                                                </div>
+                            echo '<div class="columns">
+                                    <div class="column">
+                                        <div class="field">
+                                            <div class="control">
+                                                <input type="hidden" name="pictureId" value="' . $post["id"] . '" />
+                                                <input id="new-comment-' . $post['id'] . '" class="input" name="comment" type="text" placeholder="Commentaire" onkeypress="handleKeyPressGallery(event, ' . $post['id'] . ' )">
                                             </div>
-                                        </form>';
+                                        </div>
+                                    </div>
+                                    <div class="column is-2">
+                                        <button class="button is-fullwidth" type="submit" onclick="addComment(' . $post['id'] . ')">
+                                            <i class="fa-solid fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>';
                         }
                         echo '
-                                    </div>
                                 </div>
-                                ';
+                            </div>
+                        ';
                         ?>
                     </div>
                 </div>
             </div>
+            <? $i--; ?>
         <?php } ?>
     <?php } ?>
     </div>

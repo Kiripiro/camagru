@@ -19,7 +19,7 @@ class LikesManager extends BaseManager
         try {
             if ($this->likeExists($pictureID, $userId)) {
                 if ($this->removeLike($pictureID, $userId)) {
-                    return "Like removed";
+                    return "Like supprimé";
                 }
                 throw new Exception("Couldn't remove like");
             }
@@ -27,7 +27,7 @@ class LikesManager extends BaseManager
             $like->setPictureID($pictureID);
             $like->setUserID($userId);
             $this->create($like, ["picture_id", "user_id"]);
-            return "Like added";
+            return "Like ajouté";
         } catch (Exception $e) {
             echo $e->getMessage();
             return false;

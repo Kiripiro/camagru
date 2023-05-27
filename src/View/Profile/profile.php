@@ -188,3 +188,17 @@ include_once('Utils/snackbar.php');
         </div>
     </div>
 </section>
+
+<div id="deleteModal" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <div class="box">
+            <h3 class="title is-4">Confirmation</h3>
+            <p>Are you sure you want to delete this post?</p>
+            <br>
+            <button id="confirmDelete" class="button is-danger">Delete</button>
+            <button id="cancelDelete" class="button">Cancel</button>
+        </div>
+    </div>
+    <button id="closeModal" class="modal-close is-large" aria-label="close"></button>
+</div>

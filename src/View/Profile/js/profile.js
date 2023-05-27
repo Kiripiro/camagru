@@ -12,7 +12,31 @@ const hideComments = (index) => {
     comments.classList.add('is-hidden');
 }
 
-const deletePostProfile = (post_id) => {
+function deletePostProfile(post_id) {
+    var deleteModal = document.getElementById("deleteModal");
+    deleteModal.classList.add("is-active");
+
+    var confirmDeleteBtn = document.getElementById("confirmDelete");
+    var cancelDeleteBtn = document.getElementById("cancelDelete");
+    var closeModalBtn = document.getElementById("closeModal");
+
+    confirmDeleteBtn.addEventListener("click", function () {
+        deletePostProfileConfirmation(post_id);
+
+        deleteModal.classList.remove("is-active");
+    });
+
+    cancelDeleteBtn.addEventListener("click", function () {
+        deleteModal.classList.remove("is-active");
+    });
+
+    closeModalBtn.addEventListener("click", function () {
+        deleteModal.classList.remove("is-active");
+    });
+}
+
+
+const deletePostProfileConfirmation = (post_id) => {
     const xhr = new XMLHttpRequest();
     xhr.open('POST', '/delete-post', true);
     var token = getCookie("token");

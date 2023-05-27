@@ -132,7 +132,7 @@ include_once('Utils/snackbar.php');
                                         <div class="field">
                                             <div class="control">
                                                 <input type="hidden" name="pictureId" value="' . $post["id"] . '" />
-                                                <input id="new-comment-' . $post['id'] . '" class="input" name="comment" type="text" placeholder="Commentaire" onkeypress="handleKeyPressGallery(event, ' . $post['id'] . ' )">
+                                                <input id="new-comment-' . $post['id'] . '" class="input" name="comment" type="text" placeholder="Commentaire" onkeypress="handleKeyPressComment(event, ' . $post['id'] . ' )">
                                             </div>
                                         </div>
                                     </div>

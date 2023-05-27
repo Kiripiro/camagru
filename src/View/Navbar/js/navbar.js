@@ -38,17 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-function getCookie(cookieName) {
-    var cookies = document.cookie.split(";");
-    for (var i = 0; i < cookies.length; i++) {
-        var cookie = cookies[i].trim();
-        if (cookie.indexOf(cookieName + "=") === 0) {
-            return cookie.substring(cookieName.length + 1);
-        }
-    }
-    return "";
-}
-
 const searchInput = document.getElementById("searchbar");
 const searchInputMobile = document.getElementById("searchbar-mobile");
 const searchUser = () => {
@@ -71,7 +60,10 @@ const searchUser = () => {
         if (xhr.status === 200) {
             const response = JSON.parse(xhr.responseText);
             if (response.success) {
-                window.location.href = "/userProfile?login=" + userLogin;
+                if (response.isProfile == 1)
+                    window.location.href = "/profile";
+                else
+                    window.location.href = "/userProfile?login=" + userLogin;
             } else {
                 searchInput.value = "";
                 searchInput.classList.add("is-danger") || searchInputMobile.classList.add("is-danger");

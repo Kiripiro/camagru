@@ -357,7 +357,6 @@ const useImage = () => {
     xhr.open('POST', '/studio-preview', true);
     xhr.onload = function () {
         const response = JSON.parse(xhr.responseText);
-        // console.log(xhr.responseText);
         if (response.success) {
             image.src = response.path;
         } else {
@@ -371,19 +370,8 @@ const useImage = () => {
     xhr.send(formData);
 }
 
-function getCookie(cookieName) {
-    var cookies = document.cookie.split(";");
-    for (var i = 0; i < cookies.length; i++) {
-        var cookie = cookies[i].trim();
-        if (cookie.indexOf(cookieName + "=") === 0) {
-            return cookie.substring(cookieName.length + 1);
-        }
-    }
-    return "";
-}
-
-const deletePost = (button) => {
-    var postId = button.parentElement.parentElement.parentElement.querySelector('img').getAttribute('data-post-id');
+const deletePost = (post_id) => {
+    var pictureItem = document.getElementById(`picture-${post_id}`);
     const xhr = new XMLHttpRequest();
     xhr.open('POST', '/delete-post', true);
     var token = getCookie("token");
@@ -392,7 +380,7 @@ const deletePost = (button) => {
         return;
     }
     var formData = new FormData();
-    formData.append('pictureId', postId);
+    formData.append('pictureId', post_id);
     formData.append('token', token);
 
     xhr.send(formData);
@@ -400,13 +388,13 @@ const deletePost = (button) => {
         if (xhr.status === 200) {
             const response = JSON.parse(xhr.responseText);
             if (response.success) {
-                button.parentElement.parentElement.parentElement.remove();
-                console.log('Post deleted');
+                pictureItem.remove();
+                showSnackbar(response.message, "success");
             } else {
-                console.log('Error:', response);
+                showSnackbar(response.message, "danger");
             }
         } else {
-            console.log('Error:', xhr.status);
+            showSnackbar(response.message, "danger");
         }
     }
 }

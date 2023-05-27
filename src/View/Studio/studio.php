@@ -93,21 +93,24 @@ include_once('Utils/snackbar.php');
                     <div class="recent">
                         <div class="field">
                             <label class="label">Dernières prises</label>
-                            <div class="recent-pics" style="overflow-y: scroll; height: 100vh">
+                            <div id="recent-pics" lass="recent-pics" style="overflow-y: scroll; height: 100vh">
                                 <?php if (isset($posts) && !empty($posts)) {
                                     foreach ($posts as $post) {
-                                        $filename = "Media/posts/" . $post . ".png";
+                                        $filename = "Media/posts/" . $post["path"] . ".png";
                                         if (file_exists($filename)) {
-                                            echo '<div class="control">
+                                            echo '
+                                            <div id="picture-' . $post["id"] . '" class="picture">
+                                                <div class="control">
                                                     <figure class="image is-100x100">
-                                                        <img src="/Media/posts/' . $post . '.png" alt="Image" data-post-id="' . $post . '"/>
-                                                    </figure>'
-                                                . '<div class="field mb-2">
+                                                        <img src="/Media/posts/' . $post["path"] . '.png" alt="Image" data-post-id="' . $post["id"] . '"/>
+                                                    </figure>
+                                                <div class="field mb-2">
                                                         <div class="control">
-                                                            <button class="button is-danger is-fullwidth" onclick="deletePost(this)">Supprimer</button>
+                                                            <button class="button is-danger is-fullwidth" onclick="deletePost(' . $post["id"] . ')">Supprimer</button>
                                                         </div>
                                                     </div>
-                                                </div>';
+                                                </div>
+                                            </div>';
                                         }
                                     }
                                 } else {

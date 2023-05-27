@@ -83,3 +83,111 @@ window.onload = function () {
     }
 
 };
+
+function getCookie(cookieName) {
+    var cookies = document.cookie.split(";");
+    for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i].trim();
+        if (cookie.indexOf(cookieName + "=") === 0) {
+            return cookie.substring(cookieName.length + 1);
+        }
+    }
+    return "";
+}
+
+function likePost(postId) {
+    var token = getCookie("token");
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', '/like', true);
+    var formData = new FormData();
+    formData.append('token', token);
+    formData.append('post_id', postId);
+
+    xhr.send(formData);
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            const response = JSON.parse(xhr.responseText);
+            if (response.success) {
+                if (response.message == "Like ajouté") {
+                    document.getElementById(`like-${postId}`).classList.add('is-hidden');
+                    document.getElementById(`unlike-${postId}`).classList.remove('is-hidden');
+                    let count = parseInt(document.getElementById(`like-count-${postId}`).innerHTML) + 1;
+                    document.getElementById(`like-count-${postId}`).innerHTML = count + (count > 1 ? " Likes" : " Like");
+                }
+                else if (response.message == "Like supprimé") {
+                    document.getElementById(`like-${postId}`).classList.remove('is-hidden');
+                    document.getElementById(`unlike-${postId}`).classList.add('is-hidden');
+                    let count = parseInt(document.getElementById(`like-count-${postId}`).innerHTML) - 1;
+                    document.getElementById(`like-count-${postId}`).innerHTML = count + (count > 1 ? " Likes" : " Like");
+                }
+                showSnackbar(response.message, "success");
+            } else {
+                console.log(response.error);
+            }
+        } else if (xhr.status === 401) {
+            console.log("Unauthorized");
+        } else {
+            console.log("Error", xhr.status);
+        }
+    };
+}
+
+function addComment(postId) {
+    var token = getCookie("token");
+    var commentInput = document.getElementById(`new-comment-${postId}`);
+    var comment = document.getElementById(`new-comment-${postId}`).value;
+
+    if (comment === "") {
+        showSnackbar("Commentaire vide", "error");
+        return;
+    }
+    commentInput.disabled = true;
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', '/comment', true);
+    var formData = new FormData();
+    formData.append('token', token);
+    formData.append('post_id', postId);
+    formData.append('comment', comment);
+
+    xhr.send(formData);
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            const response = JSON.parse(xhr.responseText);
+            if (response.success) {
+                let count = parseInt(document.getElementById(`comment-count-${postId}`).innerHTML) + 1;
+                document.getElementById(`comment-count-${postId}`).innerHTML = count + (count > 1 ? " Comments" : " Comment");
+                let comments = document.getElementById(`comments-${postId}`);
+                var commentContainer = document.createElement("div");
+                commentContainer.className = "comments container";
+                commentContainer.innerHTML = `
+                    <div class="columns">
+                        <div class="column is-4">
+                            <label class="label">${response.user}:</label>
+                        </div>
+                        <div class="column is-6">
+                            <p class="text">${response.comment}</p>
+                        </div>
+                    </div>
+                `;
+                comments.appendChild(commentContainer);
+                comments.insertAdjacentHTML('beforeend', '<hr>');
+                document.getElementById(`new-comment-${postId}`).value = "";
+            } else {
+                console.log(response);
+            }
+            showSnackbar(response.message, "success");
+            commentInput.disabled = false;
+        } else if (xhr.status === 401) {
+            console.log("Unauthorized");
+        } else {
+            console.log("Error", xhr.status);
+        }
+    };
+}
+
+function handleKeyPressComment(event, postId) {
+    if (event.key === "Enter") {
+        addComment(postId);
+    }
+}

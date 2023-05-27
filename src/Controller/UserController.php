@@ -445,6 +445,16 @@ class UserController extends BaseController
                 echo json_encode($response);
                 return;
             }
+            if ($user->getLogin() === $userExists->getLogin()) {
+                $response = array(
+                    "success" => true,
+                    "isProfile" => true
+                );
+
+                header('Content-Type: application/json');
+                echo json_encode($response);
+                return;
+            }
             $response = array(
                 "success" => true,
             );

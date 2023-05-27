@@ -261,7 +261,9 @@
         "action": "StudioView",
         "method": "GET",
         "param": [],
-        "manager": []
+        "manager": [
+            "StudioManager"
+        ]
     },
     {
         "path": "/studio-preview",
@@ -305,53 +307,7 @@
         ]
     },
     {
-        "path": "/profile-delete-post",
-        "controller": "Profile",
-        "action": "ProfileDeletePost",
-        "method": "POST",
-        "param": [
-            "pictureId"
-        ],
-        "manager": [
-            "UserManager",
-            "LikesManager",
-            "StudioManager",
-            "CommentsManager"
-        ]
-    },
-    {
-        "path": "/add-comment",
-        "controller": "Profile",
-        "action": "AddComment",
-        "method": "POST",
-        "param": [
-            "pictureId",
-            "comment",
-            "userLogin"
-        ],
-        "manager": [
-            "UserManager",
-            "CommentsManager",
-            "StudioManager"
-        ]
-    },
-    {
         "path": "/like",
-        "controller": "Profile",
-        "action": "AddLike",
-        "method": "POST",
-        "param": [
-            "pictureId",
-            "userLogin"
-        ],
-        "manager": [
-            "UserManager",
-            "StudioManager",
-            "LikesManager"
-        ]
-    },
-    {
-        "path": "/like-gallery",
         "controller": "Gallery",
         "action": "AddLike",
         "method": "POST",
@@ -366,7 +322,7 @@
         ]
     },
     {
-        "path": "/comment-gallery",
+        "path": "/comment",
         "controller": "Gallery",
         "action": "AddComment",
         "method": "POST",

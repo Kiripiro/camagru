@@ -13,7 +13,15 @@ class StudioController extends BaseController
         $this->addParam("title", "Studio");
         $this->addParam("description", "Ajouter une image");
         $this->addParam('session', $session);
-        $this->addParam("posts", $session->get('posts'));
+        $allUsersPosts = $this->StudioManager->getAllUsersPosts($user->getId());
+        $posts = array();
+        foreach ($allUsersPosts as $post) {
+            $posts[] = array(
+                "id" => $post->getId(),
+                "path" => $post->getPath(),
+            );
+        }
+        $this->addParam("posts", $posts);
         $this->addParam("success_message", $session->get('success_message'));
         $this->addParam("error_message", $session->get('error_message'));
         $this->addParam("navbar", "View/Navbar/navbar.php");
@@ -146,12 +154,26 @@ class StudioController extends BaseController
     public function StudioDeletePost($pictureID, $token)
     {
         if (empty($token || empty($pictureID))) {
-            $this->redirect("/studio");
+            $response = array(
+                "success" => false,
+                "message" => "Paramètres manquants"
+            );
+
+            http_response_code(400);
+            header('Content-Type: application/json');
+            echo json_encode($response);
         }
         $session = new Session();
         $user = $session->get('user');
         if ($user == null) {
-            $this->redirect("/login");
+            $response = array(
+                "success" => false,
+                "message" => "Vous devez être connecté pour effectuer cette action"
+            );
+
+            http_response_code(401);
+            header('Content-Type: application/json');
+            echo json_encode($response);
         }
         if (!$this->UserManager->verifyToken($user->getId(), $token)) {
             $response = array(
@@ -159,10 +181,11 @@ class StudioController extends BaseController
                 "message" => "Token invalide"
             );
 
+            http_response_code(401);
             header('Content-Type: application/json');
             echo json_encode($response);
         }
-        $post = $this->StudioManager->getUsersPostByPath($user->getId(), $pictureID);
+        $post = $this->StudioManager->getUsersPostByID($user->getId(), $pictureID);
         if ($post) {
             $this->CommentsManager->deleteComments($post->getId());
             $this->LikesManager->deleteLikes($post->getId());
@@ -170,16 +193,20 @@ class StudioController extends BaseController
             unlink("Media/posts/" . $post->getPath() . ".png");
             $session->removeFromArray('posts', $post->getPath());
             $response = array(
-                "success" => true
+                "success" => true,
+                "message" => "Post supprimé"
             );
 
+            http_response_code(200);
             header('Content-Type: application/json');
             echo json_encode($response);
         } else {
             $response = array(
-                "success" => false
+                "success" => false,
+                "message" => "Une erreur est survenue. Veuillez réessayer."
             );
 
+            http_response_code(400);
             header('Content-Type: application/json');
             echo json_encode($response);
         }

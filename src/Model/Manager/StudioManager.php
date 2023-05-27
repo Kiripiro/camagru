@@ -48,10 +48,10 @@ class StudioManager extends BaseManager
         return $req->fetch();
     }
 
-    public function getUsersPostByPath($userId, $picturePath)
+    public function getUsersPostByID($userId, $pictureId)
     {
-        $req = $this->_bdd->prepare("SELECT * FROM pictures WHERE userId=? AND path=?");
-        $req->execute(array($userId, $picturePath));
+        $req = $this->_bdd->prepare("SELECT * FROM pictures WHERE userId=? AND id=?");
+        $req->execute(array($userId, $pictureId));
         $req->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "Pictures");
         return $req->fetch();
     }

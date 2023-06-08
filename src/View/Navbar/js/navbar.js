@@ -41,11 +41,15 @@ document.addEventListener('DOMContentLoaded', () => {
 const searchInput = document.getElementById("searchbar");
 const searchInputMobile = document.getElementById("searchbar-mobile");
 const searchUser = () => {
-    const userLogin = searchInput.value || searchInputMobile.value;
+    const username = searchInput.value || searchInputMobile.value;
     var token = getCookie("token");
 
     if (token === "") {
-        console.log("No token found");
+        var phpSessionId = getCookie("PHPSESSID");
+        if (phpSessionId !== "") {
+            document.cookie = "PHPSESSID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        }
+        window.location.href = "/login";
         return;
     }
 
@@ -53,7 +57,7 @@ const searchUser = () => {
     xhr.open('POST', '/search-user', true);
     var formData = new FormData();
     formData.append('token', token);
-    formData.append('userLogin', userLogin);
+    formData.append('username', username);
 
     xhr.send(formData);
     xhr.onload = function () {
@@ -63,7 +67,7 @@ const searchUser = () => {
                 if (response.isProfile == 1)
                     window.location.href = "/profile";
                 else
-                    window.location.href = "/userProfile?login=" + userLogin;
+                    window.location.href = "/userProfile?username=" + username;
             } else {
                 searchInput.value = "";
                 searchInput.classList.add("is-danger") || searchInputMobile.classList.add("is-danger");

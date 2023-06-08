@@ -375,10 +375,16 @@ const deletePost = (post_id) => {
     const xhr = new XMLHttpRequest();
     xhr.open('POST', '/delete-post', true);
     var token = getCookie("token");
+
     if (token === "") {
-        console.log("No token found");
+        var phpSessionId = getCookie("PHPSESSID");
+        if (phpSessionId !== "") {
+            document.cookie = "PHPSESSID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        }
+        window.location.href = "/login";
         return;
     }
+
     var formData = new FormData();
     formData.append('pictureId', post_id);
     formData.append('token', token);
@@ -397,4 +403,9 @@ const deletePost = (post_id) => {
             showSnackbar(response.message, "danger");
         }
     }
+}
+
+window.onbeforeunload = function () {
+    console.log("onbeforeunload");
+    window.preventDefault();
 }

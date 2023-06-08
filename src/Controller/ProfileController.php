@@ -8,6 +8,9 @@ class ProfileController extends BaseController
         if (!$user) {
             throw new UserNotFoundException();
         }
+        if ($user->getTokenExp() <= date('Y-m-d H:i:s')) {
+            $this->redirect("/login");
+        }
         $this->addParam('user', $user);
         $this->addParam("title", "Profile");
         $this->addParam("description", "Profile");
@@ -17,7 +20,7 @@ class ProfileController extends BaseController
         foreach ($allUsersPosts as $post) {
             $comments = $this->CommentsManager->getPostComments($post->getId());
             foreach ($comments as $comment) {
-                $comment->setUserLogin($this->UserManager->getById($comment->getUser_id())->getLogin());
+                $comment->setUsername($this->UserManager->getById($comment->getUser_id())->getUsername());
             }
             $likes = $this->LikesManager->getPostLikes($post->getId());
             $posts[] = array(
@@ -45,11 +48,15 @@ class ProfileController extends BaseController
         if (!$user) {
             throw new UserNotFoundException();
         }
+        if ($user->getTokenExp() <= date('Y-m-d H:i:s')) {
+            $this->redirect("/login");
+        }
+
         $this->addParam('user', $user);
         $this->addParam("title", "Profile");
         $this->addParam("description", "Profile");
         $this->addParam('session', $session);
-        $userProfile = $this->UserManager->getBy("login", $userId["login"]);
+        $userProfile = $this->UserManager->getBy("username", $userId["username"]);
         if (!$userProfile) {
             throw new UserNotFoundException();
         }
@@ -58,7 +65,7 @@ class ProfileController extends BaseController
         foreach ($allUsersPosts as $post) {
             $comments = $this->CommentsManager->getPostComments($post->getId());
             foreach ($comments as $comment) {
-                $comment->setUserLogin($this->UserManager->getById($comment->getUser_id())->getLogin());
+                $comment->setUsername($this->UserManager->getById($comment->getUser_id())->getUsername());
             }
             $likes = $this->LikesManager->getPostLikes($post->getId());
             $posts[] = array(

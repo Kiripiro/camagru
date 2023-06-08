@@ -51,7 +51,7 @@
                                     style='background-image: url("/Media/avatars/avatar.png"); background-size: cover; border-radius: 100%; background-position: 50% 50%; height: 28px; width: 28px; margin-right:10px;'>
                                 <?php } ?>
                             </div>
-                            <?php echo $user->getLogin(); ?>
+                            <?php echo $user->getUsername(); ?>
                     </a>
                     <div class="navbar-dropdown">
                         <a href="/profile" class="navbar-item">

@@ -6,7 +6,7 @@ class Comments
     private $picture_id;
     private $comment;
     private $date;
-    private $user_login;
+    private $username;
 
     public function __construct()
     {
@@ -34,9 +34,9 @@ class Comments
     {
         return $this->date;
     }
-    public function getUserLogin()
+    public function getUsername()
     {
-        return $this->user_login;
+        return $this->username;
     }
 
     public function setId($id)
@@ -60,8 +60,8 @@ class Comments
         $this->date = $date;
     }
 
-    public function setUserLogin($login)
+    public function setUsername($username)
     {
-        $this->user_login = $login;
+        $this->username = $username;
     }
 }

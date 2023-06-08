@@ -4,7 +4,7 @@ class User
     private $id;
     private $firstname;
     private $lastname;
-    private $login;
+    private $username;
     private $email;
     private $password;
     private $biography;
@@ -33,9 +33,9 @@ class User
     {
         return $this->lastname;
     }
-    public function getLogin()
+    public function getUsername()
     {
-        return $this->login;
+        return $this->username;
     }
     public function getEmail()
     {
@@ -87,9 +87,9 @@ class User
         $this->lastname = $lastname;
     }
 
-    public function setLogin($login)
+    public function setUsername($username)
     {
-        $this->login = $login;
+        $this->username = $username;
     }
 
     public function setEmail($email)

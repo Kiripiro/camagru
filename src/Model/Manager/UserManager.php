@@ -11,11 +11,11 @@ class userManager extends BaseManager
         $userObj = new User();
         $userObj->setFirstname($user["firstname"]);
         $userObj->setLastname($user["lastname"]);
-        $userObj->setLogin($user["login"]);
+        $userObj->setUsername($user["username"]);
         $userObj->setEmail($user["email"]);
         $userObj->setPassword($user["password"]);
         $userObj->setVerificationToken($user["verificationToken"]);
-        $this->create($userObj, ["firstname", "lastname", "login", "email", "password", "verificationToken"]);
+        $this->create($userObj, ["firstname", "lastname", "username", "email", "password", "verificationToken"]);
     }
 
     public function getById($id)
@@ -34,10 +34,10 @@ class userManager extends BaseManager
         return $req->fetch();
     }
 
-    public function getByLogin($login)
+    public function getByUsername($username)
     {
-        $req = $this->_bdd->prepare("SELECT * FROM users WHERE login=?");
-        $req->execute(array($login));
+        $req = $this->_bdd->prepare("SELECT * FROM users WHERE username=?");
+        $req->execute(array($username));
         $req->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "User");
         return $req->fetch();
     }
@@ -50,10 +50,10 @@ class userManager extends BaseManager
         return $req->fetch();
     }
 
-    public function getUserSession($login)
+    public function getUserSession($username)
     {
-        $req = $this->_bdd->prepare("SELECT id, firstname, lastname, login, email, biography, avatar, notifs, admin, token, token_exp, verificationToken, active FROM users WHERE login=?");
-        $req->execute(array($login));
+        $req = $this->_bdd->prepare("SELECT id, firstname, lastname, username, email, biography, avatar, notifs, admin, token, token_exp, verificationToken, active FROM users WHERE username=?");
+        $req->execute(array($username));
         $req->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "User");
         return $req->fetch();
     }
@@ -88,11 +88,11 @@ class userManager extends BaseManager
         }
     }
 
-    public function updateLogin($user, $login)
+    public function updateUsername($user, $username)
     {
         try {
-            $user->setLogin($login);
-            $this->update($user, ["login"]);
+            $user->setUsername($username);
+            $this->update($user, ["username"]);
             return true;
         } catch (Exception $e) {
             echo $e->getMessage();

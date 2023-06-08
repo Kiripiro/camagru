@@ -98,6 +98,15 @@ function getCookie(cookieName) {
 function likePost(postId) {
     var token = getCookie("token");
 
+    if (token === "") {
+        var phpSessionId = getCookie("PHPSESSID");
+        if (phpSessionId !== "") {
+            document.cookie = "PHPSESSID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        }
+        window.location.href = "/login";
+        return;
+    }
+
     const xhr = new XMLHttpRequest();
     xhr.open('POST', '/like', true);
     var formData = new FormData();
@@ -135,6 +144,16 @@ function likePost(postId) {
 
 function addComment(postId) {
     var token = getCookie("token");
+
+    if (token === "") {
+        var phpSessionId = getCookie("PHPSESSID");
+        if (phpSessionId !== "") {
+            document.cookie = "PHPSESSID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        }
+        window.location.href = "/login";
+        return;
+    }
+
     var commentInput = document.getElementById(`new-comment-${postId}`);
     var comment = document.getElementById(`new-comment-${postId}`).value;
 

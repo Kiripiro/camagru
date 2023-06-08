@@ -4,7 +4,6 @@ class UserController extends BaseController
     public function Login()
     {
         $session = new Session();
-        date_default_timezone_set("Europe/Paris");
         if ($session->get("user") && $session->get("token_exp") > date("Y-m-d H:i:s")) {
             $this->redirect("/");
         }
@@ -27,12 +26,12 @@ class UserController extends BaseController
         $this->view("register");
     }
 
-    public function RegisterNewUser($firstname, $lastname, $login, $email, $password, $confirmPassword)
+    public function RegisterNewUser($firstname, $lastname, $username, $email, $password, $confirmPassword)
     {
         $user = array(
             "firstname" => $firstname,
             "lastname" => $lastname,
-            "login" => $login,
+            "username" => $username,
             "email" => $email,
             "password" => $password,
             "verificationToken" => $verificationToken = bin2hex(random_bytes(16))
@@ -43,8 +42,8 @@ class UserController extends BaseController
         if (!empty($emptyFields)) {
             throw new EmptyFieldsException(implode(', ', array_keys($emptyFields)));
         }
-        if ($this->UserManager->getBy($key = "login", $login)) {
-            throw new UserAlreadyExistsException($key, $login);
+        if ($this->UserManager->getBy($key = "username", $username)) {
+            throw new UserAlreadyExistsException($key, $username);
         } else if ($this->UserManager->getBy($key = "email", $email)) {
             throw new UserAlreadyExistsException($key, $email);
         }
@@ -81,12 +80,12 @@ class UserController extends BaseController
         $this->redirect("login");
     }
 
-    public function authenticate($login, $password)
+    public function authenticate($username, $password)
     {
-        if (empty($login) || empty($password)) {
-            throw new EmptyFieldsException("login, password");
+        if (empty($username) || empty($password)) {
+            throw new EmptyFieldsException("username, password");
         }
-        $user = $this->UserManager->getBy("login", $login);
+        $user = $this->UserManager->getBy("username", $username);
         if (!$user) {
             throw new UserNotFoundException();
         } else if (!password_verify($password, $user->getPassword())) {
@@ -106,7 +105,7 @@ class UserController extends BaseController
             $exp = new DateTime($user->getTokenExp(), new DateTimeZone("Europe/Paris"));
             setcookie('token', $user->getToken(), $exp->getTimestamp(), "/", "", false, false);
         }
-        $userData = $this->UserManager->getUserSession($login);
+        $userData = $this->UserManager->getUserSession($username);
         $session->set("user", $userData);
         $this->redirect("/");
     }
@@ -189,6 +188,9 @@ class UserController extends BaseController
         if (!$user) {
             throw new UserNotFoundException();
         }
+        if ($user->getTokenExp() <= date('Y-m-d H:i:s')) {
+            $this->redirect("/login");
+        }
         $success_message = $session->get("success_message");
         $error_message = $session->get("error_message");
         $this->addParam('title', 'Paramètres');
@@ -201,25 +203,28 @@ class UserController extends BaseController
         $this->view("settings");
     }
 
-    public function SettingsLogin($login)
+    public function SettingsUsername($username)
     {
         $session = new Session();
         $user = $session->get("user");
         if (!$user) {
             throw new UserNotFoundException();
         }
+        if ($user->getTokenExp() <= date('Y-m-d H:i:s')) {
+            $this->redirect("/login");
+        }
         $user = $this->UserManager->getById($user->getId());
         if (!$user) {
             throw new UserNotFoundException();
         }
-        $userExists = $this->UserManager->getByLogin($login);
+        $userExists = $this->UserManager->getByUsername($username);
         if ($userExists) {
-            throw new UserAlreadyExistsException('login', $login);
+            throw new UserAlreadyExistsException('username', $username);
         }
-        if ($this->UserManager->updateLogin($user, $login)) {
-            $user->setLogin($login);
+        if ($this->UserManager->updateUsername($user, $username)) {
+            $user->setUsername($username);
             $session->set("user", $user);
-            $success = "Votre login a bien été modifié.";
+            $success = "Votre username a bien été modifié.";
             $session->set("success_message", $success);
         } else {
             $failed = "Une erreur est survenue. Veuillez réessayer.";
@@ -238,6 +243,9 @@ class UserController extends BaseController
         $user = $session->get("user");
         if (!$user) {
             throw new UserNotFoundException();
+        }
+        if ($user->getTokenExp() <= date('Y-m-d H:i:s')) {
+            $this->redirect("/login");
         }
         $user = $this->UserManager->getById($user->getId());
         if (!$user) {
@@ -266,9 +274,8 @@ class UserController extends BaseController
         if (!$user) {
             throw new UserNotFoundException();
         }
-        $userExists = $this->UserManager->getById($user->getId()); // Vraiment utile ?
-        if (!$userExists) {
-            throw new UserNotFoundException();
+        if ($user->getTokenExp() <= date('Y-m-d H:i:s')) {
+            $this->redirect("/login");
         }
         if ($this->UserManager->updateBiography($user, $biography)) {
             $user->setBiography($biography);
@@ -288,6 +295,9 @@ class UserController extends BaseController
         $user = $session->get("user");
         if (!$user) {
             throw new UserNotFoundException();
+        }
+        if ($user->getTokenExp() <= date('Y-m-d H:i:s')) {
+            $this->redirect("/login");
         }
         $user = $this->UserManager->getById($user->getId());
         if (!$user) {
@@ -331,6 +341,9 @@ class UserController extends BaseController
             if (!$user) {
                 throw new UserNotFoundException();
             }
+            if ($user->getTokenExp() <= date('Y-m-d H:i:s')) {
+                $this->redirect("/login");
+            }
             $userExists = $this->UserManager->getById($user->getId());
             if (!$userExists) {
                 throw new UserNotFoundException();
@@ -340,13 +353,13 @@ class UserController extends BaseController
                 'image/png' => 'png',
                 'image/jpeg' => 'jpg'
             ];
-            $filename = $_FILES["upload"]["name"];
             $tmp = $_FILES['upload']['tmp_name'];
             $mime_type = mime_content_type($tmp);
             if (!in_array($mime_type, array_keys($ALLOWED_FILES))) {
                 throw new InvalidFileException($mime_type);
             }
-            $uploaded_file = pathinfo($filename, PATHINFO_FILENAME) . '.' . $ALLOWED_FILES[$mime_type];
+            $extension = $ALLOWED_FILES[$mime_type];
+            $uploaded_file = uniqid() . '.' . $extension;
             $filepath = $UPLOAD_DIR . '/' . $uploaded_file;
             $success = move_uploaded_file($tmp, $filepath);
             if ($success) {
@@ -372,12 +385,16 @@ class UserController extends BaseController
         $this->redirect("/settings");
     }
 
+
     public function SettingsUpdatePassword($password, $newPassword, $confirmPassword)
     {
         $session = new Session();
         $user = $session->get("user");
         if (!$user) {
             throw new UserNotFoundException();
+        }
+        if ($user->getTokenExp() <= date('Y-m-d H:i:s')) {
+            $this->redirect("/login");
         }
         $userExists = $this->UserManager->getById($user->getId());
         if (!$userExists) {
@@ -404,6 +421,9 @@ class UserController extends BaseController
         if (!$user) {
             throw new UserNotFoundException();
         }
+        if ($user->getTokenExp() <= date('Y-m-d H:i:s')) {
+            $this->redirect("/login");
+        }
         $userExists = $this->UserManager->getById($user->getId());
         if (!$userExists) {
             throw new UserNotFoundException();
@@ -422,19 +442,29 @@ class UserController extends BaseController
         $this->redirect("/settings");
     }
 
-    public function SearchUser($token, $userLogin)
+    public function SearchUser($token, $username)
     {
         $session = new Session();
         $user = $session->get("user");
         if (!$user) {
             throw new UserNotFoundException();
         }
+        if ($user->getTokenExp() <= date('Y-m-d H:i:s')) {
+            http_response_code(401);
+            header('Content-Type: application/json');
+            $response = array(
+                "success" => false,
+                "error" => "Votre session a expiré. Veuillez vous reconnecter."
+            );
+            echo json_encode($response);
+            exit;
+        }
         $userExists = $this->UserManager->getById($user->getId());
         if (!$userExists) {
             throw new UserNotFoundException();
         }
         if ($token == $userExists->getToken()) {
-            $user = $this->UserManager->getByLogin($userLogin);
+            $user = $this->UserManager->getByUsername($username);
             if (!$user) {
                 $response = array(
                     "success" => false,
@@ -443,9 +473,9 @@ class UserController extends BaseController
 
                 header('Content-Type: application/json');
                 echo json_encode($response);
-                return;
+                exit;
             }
-            if ($user->getLogin() === $userExists->getLogin()) {
+            if ($user->getUsername() === $userExists->getUsername()) {
                 $response = array(
                     "success" => true,
                     "isProfile" => true
@@ -453,7 +483,7 @@ class UserController extends BaseController
 
                 header('Content-Type: application/json');
                 echo json_encode($response);
-                return;
+                exit;
             }
             $response = array(
                 "success" => true,
@@ -461,7 +491,7 @@ class UserController extends BaseController
 
             header('Content-Type: application/json');
             echo json_encode($response);
-            return;
+            exit;
         } else {
             $response = array(
                 "success" => false,
@@ -470,7 +500,7 @@ class UserController extends BaseController
 
             header('Content-Type: application/json');
             echo json_encode($response);
-            return;
+            exit;
         }
     }
 }

@@ -13,11 +13,11 @@ const hideComments = (index) => {
     mediaComments.classList.add('is-hidden');
 }
 
-const redirect = (login, isProfile) => {
+const redirect = (username, isProfile) => {
     if (isProfile == 1) {
         window.location.href = `/profile`;
     } else {
-        window.location.href = `/userProfile?login=${login}`;
+        window.location.href = `/userProfile?username=${username}`;
     }
 }
 
@@ -43,6 +43,16 @@ observer.observe(sentinel);
 
 function loadMoreContent() {
     var token = getCookie("token");
+
+    if (token === "") {
+        var phpSessionId = getCookie("PHPSESSID");
+        if (phpSessionId !== "") {
+            document.cookie = "PHPSESSID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        }
+        window.location.href = "/login";
+        return;
+    }
+
     var offset = document.getElementById('gallery').childElementCount;
 
     const xhr = new XMLHttpRequest();

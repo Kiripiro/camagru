@@ -29,6 +29,7 @@ clean:
 fclean: clean
 	docker system prune --all --force --volumes
 	rm -rf src/Media/posts/*
+	find src/Media/avatars -type f -not -name 'avatar.png' -delete
 
 re : fclean all
 

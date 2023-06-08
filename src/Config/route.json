@@ -88,7 +88,7 @@
         "action": "Authenticate",
         "method": "POST",
         "param": [
-            "login",
+            "username",
             "password"
         ],
         "manager": [
@@ -111,7 +111,7 @@
         "param": [
             "firstname",
             "lastname",
-            "login",
+            "username",
             "email",
             "password",
             "confirmPassword"
@@ -141,12 +141,12 @@
         "manager": []
     },
     {
-        "path": "/settings/login",
+        "path": "/settings/username",
         "controller": "User",
-        "action": "SettingsLogin",
+        "action": "SettingsUsername",
         "method": "POST",
         "param": [
-            "login"
+            "username"
         ],
         "manager": [
             "UserManager"
@@ -373,7 +373,7 @@
         "method": "POST",
         "param": [
             "token",
-            "userLogin"
+            "username"
         ],
         "manager": [
             "UserManager"

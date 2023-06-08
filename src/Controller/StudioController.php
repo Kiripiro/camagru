@@ -34,6 +34,9 @@ class StudioController extends BaseController
         if ($user == null) {
             $this->redirect("/login");
         }
+        if ($user->getTokenExp() <= date('Y-m-d H:i:s')) {
+            $this->redirect("/login");
+        }
 
         if (isset($_FILES["image"]) && isset($imageDimensions) && isset($filters)) {
             if ($_FILES['image']['error'] !== UPLOAD_ERR_OK) {
@@ -137,6 +140,10 @@ class StudioController extends BaseController
         if ($user == null) {
             $this->redirect("/login");
         }
+        if ($user->getTokenExp() <= date('Y-m-d H:i:s')) {
+            $this->redirect("/login");
+        }
+
         $latestImageId = $session->get('latest_image_id');
         if ($this->StudioManager->postExists($latestImageId)) {
             throw new PostExistsException();

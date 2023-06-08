@@ -29,16 +29,16 @@ include_once('Utils/snackbar.php');
                                     </div>
                                     <?
                                     if (isset($user)) {
-                                        if ($user && $user->getLogin() != $post['user_login'])
-                                            echo '<div class="media-content" onclick="redirect(`' . $post['user_login'] . '`, 0)" style="cursor:pointer">';
+                                        if ($user && $user->getUsername() != $post['username'])
+                                            echo '<div class="media-content" onclick="redirect(`' . $post['username'] . '`, 0)" style="cursor:pointer">';
                                         else
-                                            echo '<div class="media-content" onclick="redirect(`' . $post['user_login'] . '`, 1)" style="cursor:pointer">';
+                                            echo '<div class="media-content" onclick="redirect(`' . $post['username'] . '`, 1)" style="cursor:pointer">';
                                     } else {
                                         echo '<div class="media-content">';
                                     }
                                     ?>
                                     <?php echo '<p class="title is-4">' . $post["user_firstname"] . " " . $post["user_lastname"] . '</p>'; ?>
-                                    <?php echo '<p class="subtitle is-6">@' . $post["user_login"] . '</p>'; ?>
+                                    <? echo '<p class="subtitle is-6">@' . $post['username'] . '</p>'; ?>
                                 </div>
                             </div>
                             <? echo '<div id="media-bottom-' . $post['id'] . '" class="media-bottom">'; ?>
@@ -114,7 +114,7 @@ include_once('Utils/snackbar.php');
                                     <div class="container">
                                         <div class="columns">
                                             <div class="column is-4">
-                                                <label id="comment-user-' . $post['id'] . '" class="label">' . $comment->getUserLogin() . ':</label>
+                                                <label id="comment-user-' . $post['id'] . '" class="label">' . $comment->getUsername() . ':</label>
                                             </div>
                                             <div class="column is-6">
                                                 <p id="comment-' . $post['id'] . '" class="text">' . $comment->getComment() . '</p>

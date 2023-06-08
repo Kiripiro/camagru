@@ -11,7 +11,7 @@
                         <li><a class="my-profile-menu" href="#my-profile">Modifier mon Profil</a>
                             <ul>
                                 <li><a class="profile-pic-menu" href="#profile-pic">Photo</a></li>
-                                <li><a class="login-menu" href="#login">Login</a></li>
+                                <li><a class="login-menu" href="#username">Username</a></li>
                                 <li><a class="email-menu" href="#email">Email</a></li>
                                 <li><a class="biography-menu" href="#biography">Biographie</a></li>
                                 <li><a class="delete-menu" href="#delete">Supprimer</a></li>
@@ -91,15 +91,15 @@
                                 </div>
                             </div>
                         </form>
-                        <hr id="login" class="hr">
-                        <h5 class="title is-5 has-text-black">Login</h5>
-                        <form class="form" action="/settings/login" method="post">
+                        <hr id="username" class="hr">
+                        <h5 class="title is-5 has-text-black">Username</h5>
+                        <form class="form" action="/settings/username" method="post">
                             <div class="columns is-vcentered">
                                 <div class="column is-6">
                                     <div class="field">
                                         <div class="control">
-                                            <input class="input" name="login" type="text" value="<?php if ($user)
-                                                echo $user->getLogin() ?>">
+                                            <input class="input" name="username" type="text" value="<?php if ($user)
+                                                echo $user->getUsername() ?>">
                                             </div>
                                         </div>
                                     </div>

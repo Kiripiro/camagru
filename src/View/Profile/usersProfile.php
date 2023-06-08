@@ -35,7 +35,7 @@ include_once('Utils/snackbar.php');
                                                 <div class="column is-3">
                                                     <label class="label">Login</label>
                                                     <p class="text is-6">
-                                                        <?= $user->getLogin() ?>
+                                                        <?= $user->getUsername() ?>
                                                     </p>
                                                 </div>
                                                 <div class="column is-3">
@@ -142,7 +142,7 @@ include_once('Utils/snackbar.php');
                                                 <div class="comments container">
                                                     <div class="columns">
                                                         <div class="column is-4">
-                                                            <label id="comment-user-' . $post['id'] . '" class="label">' . $comment->getUserLogin() . ':</label>
+                                                            <label id="comment-user-' . $post['id'] . '" class="label">' . $comment->getUsername() . ':</label>
                                                         </div>
                                                         <div class="column is-6">
                                                             <p id="comment-' . $post['id'] . '" class="text">' . $comment->getComment() . '</p>

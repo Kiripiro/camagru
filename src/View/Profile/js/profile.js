@@ -42,9 +42,14 @@ const deletePostProfileConfirmation = (post_id) => {
     var token = getCookie("token");
 
     if (token === "") {
-        console.log("No token found");
+        var phpSessionId = getCookie("PHPSESSID");
+        if (phpSessionId !== "") {
+            document.cookie = "PHPSESSID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        }
+        window.location.href = "/login";
         return;
     }
+
     var formData = new FormData();
     formData.append('pictureId', post_id);
     formData.append('token', token);
@@ -57,6 +62,8 @@ const deletePostProfileConfirmation = (post_id) => {
             if (response.success) {
                 const post = document.getElementById(`post_${post_id}`);
                 const box = document.getElementById(`box_${post_id}`);
+                const nb_posts = document.getElementById('profile-nb-posts');
+                nb_posts.innerHTML = parseInt(nb_posts.innerHTML) - 1;
                 post.remove();
                 box.remove();
                 showSnackbar(response.message, "success");

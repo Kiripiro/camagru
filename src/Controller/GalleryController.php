@@ -14,7 +14,7 @@ class GalleryController extends BaseController
         foreach ($allPosts as $post) {
             $comments = $this->CommentsManager->getPostComments($post->getId());
             foreach ($comments as $comment) {
-                $comment->setUserLogin($this->UserManager->getById($comment->getUser_id())->getLogin());
+                $comment->setUsername($this->UserManager->getById($comment->getUser_id())->getUsername());
             }
             $likes = $this->LikesManager->getPostLikes($post->getId());
             $postUser = $this->UserManager->getById($post->getUserId());
@@ -28,7 +28,7 @@ class GalleryController extends BaseController
                 "comments_count" => count($comments),
                 "liked" => ($user) ? $this->LikesManager->likeExists($post->getId(), $user->getId()) : null,
                 "user_avatar" => $postUser->getAvatar(),
-                "user_login" => $postUser->getLogin(),
+                "username" => $postUser->getUsername(),
                 "user_firstname" => $postUser->getFirstname(),
                 "user_lastname" => $postUser->getLastname(),
             );
@@ -160,7 +160,7 @@ class GalleryController extends BaseController
                         "success" => true,
                         "message" => $return,
                         "mail" => "Mail sent",
-                        "user" => $userPost->getLogin(),
+                        "user" => $userPost->getUsername(),
                         "comment" => $comment
                     );
                     http_response_code(200);
@@ -172,7 +172,7 @@ class GalleryController extends BaseController
                 $response = array(
                     "success" => true,
                     "message" => $return,
-                    "user" => $userPost->getLogin(),
+                    "user" => $userPost->getUsername(),
                     "comment" => $comment
                 );
                 http_response_code(200);
@@ -204,7 +204,7 @@ class GalleryController extends BaseController
             $i++;
             $comments = $this->CommentsManager->getPostComments($post->getId());
             foreach ($comments as $comment) {
-                $comment->setUserLogin($this->UserManager->getById($comment->getUser_id())->getLogin());
+                $comment->setUsername($this->UserManager->getById($comment->getUser_id())->getUsername());
             }
             $likes = $this->LikesManager->getPostLikes($post->getId());
             $postUser = $this->UserManager->getById($post->getUserId());
@@ -224,9 +224,9 @@ class GalleryController extends BaseController
                             ' . (($postUser->getAvatar()) ? '<img src="/Media/avatars/' . $postUser->getAvatar() . '">' : '<img src="/Media/avatars/avatar.png">') . '
                         </figure>
                     </div>
-                    <div class="media-content" onclick="redirect(\'' . $postUser->getLogin() . '\', ' . (($user && $user->getLogin() != $postUser->getLogin()) ? '0' : '1') . ')" style="cursor:pointer">
+                    <div class="media-content" onclick="redirect(\'' . $postUser->getUsername() . '\', ' . (($user && $user->getUsername() != $postUser->getUsername()) ? '0' : '1') . ')" style="cursor:pointer">
                         <p class="title is-4">' . $postUser->getFirstname() . ' ' . $postUser->getLastname() . '</p>
-                        <p class="subtitle is-6">@' . $postUser->getLogin() . '</p>
+                        <p class="subtitle is-6">@' . $postUser->getUsername() . '</p>
                     </div>
                 </div>
                 <div class="media-bottom" id="media-bottom-' . $i . '">
@@ -273,7 +273,7 @@ class GalleryController extends BaseController
                         <div class="container">
                             <div class="columns">
                                 <div class="column is-4">
-                                    <label class="label">' . $comment->getUserLogin() . ':</label>
+                                    <label class="label">' . $comment->getUsername() . ':</label>
                                 </div>
                                 <div class="column is-6">
                                     <p class="text">' . $comment->getComment() . '</p>

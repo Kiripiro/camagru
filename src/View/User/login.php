@@ -11,13 +11,13 @@
                         <h3 class="title is-4 has-text-black">Se connecter</h3>
                         <hr class="login-hr">
                         <div class="box">
-                            <div class="title has-text-grey is-5">Veuillez entrer votre login et votre mot de passe.
+                            <div class="title has-text-grey is-5">Veuillez entrer votre username et votre mot de passe.
                             </div>
                             <form class="form" action="login" method="post">
                                 <div class="field">
                                     <div class="control">
-                                        <input class="input is-normal" type="text" name="login" placeholder="Login"
-                                            autofocus="">
+                                        <input class="input is-normal" type="text" name="username"
+                                            placeholder="Username" autofocus="">
                                     </div>
                                 </div>
                                 <div class="field">

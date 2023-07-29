@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const fileInput = document.querySelector('#file-upload input[type=file]');
     fileInput.onchange = () => {
         if (fileInput.files[0].size > 2 * 1024 * 1024) {
-            alert('La taille de l\'image ne doit pas dépasser 2 Mo.');
+            alert('The image\'s size shouldn\'t be above 2 Mo.');
             fileInput.files[0].value = null;
             return;
         }

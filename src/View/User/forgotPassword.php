@@ -9,11 +9,11 @@
                                 <img src="/Media/logo/logo.png" alt="Camagru">
                             </div>
                             <hr class="forgotPassword-hr">
-                            <h3 class="title is-4 has-text-black">Mot de passe oublié</h3>
+                            <h3 class="title is-4 has-text-black">Forgot password ?</h3>
                             <hr class="forgotPassword-hr">
                             <div class="box">
-                                <div class="title has-text-grey is-5">Veuillez entrer votre email. Nous vous enverrons un
-                                    mail de récupération.
+                                <div class="title has-text-grey is-5">Please enter your email address. You will receive a
+                                    link to create a new password via email.
                                 </div>
                                 <form class="form" action="forgot-password" method="post">
                                     <div class="field">
@@ -22,12 +22,12 @@
                                                 autofocus="">
                                         </div>
                                     </div>
-                                    <button class="button is-block is-info is-normal is-fullwidth">Envoyer</button>
+                                    <button class="button is-block is-info is-normal is-fullwidth">Send</button>
                                 </form>
                                 <hr class="forgotPassword-hr">
                                 <div class="title has-text-grey is-6">
-                                    Vous n'avez pas de compte ?
-                                    <a class="has-text-link" href="/register">Inscrivez-vous</a>
+                                    Don't have an account ?
+                                    <a class="has-text-link" href="/register">Sign up here</a>
                                 </div>
                             <?php else: ?>
                                 <div class="title has-text-grey is-6">

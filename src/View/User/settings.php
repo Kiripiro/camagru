@@ -5,27 +5,27 @@
             <div class="column is-3 is-clipped">
                 <aside class="menu is-hidden-mobile" style="position: fixed;">
                     <p class="menu-label">
-                        Paramètres
+                        Settings
                     </p>
                     <ul class="menu-list">
-                        <li><a class="my-profile-menu" href="#my-profile">Modifier mon Profil</a>
+                        <li><a class="my-profile-menu" href="#my-profile">Update your Profile</a>
                             <ul>
                                 <li><a class="profile-pic-menu" href="#profile-pic">Photo</a></li>
                                 <li><a class="login-menu" href="#username">Username</a></li>
                                 <li><a class="email-menu" href="#email">Email</a></li>
-                                <li><a class="biography-menu" href="#biography">Biographie</a></li>
-                                <li><a class="delete-menu" href="#delete">Supprimer</a></li>
+                                <li><a class="biography-menu" href="#biography">Biography</a></li>
+                                <li><a class="delete-menu" href="#delete">Delete</a></li>
                             </ul>
                         </li>
-                        <li><a class="security-menu" href="#security">Sécurité</a>
+                        <li><a class="security-menu" href="#security">Safety</a>
                             <ul>
-                                <li><a class="update-password-menu" href="#update-password">Mot de passe</a></li>
+                                <li><a class="update-password-menu" href="#update-password">Password</a></li>
                             </ul>
                         </li>
                         <li><a class="notifications-menu" href="#notifications">Notifications</a>
                             <ul>
-                                <li><a class="email-notifications-menu" href="#email-notifications">Recevoir
-                                        par email</a></li>
+                                <li><a class="email-notifications-menu" href="#email-notifications">Recieve by email</a>
+                                </li>
                             </ul>
                         </li>
                     </ul>
@@ -35,7 +35,7 @@
                 <section class="settings is-light">
                     <div id="my-profile" class="box">
                         <div class="box">
-                            <h3 class="title is-4 has-text-black has-text-centered">Modifier mon profil</h3>
+                            <h3 class="title is-4 has-text-black has-text-centered">Update my profile</h3>
                         </div>
                         <hr id="profile-pic" class="hr">
                         <h5 class="title is-5 has-text-black">Photo</h5>
@@ -68,11 +68,11 @@
                                                     <i class="fas fa-cloud-upload-alt"></i>
                                                 </span>
                                                 <span class="file-label">
-                                                    Choisir un fichier…
+                                                    Choose a file...
                                                 </span>
                                             </span>
                                             <span class="file-name">
-                                                Aucun fichier sélectionné
+                                                No file uploaded
                                             </span>
                                         </label>
                                     </div>
@@ -80,13 +80,13 @@
                                 <div class="column is-3">
                                     <div class="field">
                                         <div class="control has-text-centered">
-                                            <button name="update" class="button is-primary">Modifier</button>
+                                            <button name="update" class="button is-primary">Update</button>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="column is-3">
                                     <div class="notification">
-                                        La taille recommandée est de <strong>128x128</strong> pixels.
+                                        The recommended size is <strong>128x128</strong> pixels.
                                     </div>
                                 </div>
                             </div>
@@ -106,7 +106,7 @@
                                     <div class="column is-3">
                                         <div class="field">
                                             <div class="control has-text-centered">
-                                                <button class="button is-primary">Modifier</button>
+                                                <button class="button is-primary">Update</button>
                                             </div>
                                         </div>
                                     </div>
@@ -127,14 +127,14 @@
                                     <div class="column is-3">
                                         <div class="field">
                                             <div class="control has-text-centered">
-                                                <button class="button is-primary">Modifier</button>
+                                                <button class="button is-primary">Update</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </form>
                             <hr id="biography" class="hr">
-                            <h5 class="title is-5 has-text-black">Biographie</h5>
+                            <h5 class="title is-5 has-text-black">Biography</h5>
                             <form class="form" action="/settings/biography" method="post">
                                 <div class="columns is-vcentered">
                                     <div class="column is-6">
@@ -148,38 +148,38 @@
                                     <div class="column is-3">
                                         <div class="field">
                                             <div class="control has-text-centered">
-                                                <button class="button is-primary">Modifier</button>
+                                                <button class="button is-primary">Update</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </form>
                             <hr id="delete" class="hr">
-                            <h5 class="title is-5 has-text-black">Supprimer</h5>
+                            <h5 class="title is-5 has-text-black">Delete</h5>
                             <div class="columns is-vcentered">
                                 <div class="column is-6">
                                     <div class="notification">
-                                        Voulez-vous vraiment supprimer votre compte ?<br><br>
-                                        Attention, cette action est <strong class="has-text-danger">irréversible</strong>
+                                        Do you really wish to delete your account ?<br><br>
+                                        Careful, this action is <strong class="has-text-danger">irreversible</strong>
                                         !<br>
-                                        Une fois le compte supprimé, toutes les données seront effacées et ne
-                                        pourront pas être récupérées.
+                                        Once you account has been deleted, all your data will be deleted and you won't be
+                                        able to retrieve it.
                                     </div>
                                 </div>
                                 <div class="column is-3">
                                     <div class="field">
                                         <div class="control has-text-centered">
-                                            <button id="delete-button" class="button is-danger">Supprimer</button>
+                                            <button id="delete-button" class="button is-danger">Delete</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <hr class="hr">
                             <div class="box">
-                                <h3 id="security" class="title is-4 has-text-black has-text-centered">Sécurité</h3>
+                                <h3 id="security" class="title is-4 has-text-black has-text-centered">Safety</h3>
                             </div>
                             <hr id="update-password" class="hr">
-                            <h5 class="title is-5 has-text-black">Modifier le mot de passe</h5>
+                            <h5 class="title is-5 has-text-black">Update your password</h5>
                             <form class="form" action="/settings/update-password" method="post">
                                 <div class="columns is-vcentered">
                                     <div class="column is-6">
@@ -232,7 +232,7 @@
                                     <div class="column is-3">
                                         <div class="field">
                                             <div class="control has-text-centered">
-                                                <button class="button is-primary">Modifier</button>
+                                                <button class="button is-primary">Update</button>
                                             </div>
                                         </div>
                                     </div>
@@ -245,29 +245,29 @@
                                 </h3>
                             </div>
                             <hr id="email-notifications" class="hr">
-                            <h5 class="title is-5 has-text-black">Recevoir par email</h5>
+                            <h5 class="title is-5 has-text-black">Recieve by email</h5>
                             <form class="form" action="/settings/update-notifications" method="post">
                                 <div class="columns is-vcentered">
                                     <div class="column is-6">
-                                        <div class="notification">Voulez-vous recevoir un email de notification pour chaque
-                                            nouveau commentaire sur vos photos ?
-                                        </div>
+                                        <div class="notification">Do you want to recieve notifications when you have a new
+                                            comment by email ?</div>
                                     </div>
-                                    <div class="column is-3">
-                                        <div class="field">
-                                            <div class="control has-text-centered">
-                                            <?php if ($user->getNotifs() == 0): ?>
-                                                <input type="hidden" name="value" value="activated">
-                                                <button class="button is-primary">Activer</button>
-                                            <?php else: ?>
-                                                <input type="hidden" name="value" value="deactivated">
-                                                <button class="button is-danger">Désactiver</button>
-                                            <?php endif; ?>
-                                        </div>
+                                </div>
+                                <div class="column is-3">
+                                    <div class="field">
+                                        <div class="control has-text-centered">
+                                        <?php if ($user->getNotifs() == 0): ?>
+                                            <input type="hidden" name="value" value="activated">
+                                            <button class="button is-primary">Activate</button>
+                                        <?php else: ?>
+                                            <input type="hidden" name="value" value="deactivated">
+                                            <button class="button is-danger">Deactivate</button>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                             </div>
-                        </form>
+                    </div>
+                    </form>
                 </section>
             </div>
         </div>
@@ -279,12 +279,12 @@
     <div class="modal-card">
         <form class="form" action="/settings/delete" method="post">
             <header class="modal-card-head">
-                <h3 class="title is-4 is-centered">Supprimer le compte</h3>
+                <h3 class="title is-4 is-centered">Delete your account</h3>
             </header>
             <section class="modal-card-body">
-                <p class="has-text-centered">Voulez-vous vraiment <strong class="has-text-danger">supprimer</strong>
-                    votre compte de manière permanante ?</p>
-                <p class="has-text-centered">Dans ce cas, veuillez entrer votre mot de passe ci-dessous.</p>
+                <p class="has-text-centered">Do you really want to <strong class="has-text-danger">delete</strong>
+                    your account permanently ?</p>
+                <p class="has-text-centered">In that cas, please enter your password below.</p>
                 <br>
                 <div class="field">
                     <div class="control is-expanded">
@@ -293,7 +293,7 @@
                 </div>
             </section>
             <footer class="modal-card-foot is-centered">
-                <button class="button is-danger">Supprimer</button>
+                <button class="button is-danger">Delete</button>
             </footer>
         </form>
     </div>

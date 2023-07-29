@@ -10,7 +10,9 @@ include_once('Utils/snackbar.php');
                     <section class="profile-info is-light">
                         <div class="box">
                             <div class="box">
-                                <h3 class="title is-4 has-text-black has-text-centered">Mon profil</h3>
+                                <h3 class="title is-4 has-text-black has-text-centered">
+                                    <?= $userProfile->getUsername() ?>
+                                </h3>
                             </div>
                             <div class="box">
                                 <div class="columns">
@@ -18,9 +20,10 @@ include_once('Utils/snackbar.php');
                                         <div class="profile-avatar-container">
                                             <div class="has-text-centered">
                                                 <figure class="image is-128x128 is-inline-block">
-                                                    <?php if (isset($user) && $user->getAvatar() != null): ?>
+                                                    <?php if (isset($userProfile) && $userProfile->getAvatar() != null): ?>
                                                         <img class="image is-rounded"
-                                                            src="/Media/avatars/<?= $user->getAvatar() ?>" alt="Logo">
+                                                            src="/Media/avatars/<?= $userProfile->getAvatar() ?>"
+                                                            alt="Logo">
                                                     <?php else: ?>
                                                         <img class="image is-rounded" src="/Media/avatars/avatar.png"
                                                             alt="Logo">
@@ -33,21 +36,21 @@ include_once('Utils/snackbar.php');
                                         <div class="profile-infos-container">
                                             <div class="columns">
                                                 <div class="column is-3">
-                                                    <label class="label">Login</label>
+                                                    <label class="label">Username</label>
                                                     <p class="text is-6">
-                                                        <?= $user->getUsername() ?>
+                                                        <?= $userProfile->getUsername() ?>
                                                     </p>
                                                 </div>
                                                 <div class="column is-3">
-                                                    <label class="label">Prénom</label>
+                                                    <label class="label">Firstname</label>
                                                     <p class="text is-6">
-                                                        <?= $user->getFirstname() ?>
+                                                        <?= $userProfile->getFirstname() ?>
                                                     </p>
                                                 </div>
                                                 <div class="column is-3">
-                                                    <label class="label">Nom</label>
+                                                    <label class="label">Lastname</label>
                                                     <p class="text is-6">
-                                                        <?= $user->getLastname() ?>
+                                                        <?= $userProfile->getLastname() ?>
                                                     </p>
                                                 </div>
                                                 <div class="column is-3">
@@ -58,9 +61,9 @@ include_once('Utils/snackbar.php');
                                                 </div>
                                             </div>
                                             <div class="profile-infos-bis-container">
-                                                <label class="label">Biographie</label>
+                                                <label class="label">Biography</label>
                                                 <p class="text is-6">
-                                                    <?= $user->getBiography() ?>
+                                                    <?= $userProfile->getBiography() ?>
                                                 </p>
                                             </div>
                                         </div>
@@ -70,7 +73,7 @@ include_once('Utils/snackbar.php');
                     </section>
                     <section class="profile-posts is-light">
                         <div class="box mt-5">
-                            <h3 class="title is-4 has-text-black has-text-centered">Mes posts</h3>
+                            <h3 class="title is-4 has-text-black has-text-centered">Posts</h3>
                             <?php if (isset($posts) && !empty($posts)) {
                                 foreach ($posts as $post) {
                                     $filename = "Media/posts/" . $post["path"] . ".png";
@@ -86,7 +89,7 @@ include_once('Utils/snackbar.php');
                                                         <div class="control">
                                                             <div class="level is-mobile">
                                                                 <div class="level-left mt-2">';
-                                        if ($user != NULL) {
+                                        if ($userProfile != NULL) {
                                             echo '<button class="button mr-2 mt-2" onclick="likePost(' . $post['id'] . ')">';
                                             if ($post['liked']) {
                                                 echo '<i id="unlike-' . $post['id'] . '" class="fa-solid fa-heart"></i>'
@@ -125,7 +128,7 @@ include_once('Utils/snackbar.php');
                                                         <div class="container">
                                                             <div class="columns">
                                                                 <div class="column">
-                                                                    <label class="label is-pulled-left mt-3">Commentaires</label>
+                                                                    <label class="label is-pulled-left mt-3">Comments</label>
                                                                 </div>
                                                                 <div class="column is-2">
                                                                     <button class="button is-pulled-right" onclick="hideComments(' . $post["id"] . ')">
@@ -158,7 +161,7 @@ include_once('Utils/snackbar.php');
                                                             <div class="field">
                                                                 <div class="control">
                                                                     <input type="hidden" name="pictureId" value="' . $post["id"] . '" />
-                                                                    <input id="new-comment-' . $post['id'] . '" class="input" name="comment" type="text" placeholder="Commentaire" onkeypress="handleKeyPressComment(event, ' . $post['id'] . ' )">
+                                                                    <input id="new-comment-' . $post['id'] . '" class="input" name="comment" type="text" placeholder="Comments" onkeypress="handleKeyPressComment(event, ' . $post['id'] . ' )">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -174,7 +177,7 @@ include_once('Utils/snackbar.php');
                                     }
                                 }
                             } else {
-                                echo 'Aucune photo';
+                                echo 'No posts yet.';
                             }
                             ?>
                     </section>

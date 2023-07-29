@@ -26,7 +26,7 @@
                 <div class="navbar-item is-hidden-touch">
                     <div class="navbar-searchbar field has-addons">
                         <div class="control">
-                            <input id="searchbar" name="input" class="input" type="text" placeholder="Rechercher..."
+                            <input id="searchbar" name="input" class="input" type="text" placeholder="Find user..."
                                 onkeypress="handleKeyPress(event)">
                         </div>
                         <div class="control">
@@ -45,24 +45,23 @@
                     <a class="navbar-link">
                         <?php if ($user->getAvatar() != null) { ?>
                             <div class="navbar-avatar"
-                                style='background-image: url("/Media/avatars/<?php echo $user->getAvatar(); ?>"); background-size: cover; background-position: 50% 50%; border-radius: 100%; height: 28px; width: 28px; margin-right:10px;'>
+                                style='background-image: url("/Media/avatars/<?php echo $user->getAvatar(); ?>");'>
                             <?php } else { ?>
-                                <div class="navbar-avatar"
-                                    style='background-image: url("/Media/avatars/avatar.png"); background-size: cover; border-radius: 100%; background-position: 50% 50%; height: 28px; width: 28px; margin-right:10px;'>
+                                <div class="navbar-avatar" style='background-image: url("/Media/avatars/avatar.png");'>
                                 <?php } ?>
                             </div>
                             <?php echo $user->getUsername(); ?>
                     </a>
                     <div class="navbar-dropdown">
                         <a href="/profile" class="navbar-item">
-                            Mon profil
+                            My profile
                         </a>
                         <a href="/settings" class="navbar-item">
-                            Paramètres
+                            Settings
                         </a>
                         <hr class="navbar-divider">
                         <a href="/logout" class="navbar-item">
-                            Déconnexion
+                            Sign out
                         </a>
                     </div>
                 </div>
@@ -70,10 +69,10 @@
                 <div class="navbar-item">
                     <div class="buttons">
                         <a href="/login" class="button is-light">
-                            Se connecter
+                            Sign in
                         </a>
                         <a href="/register" class="button is-primary">
-                            <strong>Créer un compte</strong>
+                            <strong>Create an account</strong>
                         </a>
                     </div>
                 </div>
@@ -88,7 +87,7 @@
         <section id="navbar-modal-card-body" class="modal-card-body">
             <div class="field has-addons">
                 <div class="control is-expanded">
-                    <input id="searchbar-mobile" name="input" class="input" type="text" placeholder="Rechercher..."
+                    <input id="searchbar-mobile" name="input" class="input" type="text" placeholder="Find user..."
                         onkeypress="handleKeyPress(event)">
                 </div>
                 <div class="control">

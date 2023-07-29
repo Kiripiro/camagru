@@ -2,9 +2,9 @@ window.onload = function () {
     const searchbar = document.getElementById("searchbar");
     if (searchbar) {
         if (navigator.userAgent.indexOf('Mac OS X') != -1) {
-            searchbar.setAttribute("placeholder", "Rechercher... (⌘ + K)");
+            searchbar.setAttribute("placeholder", "Find user... (⌘ + K)");
         } else if ((navigator.userAgent.indexOf('Linux') != -1) || (navigator.userAgent.indexOf('Windows') != -1)) {
-            searchbar.setAttribute("placeholder", "Rechercher... (CTRL + K)");
+            searchbar.setAttribute("placeholder", "Find user... (CTRL + K)");
         }
         window.addEventListener('keydown', function (e) {
             if (e.metaKey && e.key == 'k') {

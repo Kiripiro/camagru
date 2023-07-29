@@ -9,22 +9,22 @@
                                 <img src="/Media/logo/logo.png" alt="Camagru">
                             </div>
                             <hr class="register-hr">
-                            <h3 class="title is-4 has-text-black">Créer un compte</h3>
+                            <h3 class="title is-4 has-text-black">Sign up</h3>
                             <hr class="register-hr">
                             <div class="box">
-                                <div class="title has-text-grey is-5">Veuillez entrer votre username et votre mot de passe.
+                                <div class="title has-text-grey is-5">Please enter your informations.
                                 </div>
                                 <form class="form" action="register" method="post">
                                     <div class="field">
                                         <div class="control">
-                                            <input class="input is-normal" type="text" name="firstname" placeholder="Prénom"
-                                                autofocus="">
+                                            <input class="input is-normal" type="text" name="firstname"
+                                                placeholder="Firstname" autofocus="">
                                         </div>
                                     </div>
                                     <div class="field">
                                         <div class="control">
-                                            <input class="input is-normal" type="text" name="lastname" placeholder="Nom"
-                                                autofocus="">
+                                            <input class="input is-normal" type="text" name="lastname"
+                                                placeholder="Lastname" autofocus="">
                                         </div>
                                     </div>
                                     <div class="field">
@@ -44,7 +44,7 @@
                                             <div class="columns is-mobile">
                                                 <div class="column is-10">
                                                     <input class="input is-normal" type="password" name="password"
-                                                        placeholder="Mot de passe">
+                                                        placeholder="Password">
                                                 </div>
                                                 <div class="column is-1 has-text-centered">
                                                     <span class="icon is-small is-right toggle-password mt-3">
@@ -59,7 +59,7 @@
                                             <div class="columns is-mobile">
                                                 <div class="column is-10">
                                                     <input class="input is-normal" type="password" name="confirmPassword"
-                                                        placeholder="Confirmez le mot de passe">
+                                                        placeholder="Confirm password">
                                                 </div>
                                                 <div class="column is-1 has-text-centered">
                                                     <span class="icon is-small is-right toggle-password mt-3">
@@ -69,12 +69,12 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <button class="button is-block is-info is-normal is-fullwidth">Se connecter</button>
+                                    <button class="button is-block is-info is-normal is-fullwidth">Sign in</button>
                                 </form>
                                 <hr class="register-hr">
                                 <div class="title has-text-grey is-6">
-                                    Vous avez un compte ?
-                                    <a class="has-text-link" href="/login">Connectez-vous</a>
+                                    Already have an account ?
+                                    <a class="has-text-link" href="/login">Sign in</a>
                                 </div>
                             </div>
                         <?php else: ?>

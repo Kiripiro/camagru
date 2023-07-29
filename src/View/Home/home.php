@@ -5,15 +5,15 @@
                 <div class="column is-8">
                     <div class="">
                         <p class="title mb-6">
-                            Bienvenue sur mon projet <span class="project">Camagru</span> !
+                            Welcome to my <span class="project">Camagru</span> project!
                             <img src="https://media.giphy.com/media/hvRJCLFzcasrR4ia7z/giphy.gif" width="50vw" />
                         </p>
                         <p class="subtitle description mt-6">
-                            Un projet simple pour apprendre les bases de PHP et Javascript.<br />
+                            A simple website learn PHP and Javascript.<br />
                         </p>
                         <button class="button is-primary is-rounded is-medium is-outlined mt-4"
                             onclick="window.location.href = '/gallery'">
-                            <span>Visiter la galerie</span>
+                            <span>Visit the gallery</span>
                             <span class="icon is-small">
                                 <i class="fas fa-images"></i>
                             </span>

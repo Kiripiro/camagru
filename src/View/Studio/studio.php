@@ -17,25 +17,25 @@ include_once('Utils/snackbar.php');
                         </div>
                         <div class="field is-grouped is-flex is-justify-content-center">
                             <div id="use-image" class="control is-hidden">
-                                <button class="button is-link is-mobile-responsive" onclick="useImage()">Utiliser la
+                                <button class="button is-link is-mobile-responsive" onclick="useImage()">Use this
                                     photo</button>
                             </div>
                             <div class="control take-snapshot">
                                 <button id="take-snapshot" class="button is-primary is-mobile-responsive"
-                                    onclick="takeSnapshot()">Prendre la photo</button>
+                                    onclick="takeSnapshot()">Take photo</button>
                             </div>
                             <div class="control">
                                 <button id="delete-filter" class="button is-warning is-mobile-responsive"
-                                    onclick="deleteFilter()" disabled>Supprimer le filtre</button>
+                                    onclick="deleteFilter()" disabled>Delete filter</button>
                             </div>
                             <div class="control">
                                 <button id="delete-photo" class="button is-danger is-mobile-responsive"
-                                    onclick="deletePhoto()" disabled>Supprimer la photo</button>
+                                    onclick="deletePhoto()" disabled>Delete photo</button>
                             </div>
                         </div>
                         <hr class="studio-hr">
                         <div class="field">
-                            <label class="label">Importer une image</label>
+                            <label class="label">Import an image</label>
                             <div class="control">
                                 <input id="file-upload" class="input" type="file" name="image" />
                             </div>
@@ -46,7 +46,7 @@ include_once('Utils/snackbar.php');
                 <div class="column is-2">
                     <div class="filters">
                         <div class="field">
-                            <label class="label">Filtres</label>
+                            <label class="label">Filters</label>
                             <div class="filters-container container" style="overflow-y: scroll; height: 75vh;">
                                 <div class="filter-item">
                                     <figure class="image">
@@ -92,7 +92,7 @@ include_once('Utils/snackbar.php');
                 <div class="column is-3">
                     <div class="recent">
                         <div class="field">
-                            <label class="label">Dernières prises</label>
+                            <label class="label">Lasts taken</label>
                             <div id="recent-pics" lass="recent-pics" style="overflow-y: scroll; height: 100vh">
                                 <?php if (isset($posts) && !empty($posts)) {
                                     foreach ($posts as $post) {
@@ -106,7 +106,7 @@ include_once('Utils/snackbar.php');
                                                     </figure>
                                                 <div class="field mb-2">
                                                         <div class="control">
-                                                            <button class="button is-danger is-fullwidth" onclick="deletePost(' . $post["id"] . ')">Supprimer</button>
+                                                            <button class="button is-danger is-fullwidth" onclick="deletePost(' . $post["id"] . ')">Delete</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -114,7 +114,7 @@ include_once('Utils/snackbar.php');
                                         }
                                     }
                                 } else {
-                                    echo 'Aucune photo';
+                                    echo 'No photos yet';
                                 }
                                 ?>
                             </div>
@@ -130,13 +130,12 @@ include_once('Utils/snackbar.php');
                     <div class="field">
                         <label class="label">Description</label>
                         <div class="control">
-                            <textarea class="textarea" name="description"
-                                placeholder="Description de l'image"></textarea>
+                            <textarea class="textarea" name="description" placeholder="Description"></textarea>
                         </div>
                     </div>
                     <div class="field">
                         <div class="control">
-                            <button class="button is-link">Publier</button>
+                            <button class="button is-link">Publish</button>
                         </div>
                     </div>
                 </form>

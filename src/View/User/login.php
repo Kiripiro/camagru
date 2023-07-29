@@ -8,10 +8,10 @@
                             <img src="/Media/logo/logo.png" alt="Camagru">
                         </div>
                         <hr class="login-hr">
-                        <h3 class="title is-4 has-text-black">Se connecter</h3>
+                        <h3 class="title is-4 has-text-black">Sign in</h3>
                         <hr class="login-hr">
                         <div class="box">
-                            <div class="title has-text-grey is-5">Veuillez entrer votre username et votre mot de passe.
+                            <div class="title has-text-grey is-5">Please enter your username and password.
                             </div>
                             <form class="form" action="login" method="post">
                                 <div class="field">
@@ -35,16 +35,16 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button class="button is-block is-info is-normal is-fullwidth">Se connecter</button>
+                                <button class="button is-block is-info is-normal is-fullwidth">Sign in</button>
                             </form>
                             <hr class="login-hr">
                             <div class="title has-text-link is-7">
-                                <a class="has-text-blue" href="/forgot-password">Mot de passe oublié ?</a>
+                                <a class="has-text-blue" href="/forgot-password">Forgot your password ?</a>
                             </div>
                             <hr class="login-hr">
                             <div class="title has-text-grey is-6">
-                                Vous n'avez pas de compte ?
-                                <a class="has-text-link" href="/register">Inscrivez-vous</a>
+                                Don't have an account ?
+                                <a class="has-text-link" href="/register">Sign up here</a>
                             </div>
                         </div>
                     </div>

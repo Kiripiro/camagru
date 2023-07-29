@@ -8,11 +8,10 @@
                             <img src="/Media/logo/logo.png" alt="Camagru">
                         </div>
                         <hr class="resetPassword-hr">
-                        <h3 class="title is-4 has-text-black">Changer de mot de passe</h3>
+                        <h3 class="title is-4 has-text-black">Change your password</h3>
                         <hr class="forgotPassword-hr">
                         <div class="box">
-                            <div class="title has-text-grey is-5">Veuillez entrer votre ancien mot de passe ainsi que
-                                votre nouveau mot de passe.
+                            <div class="title has-text-grey is-5">Please enter your new password and confirm it.
                             </div>
                             <form class="form" action="reset-password" method="post">
                                 <div class="field">
@@ -27,7 +26,7 @@
                                             placeholder="Confirmez le mot de passe" autofocus="">
                                     </div>
                                 </div>
-                                <button class="button is-block is-info is-normal is-fullwidth">Envoyer</button>
+                                <button class="button is-block is-info is-normal is-fullwidth">Send</button>
                             </form>
                         </div>
                     </div>

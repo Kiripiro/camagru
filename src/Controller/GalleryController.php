@@ -49,7 +49,7 @@ class GalleryController extends BaseController
             if (!$this->UserManager->verifyToken($user->getId(), $token)) {
                 $response = array(
                     "success" => false,
-                    "message" => "Token invalide"
+                    "message" => "Invalid token"
                 );
                 http_response_code(401);
                 header('Content-Type: application/json');
@@ -80,7 +80,7 @@ class GalleryController extends BaseController
         }
         $return = $this->LikesManager->addLike($postId, $user->getId());
         if ($return === false) {
-            $return = "Une erreur est survenue. Veuillez réessayer.";
+            $return = "An error has occured. Please try again.";
             http_response_code(400);
             echo json_encode(array("error" => $return));
             exit;
@@ -103,7 +103,7 @@ class GalleryController extends BaseController
             if (!$this->UserManager->verifyToken($user->getId(), $token)) {
                 $response = array(
                     "success" => false,
-                    "message" => "Token invalide"
+                    "message" => "Invalid token"
                 );
                 http_response_code(401);
                 header('Content-Type: application/json');
@@ -135,12 +135,12 @@ class GalleryController extends BaseController
         if (empty($comment)) {
             http_response_code(400);
             header('Content-Type: application/json');
-            echo json_encode(array("error" => "Veuillez entrer un commentaire."));
+            echo json_encode(array("error" => "Please enter a comment."));
             exit;
         }
         $return = $this->CommentsManager->addComment($comment, $postId, $user->getId());
         if ($return === false) {
-            $return = "Une erreur est survenue. Veuillez réessayer.";
+            $return = "An error has occured. Please try again.";
             http_response_code(400);
             header('Content-Type: application/json');
             echo json_encode(array("error" => $return));
@@ -153,7 +153,7 @@ class GalleryController extends BaseController
                 if (!$mail->sendNewCommentMail($userPost->getFirstname(), $userPost->getLastname(), $userPost->getEmail())) {
                     http_response_code(400);
                     header('Content-Type: application/json');
-                    echo json_encode(array("error" => "Une erreur est survenue. Veuillez réessayer."));
+                    echo json_encode(array("error" => "An error has occured. Please try again."));
                     exit;
                 } else {
                     $response = array(
@@ -191,7 +191,7 @@ class GalleryController extends BaseController
             if (!$this->UserManager->verifyToken($user->getId(), $token)) {
                 $response = array(
                     "success" => false,
-                    "message" => "Token invalide"
+                    "message" => "Invalid token"
                 );
                 return $response;
             }
@@ -257,7 +257,7 @@ class GalleryController extends BaseController
                     <div class="container">
                         <div class="columns">
                             <div class="column">
-                                <label class="label is-pulled-left mt-2">Commentaires</label>
+                                <label class="label is-pulled-left mt-2">Comments</label>
                             </div>
                             <div class="column">
                                 <button class="button is-pulled-right" onclick="hideComments(' . $i . ')">
@@ -293,7 +293,7 @@ class GalleryController extends BaseController
                                     <div class="field">
                                         <div class="control">
                                             <input type="hidden" name="pictureId" value="' . $post->getId() . '" />
-                                            <input id="comment_' . $i . '" class="input" name="comment" type="text" placeholder="Commentaire">
+                                            <input id="comment_' . $i . '" class="input" name="comment" type="text" placeholder="Comments">
                                         </div>
                                     </div>
                                 </div>

@@ -60,7 +60,7 @@ navigator.mediaDevices.enumerateDevices()
                     }
                 })
                 .catch(function (err) {
-                    console.log("An error occurred: " + err);
+                    console.log("An error has occurred: " + err);
                 });
         } else {
             canvas.style = "display: block";

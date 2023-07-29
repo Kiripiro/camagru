@@ -52,3 +52,7 @@
             </div>
         </div>
 </section>
+
+<?
+include_once('Utils/snackbar.php');
+?>

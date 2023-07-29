@@ -8,9 +8,9 @@
                         Settings
                     </p>
                     <ul class="menu-list">
-                        <li><a class="my-profile-menu" href="#my-profile">Update your Profile</a>
+                        <li><a class="my-profile-menu" href="#my-profile">Update my profile</a>
                             <ul>
-                                <li><a class="profile-pic-menu" href="#profile-pic">Photo</a></li>
+                                <li><a class="profile-pic-menu" href="#profile-pic">Profile picture</a></li>
                                 <li><a class="login-menu" href="#username">Username</a></li>
                                 <li><a class="email-menu" href="#email">Email</a></li>
                                 <li><a class="biography-menu" href="#biography">Biography</a></li>
@@ -31,14 +31,14 @@
                     </ul>
                 </aside>
             </div>
-            <div class="menu-container column is-9" style="overflow-y: scroll;">
+            <div class="menu-container column is-9">
                 <section class="settings is-light">
                     <div id="my-profile" class="box">
                         <div class="box">
                             <h3 class="title is-4 has-text-black has-text-centered">Update my profile</h3>
                         </div>
                         <hr id="profile-pic" class="hr">
-                        <h5 class="title is-5 has-text-black">Photo</h5>
+                        <h5 class="title is-5 has-text-black">Profile picture</h5>
                         <form id="profile-form" action="/settings/update-avatar" method="post" class="form"
                             enctype="multipart/form-data" accept="image/*" maxlength="2097152">
                             <div class="columns is-vcentered">
@@ -111,163 +111,163 @@
                                         </div>
                                     </div>
                                 </div>
-                            </form>
-                            <hr id="email" class="hr">
-                            <h5 class="title is-5 has-text-black">Email</h5>
-                            <form class="form" action="/settings/email" method="post">
-                                <div class="columns is-vcentered">
-                                    <div class="column is-6">
-                                        <div class="field">
-                                            <div class="control">
-                                                <input class="input" name="email" type="email" value="<?php if ($user)
-                                                echo $user->getEmail() ?>">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="column is-3">
-                                        <div class="field">
-                                            <div class="control has-text-centered">
-                                                <button class="button is-primary">Update</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                            <hr id="biography" class="hr">
-                            <h5 class="title is-5 has-text-black">Biography</h5>
-                            <form class="form" action="/settings/biography" method="post">
-                                <div class="columns is-vcentered">
-                                    <div class="column is-6">
-                                        <div class="field">
-                                            <div class="control">
-                                                <textarea class="textarea" name="biography" type="text"><?php if ($user)
-                                                echo $user->getBiography() ?></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="column is-3">
-                                        <div class="field">
-                                            <div class="control has-text-centered">
-                                                <button class="button is-primary">Update</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                            <hr id="delete" class="hr">
-                            <h5 class="title is-5 has-text-black">Delete</h5>
+                        </form>
+                        <hr id="email" class="hr">
+                        <h5 class="title is-5 has-text-black">Email</h5>
+                        <form class="form" action="/settings/email" method="post">
                             <div class="columns is-vcentered">
                                 <div class="column is-6">
-                                    <div class="notification">
-                                        Do you really wish to delete your account ?<br><br>
-                                        Careful, this action is <strong class="has-text-danger">irreversible</strong>
-                                        !<br>
-                                        Once you account has been deleted, all your data will be deleted and you won't be
-                                        able to retrieve it.
+                                    <div class="field">
+                                        <div class="control">
+                                            <input class="input" name="email" type="email" value="<?php if ($user)
+                                            echo $user->getEmail() ?>">
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="column is-3">
                                     <div class="field">
                                         <div class="control has-text-centered">
-                                            <button id="delete-button" class="button is-danger">Delete</button>
+                                            <button class="button is-primary">Update</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <hr class="hr">
-                            <div class="box">
-                                <h3 id="security" class="title is-4 has-text-black has-text-centered">Safety</h3>
-                            </div>
-                            <hr id="update-password" class="hr">
-                            <h5 class="title is-5 has-text-black">Update your password</h5>
-                            <form class="form" action="/settings/update-password" method="post">
-                                <div class="columns is-vcentered">
-                                    <div class="column is-6">
-                                        <div class="field">
-                                            <div class="control">
-                                                <div class="columns is-mobile">
-                                                    <div class="column is-10">
-                                                        <input class="input is-normal" type="password" name="password"
-                                                            placeholder="Mot de passe actuel">
-                                                    </div>
-                                                    <div class="column is-1 has-text-centered">
-                                                        <span class="icon is-small is-right toggle-password mt-3">
-                                                            <i class="fa-solid fa-eye"></i>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
+                        </form>
+                        <hr id="biography" class="hr">
+                        <h5 class="title is-5 has-text-black">Biography</h5>
+                        <form class="form" action="/settings/biography" method="post">
+                            <div class="columns is-vcentered">
+                                <div class="column is-6">
+                                    <div class="field">
+                                        <div class="control">
+                                            <textarea class="textarea" name="biography" type="text" maxlength="255"><?php if ($user)
+                                            echo $user->getBiography() ?></textarea>
                                         </div>
-                                        <div class="field">
-                                            <div class="control">
-                                                <div class="columns is-mobile">
-                                                    <div class="column is-10">
-                                                        <input class="input is-normal" type="password" name="newPassword"
-                                                            placeholder="Nouveau mot de passe">
-                                                    </div>
-                                                    <div class="column is-1 has-text-centered">
-                                                        <span class="icon is-small is-right toggle-password mt-3">
-                                                            <i class="fa-solid fa-eye"></i>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="field">
-                                            <div class="control">
-                                                <div class="columns is-mobile">
-                                                    <div class="column is-10">
-                                                        <input class="input is-normal" type="password"
-                                                            name="confirmPassword" placeholder="Confirmez le mot de passe">
-                                                    </div>
-                                                    <div class="column is-1 has-text-centered">
-                                                        <span class="icon is-small is-right toggle-password mt-3">
-                                                            <i class="fa-solid fa-eye"></i>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="column is-3">
-                                        <div class="field">
-                                            <div class="control has-text-centered">
-                                                <button class="button is-primary">Update</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                            <hr class="hr">
-                            <div id="notifications" class="box">
-                                <h3 class="title is-4 has-text-black has-text-centered">
-                                    Notifications
-                                </h3>
-                            </div>
-                            <hr id="email-notifications" class="hr">
-                            <h5 class="title is-5 has-text-black">Recieve by email</h5>
-                            <form class="form" action="/settings/update-notifications" method="post">
-                                <div class="columns is-vcentered">
-                                    <div class="column is-6">
-                                        <div class="notification">Do you want to recieve notifications when you have a new
-                                            comment by email ?</div>
                                     </div>
                                 </div>
                                 <div class="column is-3">
                                     <div class="field">
                                         <div class="control has-text-centered">
-                                        <?php if ($user->getNotifs() == 0): ?>
-                                            <input type="hidden" name="value" value="activated">
-                                            <button class="button is-primary">Activate</button>
-                                        <?php else: ?>
-                                            <input type="hidden" name="value" value="deactivated">
-                                            <button class="button is-danger">Deactivate</button>
-                                        <?php endif; ?>
+                                            <button class="button is-primary">Update</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                        </form>
+                        <hr id="delete" class="hr">
+                        <h5 class="title is-5 has-text-black">Delete</h5>
+                        <div class="columns is-vcentered">
+                            <div class="column is-6">
+                                <div class="notification">
+                                    Do you really wish to delete your account ?<br><br>
+                                    Be careful ! This action is <strong class="has-text-danger">irreversible</strong>
+                                    !<br>
+                                    Once your account has been deleted, all your data will be deleted and you won't be
+                                    able to retrieve it.
+                                </div>
+                            </div>
+                            <div class="column is-3">
+                                <div class="field">
+                                    <div class="control has-text-centered">
+                                        <button id="delete-button" class="button is-danger">Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="hr">
+                        <div class="box">
+                            <h3 id="security" class="title is-4 has-text-black has-text-centered">Safety</h3>
+                        </div>
+                        <hr id="update-password" class="hr">
+                        <h5 class="title is-5 has-text-black">Update your password</h5>
+                        <form class="form" action="/settings/update-password" method="post">
+                            <div class="columns is-vcentered">
+                                <div class="column is-6">
+                                    <div class="field">
+                                        <div class="control">
+                                            <div class="columns is-mobile">
+                                                <div class="column is-10">
+                                                    <input class="input is-normal" type="password" name="password"
+                                                        placeholder="Mot de passe actuel">
+                                                </div>
+                                                <div class="column is-1 has-text-centered">
+                                                    <span class="icon is-small is-right toggle-password mt-3">
+                                                        <i class="fa-solid fa-eye"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <div class="control">
+                                            <div class="columns is-mobile">
+                                                <div class="column is-10">
+                                                    <input class="input is-normal" type="password" name="newPassword"
+                                                        placeholder="Nouveau mot de passe">
+                                                </div>
+                                                <div class="column is-1 has-text-centered">
+                                                    <span class="icon is-small is-right toggle-password mt-3">
+                                                        <i class="fa-solid fa-eye"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <div class="control">
+                                            <div class="columns is-mobile">
+                                                <div class="column is-10">
+                                                    <input class="input is-normal" type="password"
+                                                        name="confirmPassword" placeholder="Confirmez le mot de passe">
+                                                </div>
+                                                <div class="column is-1 has-text-centered">
+                                                    <span class="icon is-small is-right toggle-password mt-3">
+                                                        <i class="fa-solid fa-eye"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="column is-3">
+                                    <div class="field">
+                                        <div class="control has-text-centered">
+                                            <button class="button is-primary">Update</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <hr class="hr">
+                        <div id="notifications" class="box">
+                            <h3 class="title is-4 has-text-black has-text-centered">
+                                Notifications
+                            </h3>
+                        </div>
+                        <hr id="email-notifications" class="hr">
+                        <h5 class="title is-5 has-text-black">Recieve by email</h5>
+                        <form class="form" action="/settings/update-notifications" method="post">
+                            <div class="columns is-vcentered">
+                                <div class="column is-6">
+                                    <div class="notification">Do you want to recieve notifications when you have a new
+                                        comment by email ?</div>
+                                </div>
+                                <div class="column is-3">
+                                    <div class="field">
+                                        <div class="control has-text-centered">
+                                            <?php if ($user->getNotifs() == 0): ?>
+                                                    <input type="hidden" name="value" value="activated">
+                                                    <button class="button is-primary">Activate</button>
+                                            <?php else: ?>
+                                                <input type="hidden" name="value" value="deactivated">
+                                                <button class="button is-danger">Deactivate</button>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                    </form>
                 </section>
             </div>
         </div>

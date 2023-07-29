@@ -9,7 +9,7 @@
                             <img src="https://media.giphy.com/media/hvRJCLFzcasrR4ia7z/giphy.gif" width="50vw" />
                         </p>
                         <p class="subtitle description mt-6">
-                            A simple website learn PHP and Javascript.<br />
+                            A simple website to learn PHP and Javascript.<br/>
                         </p>
                         <button class="button is-primary is-rounded is-medium is-outlined mt-4"
                             onclick="window.location.href = '/gallery'">

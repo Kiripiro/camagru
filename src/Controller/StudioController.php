@@ -11,7 +11,7 @@ class StudioController extends BaseController
         }
         $this->addParam("user", $user);
         $this->addParam("title", "Studio");
-        $this->addParam("description", "Ajouter une image");
+        $this->addParam("description", "Upload a new post");
         $this->addParam('session', $session);
         $allUsersPosts = $this->StudioManager->getAllUsersPosts($user->getId());
         $posts = array();
@@ -27,6 +27,7 @@ class StudioController extends BaseController
         $this->addParam("navbar", "View/Navbar/navbar.php");
         $this->view("studio");
     }
+
     public function StudioPreview($imageDimensions, $filters)
     {
         $session = new Session();
@@ -151,9 +152,9 @@ class StudioController extends BaseController
         $post = $this->StudioManager->addPost($latestImageId, $user->getId(), $description);
         if ($post) {
             $session->addArray('posts', $post->getPath());
-            $session->set('success_message', "Votre image a bien été publiée !");
+            $session->set('success_message', "Your post has been published !");
         } else {
-            $session->set('error_message', "Une erreur est survenue lors de la publication de votre image.");
+            $session->set('error_message', "An error has occured while publishing your post.");
         }
         $this->redirect("/studio");
     }
@@ -163,7 +164,7 @@ class StudioController extends BaseController
         if (empty($token || empty($pictureID))) {
             $response = array(
                 "success" => false,
-                "message" => "Paramètres manquants"
+                "message" => "Missing parameters"
             );
 
             http_response_code(400);
@@ -175,7 +176,7 @@ class StudioController extends BaseController
         if ($user == null) {
             $response = array(
                 "success" => false,
-                "message" => "Vous devez être connecté pour effectuer cette action"
+                "message" => "Please sign in to delete your post"
             );
 
             http_response_code(401);
@@ -185,7 +186,7 @@ class StudioController extends BaseController
         if (!$this->UserManager->verifyToken($user->getId(), $token)) {
             $response = array(
                 "success" => false,
-                "message" => "Token invalide"
+                "message" => "Invalid token"
             );
 
             http_response_code(401);
@@ -201,7 +202,7 @@ class StudioController extends BaseController
             $session->removeFromArray('posts', $post->getPath());
             $response = array(
                 "success" => true,
-                "message" => "Post supprimé"
+                "message" => "Post deleted"
             );
 
             http_response_code(200);
@@ -210,7 +211,7 @@ class StudioController extends BaseController
         } else {
             $response = array(
                 "success" => false,
-                "message" => "Une erreur est survenue. Veuillez réessayer."
+                "message" => "An error has occured. Please try again."
             );
 
             http_response_code(400);

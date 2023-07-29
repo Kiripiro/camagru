@@ -380,7 +380,7 @@
         ]
     },
     {
-        "path": "/NotFound",
+        "path": "/notfound",
         "controller": "Error",
         "action": "Show404",
         "method": "GET",
@@ -388,7 +388,7 @@
         "manager": []
     },
     {
-        "path": "/Error",
+        "path": "/error",
         "controller": "Error",
         "action": "Show",
         "method": "GET",

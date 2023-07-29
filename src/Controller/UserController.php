@@ -7,8 +7,8 @@ class UserController extends BaseController
         if ($session->get("user") && $session->get("token_exp") > date("Y-m-d H:i:s")) {
             $this->redirect("/");
         }
-        $this->addParam('title', 'Se connecter');
-        $this->addParam('description', 'Se connecter à votre compte sur notre site');
+        $this->addParam('title', 'Sign in');
+        $this->addParam('description', 'Sign in to our website');
         $this->view("login");
     }
 
@@ -21,8 +21,8 @@ class UserController extends BaseController
 
     public function Register()
     {
-        $this->addParam('title', 'Créer un compte');
-        $this->addParam('description', 'Créer un compte sur notre site');
+        $this->addParam('title', 'Create an account');
+        $this->addParam('description', 'Create an account to our website');
         $this->view("register");
     }
 
@@ -56,9 +56,9 @@ class UserController extends BaseController
         $mail = new Mail();
         $status = $mail->sendVerificationMail($firstname, $lastname, $email, $verificationToken);
         if ($status) {
-            $success = "Nous vous avons envoyé un email de vérification. Merci de suivre les instructions pour activer votre compte.";
+            $success = "We sent you a verification email. Please follow the instructions to validate your account.";
         } else {
-            $failed = "Nous n'avons pas pu vous envoyer l'email de vérification. Merci d'utiliser un autre email.";
+            $failed = "Sorry, we couldn't send you the verification email. Please make sure to use a valid email.";
         }
         $this->addParam('message', $status ? $success : $failed);
         $this->view("register");
@@ -112,8 +112,8 @@ class UserController extends BaseController
 
     public function ForgotPasswordView()
     {
-        $this->addParam('title', 'Mot de passe oublié');
-        $this->addParam('description', 'Mot de passe oublié ?');
+        $this->addParam('title', 'Forgot password');
+        $this->addParam('description', 'Forgot password ?');
         $this->view("forgotPassword");
     }
 
@@ -127,9 +127,9 @@ class UserController extends BaseController
             $mail = new Mail();
             $status = $mail->sendResetPasswordMail($user->getFirstname(), $user->getLastname(), $user->getEmail(), $user->getVerificationToken());
             if ($status) {
-                $success = "Nous vous avons envoyé un email. Merci de suivre les instructions pour changer votre mot de passe.";
+                $success = "We sent you an email. Please follow the instructions to update your password.";
             } else {
-                $failed = "Nous n'avons pas pu vous envoyer l'email. Merci d'utiliser un autre email.";
+                $failed = "Sorry, we couldn't send you the email. Please use another email.";
             }
             $this->addParam('message', $status ? $success : $failed);
             $this->view("forgotPassword");
@@ -140,8 +140,8 @@ class UserController extends BaseController
     {
         $session = new Session();
         $session->set("token", $token);
-        $this->addParam('title', 'Changer de mot de passe');
-        $this->addParam('description', 'Changer de mot de passe sur note site');
+        $this->addParam('title', 'Update password');
+        $this->addParam('description', 'Update your password');
         $this->view("resetPassword");
     }
 
@@ -170,14 +170,14 @@ class UserController extends BaseController
             PasswordValidator::validate($newPassword, $confirmPassword);
             $user->setPassword(password_hash($newPassword, PASSWORD_BCRYPT));
             $this->UserManager->setPassword($user->getId(), $user->getPassword());
-            $success = "Votre mot de passe a bien été modifié.";
+            $success = "Your password has been updated.";
         } catch (Exception $e) {
             $failed = $e->getMessage();
         }
         $this->addParam('message', isset($success) ? $success : $failed);
         $this->addParam('navbar', 'View/Navbar/navbar.php');
-        $this->addParam('title', 'Paramètres');
-        $this->addParam('description', 'Paramètres de votre compte');
+        $this->addParam('title', 'Settings');
+        $this->addParam('description', 'Your account settings');
         $this->view("settings");
     }
 
@@ -193,8 +193,8 @@ class UserController extends BaseController
         }
         $success_message = $session->get("success_message");
         $error_message = $session->get("error_message");
-        $this->addParam('title', 'Paramètres');
-        $this->addParam('description', 'Paramètres de votre compte');
+        $this->addParam('title', 'Settings');
+        $this->addParam('description', 'Your account settings');
         $this->addParam('session', $session);
         $this->addParam('user', $user);
         $this->addParam('success_message', $success_message);
@@ -224,10 +224,10 @@ class UserController extends BaseController
         if ($this->UserManager->updateUsername($user, $username)) {
             $user->setUsername($username);
             $session->set("user", $user);
-            $success = "Votre username a bien été modifié.";
+            $success = "Your username has been updated.";
             $session->set("success_message", $success);
         } else {
-            $failed = "Une erreur est survenue. Veuillez réessayer.";
+            $failed = "An error has occured. Please try again.";
             $session->set("error_message", $failed);
         }
         $this->redirect("/settings");
@@ -258,10 +258,10 @@ class UserController extends BaseController
         if ($this->UserManager->updateEmail($user, $email)) {
             $user->setEmail($email);
             $session->set("user", $user);
-            $success = "Votre email a bien été modifié.";
+            $success = "Your email has been updated.";
             $session->set('success_message', $success);
         } else {
-            $error = "Une erreur est survenue. Veuillez réessayer.";
+            $error = "An error has occured. Please try again.";
             $session->set('error_message', $error);
         }
         $this->redirect("/settings");
@@ -280,10 +280,10 @@ class UserController extends BaseController
         if ($this->UserManager->updateBiography($user, $biography)) {
             $user->setBiography($biography);
             $session->set("user", $user);
-            $success = "Votre biographie a bien été modifiée.";
+            $success = "Your biography has been updated.";
             $session->set('success_message', $success);
         } else {
-            $error = "Une erreur est survenue. Veuillez réessayer.";
+            $error = "An error has occured. Please try again.";
             $session->set('error_message', $error);
         }
         $this->redirect("/settings");
@@ -315,7 +315,7 @@ class UserController extends BaseController
             else if (file_exists("Media/posts/" . $post->getPath() . ".jpeg"))
                 unlink("Media/posts/" . $post->getPath() . ".jpeg");
             else {
-                $error = "Une erreur est survenue. Veuillez réessayer.";
+                $error = "An error has occured. Please try again.";
                 $session->set('error_message', $error);
                 return;
             }
@@ -323,7 +323,7 @@ class UserController extends BaseController
         if ($this->UserManager->delete($user)) {
             $session->destroy();
         } else {
-            $error = "Une erreur est survenue. Veuillez réessayer.";
+            $error = "An error has occured. Please try again.";
             $session->set('error_message', $error);
         }
         $this->redirect("/");
@@ -372,14 +372,14 @@ class UserController extends BaseController
             if ($this->UserManager->updateAvatar($user, $uploaded_file)) {
                 $user->setAvatar($uploaded_file);
                 $session->set("user", $user);
-                $success = "Votre avatar a bien été modifié.";
+                $success = "Your profile picture has been updated.";
                 $session->set('success_message', $success);
             } else {
-                $error = "Une erreur est survenue. Veuillez réessayer.";
+                $error = "An error has occured. Please try again.";
                 $session->set('error_message', $error);
             }
         } else {
-            $error = "Merci de choisir une photo de profil. Veuillez réessayer.";
+            $error = "Please select an image and try again.";
             $session->set('error_message', $error);
         }
         $this->redirect("/settings");
@@ -405,10 +405,10 @@ class UserController extends BaseController
         }
         PasswordValidator::validate($newPassword, $confirmPassword);
         if ($this->UserManager->updatePassword($userExists, $newPassword)) {
-            $success = "Votre mot de passe a bien été modifiée.";
+            $success = "Your password has been updated.";
             $session->set('success_message', $success);
         } else {
-            $error = "Une erreur est survenue. Veuillez réessayer.";
+            $error = "An error has occured. Please try again.";
             $session->set('error_message', $error);
         }
         $this->redirect("/settings");
@@ -429,14 +429,10 @@ class UserController extends BaseController
             throw new UserNotFoundException();
         }
         if ($this->UserManager->updateNotifs($user, $value)) {
-            if ($value == "activated")
-                $value = "activées";
-            else if ($value == "deactivated")
-                $value = "désactivées";
-            $success = "Les notifications par email ont bien été " . $value . ".";
+            $success = "Your email notifications have been " . $value . ".";
             $session->set('success_message', $success);
         } else {
-            $error = "Une erreur est survenue. Veuillez réessayer.";
+            $error = "An error has occured. Please try again.";
             $session->set('error_message', $error);
         }
         $this->redirect("/settings");
@@ -454,7 +450,7 @@ class UserController extends BaseController
             header('Content-Type: application/json');
             $response = array(
                 "success" => false,
-                "error" => "Votre session a expiré. Veuillez vous reconnecter."
+                "error" => "Your session has expired. Please sign in again."
             );
             echo json_encode($response);
             exit;
@@ -468,7 +464,7 @@ class UserController extends BaseController
             if (!$user) {
                 $response = array(
                     "success" => false,
-                    "error" => "L'utilisateur n'existe pas."
+                    "error" => "User doesn't exist."
                 );
 
                 header('Content-Type: application/json');
@@ -495,7 +491,7 @@ class UserController extends BaseController
         } else {
             $response = array(
                 "success" => false,
-                "error" => "Vous n'êtes pas autorisé à effectuer cette action."
+                "error" => "You are not authorized to perform this action."
             );
 
             header('Content-Type: application/json');

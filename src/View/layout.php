@@ -14,6 +14,7 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.css" />
     <link rel="stylesheet" href="/Css/style.css">
     <meta name="description" content="<?= isset($description) ? $description : 'Default Description'; ?>">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 </head>
 
 <body>

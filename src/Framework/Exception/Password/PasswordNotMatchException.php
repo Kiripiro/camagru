@@ -3,6 +3,6 @@ class PasswordNotMatchException extends Exception
 {
     public function __construct()
     {
-        parent::__construct("Password not match");
+        parent::__construct("Passwords do not match");
     }
 }

@@ -1,13 +1,13 @@
 window.onload = function () {
     const searchbar = document.getElementById("searchbar");
     if (searchbar) {
-        if (navigator.userAgent.indexOf('Mac OS X') != -1) {
+        if (navigator.userAgentData.platform === "Mac") {
             searchbar.setAttribute("placeholder", "Find user... (⌘ + K)");
-        } else if ((navigator.userAgent.indexOf('Linux') != -1) || (navigator.userAgent.indexOf('Windows') != -1)) {
+        } else if ((navigator.userAgentData.platform === "Linux") || (navigator.userAgentData.platform === "Windows")) {
             searchbar.setAttribute("placeholder", "Find user... (CTRL + K)");
         }
         window.addEventListener('keydown', function (e) {
-            if (e.metaKey && e.key == 'k') {
+            if (e.metaKey && e.key == 'k' || e.ctrlKey && e.key == 'k') {
                 e.preventDefault();
                 searchbar.focus();
             }
@@ -44,7 +44,16 @@ window.onload = function () {
                 let isValid = true;
 
                 inputs.forEach(input => {
-                    if (!input.value) {
+                    if (input.name === "biography") {
+                        if (input.value.length > 255) {
+                            isValid = false;
+                            input.style.border = "1px solid red";
+                            errorMessage.textContent = "Biography must be less than 255 characters.";
+                        } else {
+                            input.style.border = "";
+                        }
+                    }
+                    if (!input.value && input.name !== "biography") {
                         isValid = false;
                         input.style.border = "1px solid red";
                     } else {
@@ -56,9 +65,9 @@ window.onload = function () {
                     form.submit();
                 } else {
                     if (inputs.length === 1) {
-                        errorMessage.textContent = "Ce champ est requis.";
+                        errorMessage.textContent = "This field is required.";
                     } else {
-                        errorMessage.textContent = "Tous les champs sont requis.";
+                        errorMessage.textContent = "All fields are required.";
                     }
                 }
             });

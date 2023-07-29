@@ -44,15 +44,6 @@ observer.observe(sentinel);
 function loadMoreContent() {
     var token = getCookie("token");
 
-    if (token === "") {
-        var phpSessionId = getCookie("PHPSESSID");
-        if (phpSessionId !== "") {
-            document.cookie = "PHPSESSID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-        }
-        window.location.href = "/login";
-        return;
-    }
-
     var offset = document.getElementById('gallery').childElementCount;
 
     const xhr = new XMLHttpRequest();

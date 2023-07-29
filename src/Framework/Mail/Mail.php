@@ -26,7 +26,7 @@ class Mail
     {
         $this->_mail->Subject = 'Camagru - Email verification';
         $this->_mail->setFrom("atourret42.camagru@gmail.com");
-        $this->_mail->Body = "Bonjour $firstname $lastname,\nMerci de cliquer sur le lien suivant pour activer votre compte:\nhttps://localhost/verify?token=$verificationToken";
+        $this->_mail->Body = "Bonjour $firstname $lastname,\nPlease click on the following link to activate your account:\nhttps://" . $_SERVER['HTTP_HOST'] . "/verify?token=$verificationToken";
         $this->_mail->addAddress($email);
         if (!$this->_mail->send()) {
             throw new MailHasNotBeenSentException();
@@ -37,9 +37,9 @@ class Mail
 
     public function sendResetPasswordMail($firstname, $lastname, $email, $verificationToken)
     {
-        $this->_mail->Subject = 'Camagru - Nouveau de mot de passe';
+        $this->_mail->Subject = 'Camagru - Update password';
         $this->_mail->setFrom("atourret42.camagru@gmail.com");
-        $this->_mail->Body = "Bonjour $firstname $lastname,\nMerci de cliquer sur le lien suivant pour réinitialiser votre mot de passe:\nhttps://localhost/reset-password?token=$verificationToken";
+        $this->_mail->Body = "Bonjour $firstname $lastname,\nPlease click on the following link to reset your password:\nhttps://" . $_SERVER['HTTP_HOST'] . "/reset-password?token=$verificationToken";
         $this->_mail->addAddress($email);
         if (!$this->_mail->send()) {
             throw new MailHasNotBeenSentException();
@@ -50,9 +50,9 @@ class Mail
 
     public function sendNewCommentMail($firstname, $lastname, $email)
     {
-        $this->_mail->Subject = 'Camagru - Nouveau commentaire';
+        $this->_mail->Subject = 'Camagru - New comment';
         $this->_mail->setFrom("atourret42@gmail.com");
-        $this->_mail->Body = "Bonjour $firstname $lastname,\nUn nouveau commentaire a été posté sur l'une de vos photos.";
+        $this->_mail->Body = "Bonjour $firstname $lastname,\nA new comment has been published on one of your posts.";
         $this->_mail->addAddress($email);
         if (!$this->_mail->send()) {
             throw new MailHasNotBeenSentException();

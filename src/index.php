@@ -1,5 +1,6 @@
 <?php
-// phpinfo();
+//phpinfo();
+
 $configFile = file_get_contents("Config/config.json");
 $config = json_decode($configFile);
 
@@ -19,16 +20,20 @@ try {
     $httpRequest->run($config);
 } catch (Exception $e) {
     if ($e instanceof NoRouteFoundException) {
-        $httpRequest = new HttpRequest("/NotFound", "GET");
+        $httpRequest = new HttpRequest("/notfound", "GET");
         $router = new Router();
         $httpRequest->setRoute($router->findRoute($httpRequest, $config->basepath));
         $httpRequest->addParam($e);
         $httpRequest->run($config);
     } else {
-        $httpRequest = new HttpRequest("/Error", "GET");
-        $router = new Router();
-        $httpRequest->setRoute($router->findRoute($httpRequest, $config->basepath));
-        $httpRequest->addParam($e);
-        $httpRequest->run($config);
+        // $httpRequest = new HttpRequest("/Error", "GET");
+        // $router = new Router();
+        // $httpRequest->setRoute($router->findRoute($httpRequest, $config->basepath));
+        // $httpRequest->addParam($e);
+        // $httpRequest->run($config);
+        $session = new Session();
+        $session->set("error_message", $e->getMessage());
+        var_dump($e);
+        // $httpRequest = new HttpRequest($e[], "GET");
     }
 }

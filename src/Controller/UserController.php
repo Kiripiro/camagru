@@ -28,6 +28,12 @@ class UserController extends BaseController
     {
         $this->addParam('title', 'Create an account');
         $this->addParam('description', 'Create an account to our website');
+        $session = new Session();
+        if ($session->get("error_message")) {
+            $this->addParam("error_message", $session->get("error_message"));
+            $this->addParam('session', $session);
+            $session->remove("error_message");
+        }
         $this->view("register");
     }
 
@@ -67,7 +73,13 @@ class UserController extends BaseController
             $session->set("error_page", "/register");
             throw new InvalidEmailException();
         }
-        PasswordValidator::validate($password, $confirmPassword);
+        $passwordValidator = PasswordValidator::validate($password, $confirmPassword);
+        if ($passwordValidator !== true) {
+            $session = new Session();
+            $session->set("error_message", $passwordValidator);
+            $session->set("error_page", "/register");
+            throw new Exception($passwordValidator);
+        }
         $user['password'] = password_hash($password, PASSWORD_BCRYPT);
         $this->UserManager->addUser($user);
         $mail = new Mail();
@@ -205,14 +217,12 @@ class UserController extends BaseController
         }
         $user = $this->UserManager->getBy("verificationToken", $token['token']);
         if (!$user) {
-            $session = new Session();
             $session->set("error_message", "User not found.");
             $session->set("error_page", "/reset-password");
             throw new UserNotFoundException();
         }
         $passwordValidator = PasswordValidator::validate($password, $confirmPassword);
         if ($passwordValidator !== true) {
-            $session = new Session();
             $session->set("error_message", $passwordValidator);
             $session->set("error_page", "/reset-password");
             $session->set("error_param", "?token=" . $token['token']);
@@ -234,7 +244,12 @@ class UserController extends BaseController
                 $session->set("error_page", "/settings");
                 throw new WrongPasswordException();
             }
-            PasswordValidator::validate($newPassword, $confirmPassword);
+            $passwordValidator = PasswordValidator::validate($newPassword, $confirmPassword);
+            if ($passwordValidator !== true) {
+                $session->set("error_message", $passwordValidator);
+                $session->set("error_page", "/settings");
+                throw new Exception($passwordValidator);
+            }
             $user->setPassword(password_hash($newPassword, PASSWORD_BCRYPT));
             $this->UserManager->setPassword($user->getId(), $user->getPassword());
             $success = "Your password has been updated.";

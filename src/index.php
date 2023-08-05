@@ -27,8 +27,6 @@ try {
         $httpRequest->run($config);
     } else {
         $session = new Session();
-        var_dump($session->get("error_page"));
-        var_dump($session->get("error_param"));
         if (!$session->get("error_page")) {
             $session->set("error_page", "/notfound");
         }
@@ -36,11 +34,9 @@ try {
             $session->set("error_message", "An error has occured.");
         }
         if ($session->get("error_param")) {
-            var_dump("test");
             $httpRequest = new HttpRequest($session->get("error_page") . $session->get("error_param"), "GET");
         } else
             $httpRequest = new HttpRequest($session->get("error_page"), "GET");
-        var_dump($httpRequest);
         $router = new Router();
         $httpRequest->setRoute($router->findRoute($httpRequest, $config->basepath));
         $httpRequest->addParam($e);

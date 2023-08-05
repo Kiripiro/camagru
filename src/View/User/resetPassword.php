@@ -1,3 +1,7 @@
+<?php
+include_once("Utils/snackbar.php");
+?>
+
 <section class="resetPassword">
     <div class="hero is-fullheight is-light">
         <div class="hero-body" style="height: 80vh; overflow: hidden;">

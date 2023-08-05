@@ -1,8 +1,12 @@
+var timeoutId;
+
 function showSnackbar(message, type) {
     var snackbar = document.getElementById("snackbar");
     var snackbarMessage = document.getElementById("snackbar-message");
     var snackbarDelete = document.getElementById("snackbar-delete");
     var progressBar = document.querySelector("#snackbar .progress-bar");
+
+    clearTimeout(timeoutId);
 
     snackbarDelete.addEventListener("click", function () {
         snackbar.style.display = "none";
@@ -24,11 +28,14 @@ function showSnackbar(message, type) {
 
         progress.appendChild(progressBar);
         snackbar.appendChild(progress);
-
-        progressBar.style.animation = "progress 5s linear forwards";
+    } else {
+        progressBar.style.animation = "none";
+        progressBar.offsetHeight;
     }
 
-    setTimeout(function () {
+    progressBar.style.animation = "progress 5s linear forwards";
+
+    timeoutId = setTimeout(function () {
         snackbar.style.display = "none";
     }, 5000);
 }

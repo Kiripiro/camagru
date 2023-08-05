@@ -7,6 +7,11 @@ class UserController extends BaseController
         if ($session->get("user") && $session->get("token_exp") > date("Y-m-d H:i:s")) {
             $this->redirect("/");
         }
+        if ($session->get("error_message")) {
+            $this->addParam("error_message", $session->get("error_message"));
+            $this->addParam('session', $session);
+            $session->remove("error_message");
+        }
         $this->addParam('title', 'Sign in');
         $this->addParam('description', 'Sign in to our website');
         $this->view("login");
@@ -40,14 +45,26 @@ class UserController extends BaseController
             return empty($field);
         });
         if (!empty($emptyFields)) {
+            $sesion = new Session();
+            $sesion->set("error_message", "Please fill in all the fields.");
+            $sesion->set("error_page", "/register");
             throw new EmptyFieldsException(implode(', ', array_keys($emptyFields)));
         }
         if ($this->UserManager->getBy($key = "username", $username)) {
+            $session = new Session();
+            $session->set("error_message", "Username already exists.");
+            $session->set("error_page", "/register");
             throw new UserAlreadyExistsException($key, $username);
         } else if ($this->UserManager->getBy($key = "email", $email)) {
+            $session = new Session();
+            $session->set("error_message", "Email already in use.");
+            $session->set("error_page", "/register");
             throw new UserAlreadyExistsException($key, $email);
         }
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $session = new Session();
+            $session->set("error_message", "Please use a valid email.");
+            $session->set("error_page", "/register");
             throw new InvalidEmailException();
         }
         PasswordValidator::validate($password, $confirmPassword);
@@ -85,15 +102,21 @@ class UserController extends BaseController
         if (empty($username) || empty($password)) {
             throw new EmptyFieldsException("username, password");
         }
+        $session = new Session();
         $user = $this->UserManager->getBy("username", $username);
         if (!$user) {
+            $session->set("error_message", "User not found.");
+            $session->set("error_page", "/login");
             throw new UserNotFoundException();
         } else if (!password_verify($password, $user->getPassword())) {
+            $session->set("error_message", "Wrong password. Please try again.");
+            $session->set("error_page", "/login");
             throw new WrongPasswordException();
         } else if (!$user->getActive()) {
+            $session->set("error_message", "User not verified.");
+            $session->set("error_page", "/login");
             throw new UserNotVerifiedException($user->getFirstname(), $user->getLastname());
         }
-        $session = new Session();
         if (!$user->getToken() || $user->getTokenExp() < date('Y-m-d H:i:s')) {
             $token = bin2hex(random_bytes(16));
             $exp = new DateTime("+1 day", new DateTimeZone("Europe/Paris"));
@@ -114,6 +137,12 @@ class UserController extends BaseController
     {
         $this->addParam('title', 'Forgot password');
         $this->addParam('description', 'Forgot password ?');
+        $session = new Session();
+        if ($session->get("error_message")) {
+            $this->addParam("error_message", $session->get("error_message"));
+            $this->addParam('session', $session);
+            $session->remove("error_message");
+        }
         $this->view("forgotPassword");
     }
 
@@ -122,6 +151,9 @@ class UserController extends BaseController
         if (isset($email)) {
             $user = $this->UserManager->getBy("email", $email);
             if (!$user) {
+                $session = new Session();
+                $session->set("error_message", "User not found.");
+                $session->set("error_page", "/forgot-password");
                 throw new UserNotFoundException();
             }
             $mail = new Mail();
@@ -139,9 +171,26 @@ class UserController extends BaseController
     public function resetPasswordView($token)
     {
         $session = new Session();
+        if (!$token) {
+            $session->set("error_message", "Missing token.");
+            $session->set("error_page", "/reset-password");
+            throw new InvalidTokenException();
+        }
+        if (!$this->UserManager->getBy("verificationToken", $token['token'])) {
+
+            $session->set("error_message", "Invalid token.");
+            $session->set("error_page", "/forgot-password");
+            throw new InvalidTokenException();
+        }
         $session->set("token", $token);
         $this->addParam('title', 'Update password');
         $this->addParam('description', 'Update your password');
+        $session = new Session();
+        if ($session->get("error_message")) {
+            $this->addParam("error_message", $session->get("error_message"));
+            $this->addParam('session', $session);
+            $session->remove("error_message");
+        }
         $this->view("resetPassword");
     }
 
@@ -149,11 +198,26 @@ class UserController extends BaseController
     {
         $session = new Session();
         $token = $session->get("token");
+        if (!$token) {
+            $session->set("error_message", "Invalid token.");
+            $session->set("error_page", "/reset-password");
+            throw new InvalidTokenException();
+        }
         $user = $this->UserManager->getBy("verificationToken", $token['token']);
         if (!$user) {
+            $session = new Session();
+            $session->set("error_message", "User not found.");
+            $session->set("error_page", "/reset-password");
             throw new UserNotFoundException();
         }
-        PasswordValidator::validate($password, $confirmPassword);
+        $passwordValidator = PasswordValidator::validate($password, $confirmPassword);
+        if ($passwordValidator !== true) {
+            $session = new Session();
+            $session->set("error_message", $passwordValidator);
+            $session->set("error_page", "/reset-password");
+            $session->set("error_param", "?token=" . $token['token']);
+            throw new Exception($passwordValidator);
+        }
         $user->setPassword(password_hash($password, PASSWORD_BCRYPT));
         $this->UserManager->setPassword($user->getId(), $user->getPassword());
         $session->destroy();
@@ -165,6 +229,9 @@ class UserController extends BaseController
             $session = new Session();
             $user = $session->get("user");
             if (!password_verify($oldPassword, $user->getPassword())) {
+                $session = new Session();
+                $session->set("error_message", "Wrong password. Please try again.");
+                $session->set("error_page", "/settings");
                 throw new WrongPasswordException();
             }
             PasswordValidator::validate($newPassword, $confirmPassword);
@@ -215,11 +282,20 @@ class UserController extends BaseController
         }
         $user = $this->UserManager->getById($user->getId());
         if (!$user) {
-            throw new UserNotFoundException();
+            $session->set("error_message", "User not found.");
+            $session->set("error_page", "/settings");
+            $this->redirect("/settings");
+        }
+        if ($user->getUsername() === $username) {
+            $session->set("error_message", "Your username is already up to date.");
+            $session->set("error_page", "/settings");
+            $this->redirect("/settings");
         }
         $userExists = $this->UserManager->getByUsername($username);
         if ($userExists) {
-            throw new UserAlreadyExistsException('username', $username);
+            $session->set("error_message", "Username already exists.");
+            $session->set("error_page", "/settings");
+            $this->redirect("/settings");
         }
         if ($this->UserManager->updateUsername($user, $username)) {
             $user->setUsername($username);
@@ -253,7 +329,9 @@ class UserController extends BaseController
         }
         $userExists = $this->UserManager->getByEmail($email);
         if ($userExists) {
-            throw new UserAlreadyExistsException('email', $email);
+            $session->set("error_message", "Email already in use.");
+            $session->set("error_page", "/settings");
+            $this->redirect("/settings");
         }
         if ($this->UserManager->updateEmail($user, $email)) {
             $user->setEmail($email);
@@ -276,6 +354,12 @@ class UserController extends BaseController
         }
         if ($user->getTokenExp() <= date('Y-m-d H:i:s')) {
             $this->redirect("/login");
+        }
+        $actualBio = $user->getBiography();
+        if ($actualBio === $biography) {
+            $session->set("error_message", "Your biography is already up to date.");
+            $session->set("error_page", "/settings");
+            $this->redirect("/settings");
         }
         if ($this->UserManager->updateBiography($user, $biography)) {
             $user->setBiography($biography);
@@ -398,12 +482,21 @@ class UserController extends BaseController
         }
         $userExists = $this->UserManager->getById($user->getId());
         if (!$userExists) {
-            throw new UserNotFoundException();
+            $session->set("error_message", "User not found.");
+            $session->set("error_page", "/settings");
+            $this->redirect("/settings");
         }
         if (!password_verify($password, $userExists->getPassword())) {
-            throw new WrongPasswordException();
+            $session->set("error_message", "Wrong password. Please try again.");
+            $session->set("error_page", "/settings");
+            $this->redirect("/settings");
         }
-        PasswordValidator::validate($newPassword, $confirmPassword);
+        $passwordValidator = PasswordValidator::validate($newPassword, $confirmPassword);
+        if ($passwordValidator !== true) {
+            $session->set("error_message", $passwordValidator);
+            $session->set("error_page", "/settings");
+            $this->redirect("/settings");
+        }
         if ($this->UserManager->updatePassword($userExists, $newPassword)) {
             $success = "Your password has been updated.";
             $session->set('success_message', $success);

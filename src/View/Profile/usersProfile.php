@@ -144,10 +144,10 @@ include_once('Utils/snackbar.php');
                                             echo '
                                                 <div class="comments container">
                                                     <div class="columns">
-                                                        <div class="column is-4">
+                                                        <div class="column is-3">
                                                             <label id="comment-user-' . $post['id'] . '" class="label">' . $comment->getUsername() . ':</label>
                                                         </div>
-                                                        <div class="column is-6">
+                                                        <div class="column is-7">
                                                             <p id="comment-' . $post['id'] . '" class="text">' . $comment->getComment() . '</p>
                                                         </div>
                                                     </div>

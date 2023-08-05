@@ -24,6 +24,7 @@ update:
 	git pull origin master
 
 clean:
+	rm -rf src/Media/posts/*
 	docker-compose down -v --rmi all --remove-orphans
 
 fclean: clean

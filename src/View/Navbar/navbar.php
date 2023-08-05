@@ -26,8 +26,7 @@
                 <div class="navbar-item is-hidden-touch">
                     <div class="navbar-searchbar field has-addons">
                         <div class="control">
-                            <input id="searchbar" name="input" class="input" type="text" placeholder="Find user..."
-                                onkeypress="handleKeyPress(event)">
+                            <input id="searchbar" name="input" class="input" type="text" onkeypress="handleKeyPress(event)">
                         </div>
                         <div class="control">
                             <button class=" button is-hoverable" onclick="searchUser()">

@@ -1,7 +1,7 @@
 window.onload = function () {
     const searchbar = document.getElementById("searchbar");
     if (searchbar) {
-        if (navigator.userAgentData.platform === "Mac") {
+        if (navigator.userAgentData.platform === "Mac" || navigator.userAgentData.platform === "macOS") {
             searchbar.setAttribute("placeholder", "Find user... (⌘ + K)");
         } else if ((navigator.userAgentData.platform === "Linux") || (navigator.userAgentData.platform === "Windows")) {
             searchbar.setAttribute("placeholder", "Find user... (CTRL + K)");
@@ -127,13 +127,13 @@ function likePost(postId) {
         if (xhr.status === 200) {
             const response = JSON.parse(xhr.responseText);
             if (response.success) {
-                if (response.message == "Like ajouté") {
+                if (response.message == "Like has been added") {
                     document.getElementById(`like-${postId}`).classList.add('is-hidden');
                     document.getElementById(`unlike-${postId}`).classList.remove('is-hidden');
                     let count = parseInt(document.getElementById(`like-count-${postId}`).innerHTML) + 1;
                     document.getElementById(`like-count-${postId}`).innerHTML = count + (count > 1 ? " Likes" : " Like");
                 }
-                else if (response.message == "Like supprimé") {
+                if (response.message == "Like has been removed") {
                     document.getElementById(`like-${postId}`).classList.remove('is-hidden');
                     document.getElementById(`unlike-${postId}`).classList.add('is-hidden');
                     let count = parseInt(document.getElementById(`like-count-${postId}`).innerHTML) - 1;
@@ -167,7 +167,7 @@ function addComment(postId) {
     var comment = document.getElementById(`new-comment-${postId}`).value;
 
     if (comment === "") {
-        showSnackbar("Commentaire vide", "error");
+        showSnackbar("Empty comment", "error");
         return;
     }
     commentInput.disabled = true;
@@ -190,10 +190,10 @@ function addComment(postId) {
                 commentContainer.className = "comments container";
                 commentContainer.innerHTML = `
                     <div class="columns">
-                        <div class="column is-4">
+                        <div class="column is-3">
                             <label class="label">${response.user}:</label>
                         </div>
-                        <div class="column is-6">
+                        <div class="column is-7">
                             <p class="text">${response.comment}</p>
                         </div>
                     </div>

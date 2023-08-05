@@ -5,16 +5,23 @@ class PasswordValidator
 
     public static function validate($password, $confirmPassword)
     {
-        self::doPasswordsMatch($password, $confirmPassword);
-        self::validateLength($password);
-        self::validateUppercase($password);
-        self::validateNumber($password);
-        self::validateSpecialCharacter($password);
+        try {
+            self::doPasswordsMatch($password, $confirmPassword);
+            self::validateLength($password);
+            self::validateUppercase($password);
+            self::validateNumber($password);
+            self::validateSpecialCharacter($password);
+            return true;
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     public static function doPasswordsMatch($password, $confirmPassword)
     {
-        return $password === $confirmPassword;
+        if ($password !== $confirmPassword) {
+            throw new PasswordsDoNotMatchException();
+        }
     }
 
     private static function validateLength($password)

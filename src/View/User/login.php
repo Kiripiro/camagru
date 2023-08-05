@@ -1,3 +1,7 @@
+<?
+include_once("Utils/snackbar.php");
+?>
+
 <section class="login">
     <div class="hero is-fullheight is-light">
         <div class="hero-body" style="height: 80vh; overflow: hidden;">
@@ -52,7 +56,3 @@
             </div>
         </div>
 </section>
-
-<?
-include_once('Utils/snackbar.php');
-?>

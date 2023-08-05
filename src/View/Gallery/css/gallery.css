@@ -1,6 +1,11 @@
 .media-comments-content {
     overflow-y: scroll;
     height: 25vh;
+    /* width: 100%; */
+}
+
+.media-comments-content .text {
+    word-break: break-all;
 }
 
 /* Spinner */

@@ -18,7 +18,7 @@ class CommentsManager extends BaseManager
             $dateString = $date->format("Y-m-d H:i:s");
             $commentObj->setDate($dateString);
             $this->create($commentObj, ["user_id", "picture_id", "comment", "date"]);
-            return "Commentaire ajouté";
+            return "Comment has been added";
         } catch (Exception $e) {
             echo $e->getMessage();
             return false;

@@ -145,7 +145,7 @@ class GalleryController extends BaseController
             header('Content-Type: application/json');
             echo json_encode(array("error" => $return));
             exit;
-        } else if ($return === "Commentaire ajouté") {
+        } else if ($return === "Comment has been added") {
             $post = $this->StudioManager->getById($postId);
             $userPost = $this->UserManager->getById($post->getUserId());
             if ($userPost->getNotifs() == 1) {
@@ -160,7 +160,7 @@ class GalleryController extends BaseController
                         "success" => true,
                         "message" => $return,
                         "mail" => "Mail sent",
-                        "user" => $userPost->getUsername(),
+                        "user" => $user->getUsername(),
                         "comment" => $comment
                     );
                     http_response_code(200);
@@ -172,7 +172,7 @@ class GalleryController extends BaseController
                 $response = array(
                     "success" => true,
                     "message" => $return,
-                    "user" => $userPost->getUsername(),
+                    "user" => $user->getUsername(),
                     "comment" => $comment
                 );
                 http_response_code(200);
@@ -272,10 +272,10 @@ class GalleryController extends BaseController
                 $postHTML .= '
                         <div class="container">
                             <div class="columns">
-                                <div class="column is-4">
+                                <div class="column is-3">
                                     <label class="label">' . $comment->getUsername() . ':</label>
                                 </div>
-                                <div class="column is-6">
+                                <div class="column is-7">
                                     <p class="text">' . $comment->getComment() . '</p>
                                 </div>
                             </div>

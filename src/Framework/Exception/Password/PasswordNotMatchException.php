@@ -1,5 +1,5 @@
 <?php
-class PasswordNotMatchException extends Exception
+class PasswordsNotMatchException extends Exception
 {
     public function __construct()
     {

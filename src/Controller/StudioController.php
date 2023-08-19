@@ -42,6 +42,7 @@ class StudioController extends BaseController
         if (isset($_FILES["image"]) && isset($imageDimensions) && isset($filters)) {
             if ($_FILES['image']['error'] !== UPLOAD_ERR_OK) {
                 http_response_code(400);
+                header('Content-Type: application/json');
                 echo json_encode(array("error" => "File upload error: " . $_FILES['image']['error']));
                 exit;
             }
@@ -49,12 +50,14 @@ class StudioController extends BaseController
             $imageDimensions = json_decode($imageDimensions, true);
             if (!$imageDimensions || !isset($imageDimensions["width"]) || !isset($imageDimensions["height"])) {
                 http_response_code(400);
+                header('Content-Type: application/json');
                 echo json_encode(array("error" => "Invalid image dimensions"));
                 exit;
             }
 
             if (!$filters || !is_string($filters)) {
                 http_response_code(400);
+                header('Content-Type: application/json');
                 echo json_encode(array("error" => "Invalid filters"));
                 exit;
             }
@@ -67,6 +70,7 @@ class StudioController extends BaseController
             $image = imagecreatefrompng($path);
             if (!$image) {
                 http_response_code(400);
+                header('Content-Type: application/json');
                 echo json_encode(array("error" => "Error creating image resource"));
                 exit;
             }
@@ -79,6 +83,7 @@ class StudioController extends BaseController
 
                 if (!$filterImage) {
                     http_response_code(400);
+                    header('Content-Type: application/json');
                     echo json_encode(array("error" => "Error creating filter image resource"));
                     imagedestroy($image);
                     exit;
@@ -102,6 +107,7 @@ class StudioController extends BaseController
 
                 if (!imagecopy($image, $resizedFilterImage, (int) $filter->x, (int) $filter->y, 0, 0, $newFilterWidth, $newFilterHeight)) {
                     http_response_code(400);
+                    header('Content-Type: application/json');
                     echo json_encode(array("error" => "Error copying filter image"));
                     imagedestroy($image);
                     imagedestroy($filterImage);
@@ -130,6 +136,7 @@ class StudioController extends BaseController
             echo json_encode($response);
         } else {
             http_response_code(400);
+            header('Content-Type: application/json');
             echo json_encode(array("error" => "Missing parameters"));
         }
     }

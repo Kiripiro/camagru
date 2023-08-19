@@ -343,6 +343,17 @@ function dataURItoBlob(dataURI) {
 }
 
 const useImage = () => {
+    var token = getCookie("token");
+
+    if (token === "") {
+        var phpSessionId = getCookie("PHPSESSID");
+        if (phpSessionId !== "") {
+            document.cookie = "PHPSESSID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        }
+        window.location.href = "/login";
+        return;
+    }
+
     createImageDiv[0].classList.add("is-hidden");
     uploadImageDiv[0].classList.remove("is-hidden");
     filters = [];

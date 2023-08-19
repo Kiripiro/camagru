@@ -200,10 +200,8 @@ class GalleryController extends BaseController
 
         $allPosts = $this->StudioManager->getNbPosts($offset, 9);
         $postsHTML = '';
-        $i = $offset;
 
         foreach ($allPosts as $post) {
-            $i++;
             $comments = $this->CommentsManager->getPostComments($post->getId());
 
             foreach ($comments as $comment) {
@@ -212,7 +210,8 @@ class GalleryController extends BaseController
 
             $likes = $this->LikesManager->getPostLikes($post->getId());
             $postUser = $this->UserManager->getById($post->getUserId());
-
+            if ($user)
+                $liked = $this->LikesManager->likeExists($post->getId(), $user->getId());
             $postHTML = '
         <div class="column is-one-third">
             <div class="card">
@@ -233,45 +232,50 @@ class GalleryController extends BaseController
                             <p class="subtitle is-6">@' . $postUser->getUsername() . '</p>
                         </div>
                     </div>
-                    <div class="media-bottom" id="media-bottom-' . $i . '">
+                    <div class="media-bottom" id="media-bottom-' . $post->getId() . '">
                         <div class="media-likes">
                             <div class="media-likes-content">
                                 <div class="level is-mobile mb-1">
                                     <div class="level-left">
-                                        ' . (($user != NULL) ? '<button class="button mr-2" onclick="likePost(' . $post->getId() . ')">' : '') . '
-                                        <i class="fa-regular fa-heart"></i>
-                                        </button>
-                                        <button class="button" onclick="showComments(' . $i . ')">
+                                        ' . (($user != NULL) ? '<button class="button mr-2" onclick="likePost(' . $post->getId() . ')">' . (($liked) ? '<i id="unlike-' . $post->getId() . '" class="fa-solid fa-heart"></i>'
+                                        . '<i id="like-' . $post->getId() . '" class="fa-regular fa-heart is-hidden"></i></button>' : '<i id="like-' . $post->getId() . '" class="fa-regular fa-heart"></i>'
+                                        . '<i id="unlike-' . $post->getId() . '" class="fa-solid fa-heart is-hidden"></i></button>') : '')
+                                        . '
+                                        <button class="button" onclick="showComments(' . $post->getId() . ')">
                                             <i class="fa-regular fa-comment"></i>
                                         </button>
                                     </div>
                                 </div>
                                 <div class="media-likes-count mb-3">
-                                    <p class="text is-6">' . count($likes) . ' ' . ((count($likes) < 2) ? 'Like' : 'Likes') . '</p>
+                                    <p id="like-count-' . $post->getId() . '" class="text is-6">' . count($likes) . ' ' . ((count($likes) < 2) ? 'Like' : 'Likes') . '</p>
+                                    <p id="comment-count-' . $post->getId() . '" class="text is-6">' . count($comments) . ' ' . ((count($comments) < 2) ? 'Comment' : 'Comments') . '</p>
                                 </div>
                             </div>
                         </div>
                         <div class="content">
                             ' . (($post->getDescription()) ? '<p class="text">' . $post->getDescription() . '</p>' : '<br>') . '
-                            <p class="date">' . (new DateTime($post->getDate()))->format('h:i A') . ' - ' . (new DateTime($post->getDate()))->format('j F Y') . '</p>
+                            <p class="mt-4 date">' . (new DateTime($post->getDate()))->format('h:i A') . ' - ' . (new DateTime($post->getDate()))->format('j F Y') . '</p>
                         </div>
                     </div>
-                    <div class="media-comments is-hidden" id="media-comments-' . $i . '">
+                    <div class="media-comments is-hidden" id="media-comments-' . $post->getId() . '">
                         <div class="container">
                             <div class="columns">
                                 <div class="column">
                                     <label class="label is-pulled-left mt-2">Comments</label>
                                 </div>
                                 <div class="column">
-                                    <button class="button is-pulled-right" onclick="hideComments(' . $i . ')">
+                                    <button class="button is-pulled-right" onclick="hideComments(' . $post->getId() . ')">
                                         <i class="fa-solid fa-times"></i>
                                     </button>
                                 </div>
                             </div>
                         </div>
                         <hr>
-                        <div class="media-comments-content">';
+                        <div id="comments-' . $post->getId() . '" class="media-comments-content">';
+            $i = 0;
             foreach ($comments as $comment) {
+                if ($i != 0)
+                    $postHTML .= '<hr>';
                 $postHTML .= '
                             <div class="container">
                                 <div class="columns">
@@ -282,33 +286,33 @@ class GalleryController extends BaseController
                                         <p class="text">' . $comment->getComment() . '</p>
                                     </div>
                                 </div>
-                            </div>
-                            <hr>';
+                            </div>';
+                            $i++;
             }
             $postHTML .= '
                         </div>
-                        <div class="container">';
+                        <hr>
+                        <div class="container comment-input">';
             if ($user != NULL) {
                 $postHTML .= '
-                        <form action="/add-comment-gallery" method="POST">
                             <div class="columns">
                                 <div class="column">
                                     <div class="field">
                                         <div class="control">
                                             <input type="hidden" name="pictureId" value="' . $post->getId() . '" />
-                                            <input id="comment_' . $i . '" class="input" name="comment" type="text" placeholder="Comments">
+                                            <input id="new-comment-' . $post->getId() . '" class="input" name="comment" type="text" placeholder="Comments" onkeypress="handleKeyPressComment(event, ' . $post->getId() . ' )">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="column is-2">
-                                    <button class="button is-fullwidth" type="submit">
+                                    <button class="button is-fullwidth" type="submit" onclick="addComment(' . $post->getId() . ')">
                                         <i class="fa-solid fa-plus"></i>
                                     </button>
                                 </div>
-                            </div>
-                        </form>';
+                            </div>';
             }
             $postHTML .= '
+                        </div>
                     </div>
                 </div>
             </div>

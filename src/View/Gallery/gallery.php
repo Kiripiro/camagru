@@ -45,7 +45,7 @@ include_once('Utils/snackbar.php');
                             <div class="media-likes">
                                 <div class="media-likes-content">
                                     <div class="level is-mobile mb-1">
-                                        <div class="level-left">
+                                           <div class="level-left">
                                             <?php if ($user != NULL) {
                                                 echo '<button class="button mr-2" onclick="likePost(' . $post['id'] . ')">';
                                                 if ($post['liked']) {

@@ -56,8 +56,10 @@ function loadMoreContent() {
     xhr.onload = function () {
         if (xhr.status === 200) {
             const response = xhr.responseText;
-            if (response)
+            if (response) {
+                console.log(response);
                 document.getElementById('gallery').insertAdjacentHTML('beforeend', response);
+            }
         } else if (xhr.status === 204) {
             isObserving = false;
         } else if (xhr.status === 401) {

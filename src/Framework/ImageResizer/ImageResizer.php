@@ -1,5 +1,5 @@
 <?php
-class imageResizer
+class ImageResizer
 {
     private $image;
     private $width;

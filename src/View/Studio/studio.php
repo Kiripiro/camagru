@@ -36,8 +36,22 @@ include_once('Utils/snackbar.php');
                         <hr class="studio-hr">
                         <div class="field">
                             <label class="label">Import an image</label>
-                            <div class="control">
-                                <input id="file-upload" class="input" type="file" name="image" />
+                            <div id="file-upload" class="file is-primary has-name">
+                                <label class="file-label">
+                                    <input class="file-input" type="file" name="upload">
+                                        <span class="file-cta">
+                                            <span class="file-icon">
+                                                <i class="fas fa-upload"></i>
+                                            </span>
+                                            <span class="file-label">
+                                                Choose a file...
+                                            </span>
+                                        </span>
+                                        <span class="file-name">
+                                            No file uploaded
+                                        </span>
+                                    </input>
+                                </label>
                             </div>
                         </div>
                     </div>
@@ -114,7 +128,7 @@ include_once('Utils/snackbar.php');
                                         }
                                     }
                                 } else {
-                                    echo 'No photos yet';
+                                    echo 'No photos yet.';
                                 }
                                 ?>
                             </div>

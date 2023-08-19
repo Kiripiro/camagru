@@ -23,7 +23,6 @@ window.onload = function () {
     if (forms) {
         forms.forEach(form => {
             const inputs = form.querySelectorAll('input[type="text"], input[type="email"], input[type="password"], textarea');
-
             const errorMessageContainer = document.createElement("div");
             errorMessageContainer.style.marginTop = "3vh";
 
@@ -167,7 +166,7 @@ function addComment(postId) {
     var comment = document.getElementById(`new-comment-${postId}`).value;
 
     if (comment === "") {
-        showSnackbar("Empty comment", "error");
+        showSnackbar("Empty comment", "danger");
         return;
     }
     commentInput.disabled = true;
@@ -188,18 +187,18 @@ function addComment(postId) {
                 let comments = document.getElementById(`comments-${postId}`);
                 var commentContainer = document.createElement("div");
                 commentContainer.className = "comments container";
+                comments.insertAdjacentHTML('beforeend', '<hr>');
                 commentContainer.innerHTML = `
                     <div class="columns">
                         <div class="column is-3">
                             <label class="label">${response.user}:</label>
                         </div>
                         <div class="column is-7">
-                            <p class="text">${response.comment}</p>
+                            <p class="comment">${response.comment}</p>
                         </div>
                     </div>
                 `;
                 comments.appendChild(commentContainer);
-                comments.insertAdjacentHTML('beforeend', '<hr>');
                 document.getElementById(`new-comment-${postId}`).value = "";
             } else {
                 console.log(response);

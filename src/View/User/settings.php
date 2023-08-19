@@ -66,17 +66,18 @@ include_once('Utils/snackbar.php');
                                         class="file is-small is-primary has-name is-boxed is-centered">
                                         <label class="file-label">
                                             <input class="file-input" type="file" name="upload">
-                                            <span class="file-cta">
-                                                <span class="file-icon">
-                                                    <i class="fas fa-cloud-upload-alt"></i>
+                                                <span class="file-cta">
+                                                    <span class="file-icon">
+                                                        <i class="fas fa-cloud-upload-alt"></i>
+                                                    </span>
+                                                    <span class="file-label">
+                                                        Choose a file...
+                                                    </span>
                                                 </span>
-                                                <span class="file-label">
-                                                    Choose a file...
+                                                <span class="file-name">
+                                                    No file uploaded
                                                 </span>
-                                            </span>
-                                            <span class="file-name">
-                                                No file uploaded
-                                            </span>
+                                            </input>
                                         </label>
                                     </div>
                                 </div>
@@ -191,7 +192,7 @@ include_once('Utils/snackbar.php');
                                                 <div class="columns is-mobile">
                                                     <div class="column is-10">
                                                         <input class="input is-normal" type="password" name="password"
-                                                            placeholder="Mot de passe actuel">
+                                                            placeholder="Password">
                                                     </div>
                                                     <div class="column is-1 has-text-centered">
                                                         <span class="icon is-small is-right toggle-password mt-3">
@@ -206,7 +207,7 @@ include_once('Utils/snackbar.php');
                                                 <div class="columns is-mobile">
                                                     <div class="column is-10">
                                                         <input class="input is-normal" type="password" name="newPassword"
-                                                            placeholder="Nouveau mot de passe">
+                                                            placeholder="New password">
                                                     </div>
                                                     <div class="column is-1 has-text-centered">
                                                         <span class="icon is-small is-right toggle-password mt-3">
@@ -221,7 +222,7 @@ include_once('Utils/snackbar.php');
                                                 <div class="columns is-mobile">
                                                     <div class="column is-10">
                                                         <input class="input is-normal" type="password"
-                                                            name="confirmPassword" placeholder="Confirmez le mot de passe">
+                                                            name="confirmPassword" placeholder="Confirm the new password">
                                                     </div>
                                                     <div class="column is-1 has-text-centered">
                                                         <span class="icon is-small is-right toggle-password mt-3">
@@ -291,7 +292,7 @@ include_once('Utils/snackbar.php');
                 <br>
                 <div class="field">
                     <div class="control is-expanded">
-                        <input class="input" name="password" type="password" placeholder="Mot de passe">
+                        <input class="input" name="password" type="password" placeholder="Password">
                     </div>
                 </div>
             </section>

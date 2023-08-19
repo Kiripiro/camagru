@@ -29,7 +29,7 @@ include_once("Utils/snackbar.php");
                                         <div class="columns is-mobile">
                                             <div class="column is-10">
                                                 <input class="input is-normal" type="password" name="password"
-                                                    placeholder="Mot de passe">
+                                                    placeholder="Password">
                                             </div>
                                             <div class="column is-1 has-text-centered">
                                                 <span class="icon is-small is-right toggle-password mt-3">

@@ -21,13 +21,13 @@ include_once("Utils/snackbar.php");
                                 <div class="field">
                                     <div class="control">
                                         <input class="input is-normal" type="password" name="password"
-                                            placeholder="Nouveau mot de passe" autofocus="">
+                                            placeholder="New password" autofocus="">
                                     </div>
                                 </div>
                                 <div class="field">
                                     <div class="control">
                                         <input class="input is-normal" type="password" name="confirmPassword"
-                                            placeholder="Confirmez le mot de passe" autofocus="">
+                                            placeholder="Confirm the new password" autofocus="">
                                     </div>
                                 </div>
                                 <button class="button is-block is-info is-normal is-fullwidth">Send</button>

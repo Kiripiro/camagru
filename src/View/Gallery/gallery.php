@@ -109,7 +109,10 @@ include_once('Utils/snackbar.php');
                                     </div>
                                     <hr>
                                     <div id="comments-' . $post['id'] . '" class="media-comments-content">';
+                        $i = 0;
                         foreach ($post["comments"] as $comment) {
+                            if ($i != 0)
+                                echo '<hr>';
                             echo '
                                     <div class="container">
                                         <div class="columns">
@@ -117,14 +120,15 @@ include_once('Utils/snackbar.php');
                                                 <label id="comment-user-' . $post['id'] . '" class="label">' . $comment->getUsername() . ':</label>
                                             </div>
                                             <div class="column is-7">
-                                                <p id="comment-' . $post['id'] . '" class="text">' . $comment->getComment() . '</p>
+                                                <p id="comment-' . $post['id'] . '" class="comment">' . $comment->getComment() . '</p>
                                             </div>
                                         </div>
                                     </div>
-                                    <hr>
                                 ';
+                                $i++;
                         }
                         echo '  </div>
+                                <hr>
                                 <div class="container">';
                         if ($user != NULL) {
                             echo '<div class="columns">

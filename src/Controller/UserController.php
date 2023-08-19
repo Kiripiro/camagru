@@ -462,9 +462,9 @@ class UserController extends BaseController
             $filepath = $UPLOAD_DIR . '/' . $uploaded_file;
             $success = move_uploaded_file($tmp, $filepath);
             if ($success) {
-                $resizeObj = new imageResizer($filepath);
-                $resizeObj->resizeImage(128, 128, 'crop');
-                $resizeObj->saveImage($filepath, 100);
+                $imageResizer = new ImageResizer($filepath);
+                $imageResizer->resizeImage(128, 128, 'crop');
+                $imageResizer->saveImage($filepath, 100);
             } else {
                 throw new FileUploadException();
             }

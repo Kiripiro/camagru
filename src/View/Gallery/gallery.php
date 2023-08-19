@@ -129,7 +129,7 @@ include_once('Utils/snackbar.php');
                         }
                         echo '  </div>
                                 <hr>
-                                <div class="container">';
+                                <div class="container comment-input">';
                         if ($user != NULL) {
                             echo '<div class="columns">
                                     <div class="column">

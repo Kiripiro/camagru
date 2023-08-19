@@ -151,6 +151,9 @@ function likePost(postId) {
 }
 
 function addComment(postId) {
+    var hasBeenCommented = document.getElementById(`comment-count-${postId}`).innerHTML;
+    let countComments = parseInt(hasBeenCommented.split(" ")[0]);
+
     var token = getCookie("token");
 
     if (token === "") {
@@ -187,7 +190,8 @@ function addComment(postId) {
                 let comments = document.getElementById(`comments-${postId}`);
                 var commentContainer = document.createElement("div");
                 commentContainer.className = "comments container";
-                comments.insertAdjacentHTML('beforeend', '<hr>');
+                if (countComments !== 0)
+                    comments.insertAdjacentHTML('beforeend', '<hr>');
                 commentContainer.innerHTML = `
                     <div class="columns">
                         <div class="column is-3">

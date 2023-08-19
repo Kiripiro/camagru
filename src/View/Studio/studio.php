@@ -107,7 +107,7 @@ include_once('Utils/snackbar.php');
                     <div class="recent">
                         <div class="field">
                             <label class="label">Last taken</label>
-                            <div id="recent-pics" lass="recent-pics" style="overflow-y: scroll; height: 100vh">
+                            <div id="recent-pics" class="recent-pics" style="overflow-y: scroll; height: 100vh">
                                 <?php if (isset($posts) && !empty($posts)) {
                                     foreach ($posts as $post) {
                                         $filename = "Media/posts/" . $post["path"] . ".png";

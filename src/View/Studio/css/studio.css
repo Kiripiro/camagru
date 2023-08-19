@@ -40,6 +40,14 @@
     background-color: white;
 }
 
+.filters-container::-webkit-scrollbar {
+    display: none;
+}
+
+.recent-pics::-webkit-scrollbar {
+    display: none;
+}
+
 #video {
     width: 100%;
 }

@@ -10,6 +10,7 @@ const useImageButton = document.getElementById("use-image");
 const createImageDiv = document.getElementsByClassName("create-image");
 const uploadImageDiv = document.getElementsByClassName("upload-image");
 const image = document.getElementById("image");
+let imgLoaded = false;
 let filtersBackup = [];
 let imageBackup = null;
 let images = [];
@@ -49,11 +50,14 @@ navigator.mediaDevices.enumerateDevices()
             return device.kind === "videoinput";
         });
         if (videoDevices.length > 0) {
+            navigator.mediaDevices.getUserMedia = navigator.mediaDevices.getUserMedia ||
+            navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
             navigator.mediaDevices.getUserMedia({ video: true })
                 .then(function (stream) {
                     if (stream) {
                         const video = document.getElementById("video");
                         video.srcObject = stream;
+                        imgLoaded = true;
                         video.play();
 
                         requestAnimationFrame(draw);
@@ -76,10 +80,8 @@ navigator.mediaDevices.enumerateDevices()
 
 const input = document.querySelector('#file-upload input[type=file]');
 input.addEventListener("change", function (event) {
-    if (event.target.files[0].type !== "image/png" && event.target.files[0].type !== "image/jpeg") {
+    if (event.target.files[0].type !== "image/png" && event.target.files[0].type !== "image/jpeg" && event.target.files[0].type !== "image/jpg") {
         showSnackbar('The image\'s format should be PNG or JPEG.', "danger");
-        console.log(input.files[0].value);
-        console.log(event.target.files[0].name);
         event.target.files[0].value = null;
         return;
     }
@@ -142,7 +144,7 @@ const createFilter = (filterImage) => {
 };
 
 const addFilter = (filterElement) => {
-    if (!isSnapshotTaken) {
+    if (!isSnapshotTaken && imgLoaded) {
         const filterImage = new Image();
         filterImage.src = filterElement.src;
         if (filterImage.complete) {
@@ -422,9 +424,4 @@ const deletePost = (post_id) => {
             showSnackbar(response.message, "danger");
         }
     }
-}
-
-window.onbeforeunload = function () {
-    console.log("onbeforeunload");
-    window.preventDefault();
 }

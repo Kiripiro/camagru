@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const fileInput = document.querySelector('#file-upload input[type=file]');
     fileInput.onchange = () => {
-        if (fileInput.files[0].type !== 'image/png' && fileInput.files[0].type !== 'image/jpeg') {
+        if (fileInput.files[0].type !== 'image/png' && fileInput.files[0].type !== 'image/jpeg' && fileInput.files[0].type !== 'image/jpg') {
             showSnackbar('The image\'s format should be PNG or JPEG.', 'danger');
             fileInput.files[0].value = null;
             return;

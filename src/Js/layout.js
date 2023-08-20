@@ -1,11 +1,16 @@
 window.onload = function () {
     const searchbar = document.getElementById("searchbar");
     if (searchbar) {
-        if (navigator.userAgentData.platform === "Mac" || navigator.userAgentData.platform === "macOS") {
-            searchbar.setAttribute("placeholder", "Find user... (⌘ + K)");
-        } else if ((navigator.userAgentData.platform === "Linux") || (navigator.userAgentData.platform === "Windows")) {
+        if (navigator.userAgentData) {
+            if (navigator.userAgentData.platform === "Mac" || navigator.userAgentData.platform === "macOS") {
+                searchbar.setAttribute("placeholder", "Find user... (⌘ + K)");
+            } else if ((navigator.userAgentData.platform === "Linux") || (navigator.userAgentData.platform === "Windows")) {
+                searchbar.setAttribute("placeholder", "Find user... (CTRL + K)");
+            }
+        } else {
             searchbar.setAttribute("placeholder", "Find user... (CTRL + K)");
         }
+
         window.addEventListener('keydown', function (e) {
             if (e.metaKey && e.key == 'k' || e.ctrlKey && e.key == 'k') {
                 e.preventDefault();

@@ -455,7 +455,9 @@ class UserController extends BaseController
             $tmp = $_FILES['upload']['tmp_name'];
             $mime_type = mime_content_type($tmp);
             if (!in_array($mime_type, array_keys($ALLOWED_FILES))) {
-                throw new InvalidFileException($mime_type);
+                $session->set("error_message", "Invalid file type.");
+                $session->set("error_page", "/settings");
+                $this->redirect("/settings");
             }
             $extension = $ALLOWED_FILES[$mime_type];
             $uploaded_file = uniqid() . '.' . $extension;

@@ -40,11 +40,11 @@ class UserController extends BaseController
     public function RegisterNewUser($firstname, $lastname, $username, $email, $password, $confirmPassword)
     {
         $user = array(
-            "firstname" => $firstname,
-            "lastname" => $lastname,
-            "username" => $username,
-            "email" => $email,
-            "password" => $password,
+            "firstname" => htmlspecialchars($firstname),
+            "lastname" => htmlspecialchars($lastname),
+            "username" => htmlspecialchars($username),
+            "email" => htmlspecialchars($email),
+            "password" => htmlspecialchars($password),
             "verificationToken" => $verificationToken = bin2hex(random_bytes(16))
         );
         $emptyFields = array_filter($user, function ($field) {
@@ -233,6 +233,7 @@ class UserController extends BaseController
         $session->destroy();
         $this->redirect("login");
     }
+
     public function updatePassword($oldPassword, $newPassword, $confirmPassword)
     {
         try {
@@ -312,6 +313,7 @@ class UserController extends BaseController
             $session->set("error_page", "/settings");
             $this->redirect("/settings");
         }
+        $username = htmlspecialchars($username);
         if ($this->UserManager->updateUsername($user, $username)) {
             $user->setUsername($username);
             $session->set("user", $user);
@@ -348,6 +350,7 @@ class UserController extends BaseController
             $session->set("error_page", "/settings");
             $this->redirect("/settings");
         }
+        $email = htmlspecialchars($email);
         if ($this->UserManager->updateEmail($user, $email)) {
             $user->setEmail($email);
             $session->set("user", $user);
@@ -376,6 +379,7 @@ class UserController extends BaseController
             $session->set("error_page", "/settings");
             $this->redirect("/settings");
         }
+        $biography = htmlspecialchars($biography);
         if ($this->UserManager->updateBiography($user, $biography)) {
             $user->setBiography($biography);
             $session->set("user", $user);
@@ -608,5 +612,10 @@ class UserController extends BaseController
             echo json_encode($response);
             exit;
         }
+    }
+
+    public function IsAccountActivated()
+    {
+
     }
 }

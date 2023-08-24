@@ -156,6 +156,7 @@ class StudioController extends BaseController
         if ($this->StudioManager->postExists($latestImageId)) {
             throw new PostExistsException();
         }
+        $description = htmlspecialchars($description);
         $post = $this->StudioManager->addPost($latestImageId, $user->getId(), $description);
         if ($post) {
             $session->addArray('posts', $post->getPath());

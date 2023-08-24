@@ -138,6 +138,7 @@ class GalleryController extends BaseController
             echo json_encode(array("error" => "Please enter a comment."));
             exit;
         }
+        $comment = htmlspecialchars($comment);
         $return = $this->CommentsManager->addComment($comment, $postId, $user->getId());
         if ($return === false) {
             $return = "An error has occured. Please try again.";

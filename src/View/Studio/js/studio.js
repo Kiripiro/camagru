@@ -89,6 +89,7 @@ input.addEventListener("change", function (event) {
         const fileName = document.querySelector('#file-upload .file-name');
         fileName.textContent = input.files[0].name;
     }
+    filters = [];
     const file = event.target.files[0];
     const image = new Image();
     image.src = URL.createObjectURL(file);
@@ -112,12 +113,13 @@ const drawFromImage = () => {
         const imageHeight = imageWidth / imageRatio;
         ctx.drawImage(image, 0, 0, imageWidth, imageHeight);
     });
-    filters.forEach((filter) => {
-        if (filter && isFilterClicked) {
-            drawFilterBorder();
-        }
-        ctx.drawImage(filter.image, filter.x, filter.y, filter.width, filter.height);
-    });
+    if (filters)
+        filters.forEach((filter) => {
+            if (filter && isFilterClicked) {
+                drawFilterBorder();
+            }
+            ctx.drawImage(filter.image, filter.x, filter.y, filter.width, filter.height);
+        });
     if (isFilterClicked) {
         deleteFilterButton.removeAttribute("disabled");
     } else {

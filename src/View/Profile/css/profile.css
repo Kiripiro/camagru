@@ -1,0 +1,11 @@
+.media-comments-content::-webkit-scrollbar {
+    display: none;
+}
+
+.biography {
+	word-break: break-all;
+}
+
+.comment {
+	word-break: break-all;
+}

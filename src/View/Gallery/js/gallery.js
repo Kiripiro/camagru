@@ -57,7 +57,6 @@ function loadMoreContent() {
         if (xhr.status === 200) {
             const response = xhr.responseText;
             if (response) {
-                console.log(response);
                 document.getElementById('gallery').insertAdjacentHTML('beforeend', response);
             }
         } else if (xhr.status === 204) {

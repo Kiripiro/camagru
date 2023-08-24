@@ -2,6 +2,18 @@
     overflow-y: scroll;
 }
 
-.media-comments-content .text {
+.media-comments-content::-webkit-scrollbar {
+    display: none;
+}
+
+.media-comments-content .comment {
+    word-break: break-all;
+}
+
+.biography {
+	word-break: break-all;
+}
+
+.comment {
     word-break: break-all;
 }

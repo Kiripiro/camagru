@@ -1,8 +1,9 @@
 .home {
     background-image: url("/Media/assets/background.png");
-    background-size: contain;
+    background-size: cover;
     background-repeat: no-repeat;
     height: 100vh;
+    background-position: right center;
 }
 
 .home .title {
@@ -33,5 +34,12 @@
 
     .description {
         width: 80vw;
+    }
+}
+
+@media (min-width: 1025px) {
+    .home {
+        background-image: url("/Media/assets/background.png");
+        background-size: contain;
     }
 }

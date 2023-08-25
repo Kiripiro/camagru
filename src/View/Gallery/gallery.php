@@ -45,7 +45,7 @@ include_once('Utils/snackbar.php');
                             <div class="media-likes">
                                 <div class="media-likes-content">
                                     <div class="level is-mobile mb-1">
-                                           <div class="level-left">
+                                        <div class="level-left">
                                             <?php if ($user != NULL) {
                                                 echo '<button class="button mr-2" onclick="likePost(' . $post['id'] . ')">';
                                                 if ($post['liked']) {
@@ -96,7 +96,7 @@ include_once('Utils/snackbar.php');
                         <?
                         echo '<div id="media-comments-' . $post['id'] . '" class="media-comments is-hidden">
                                     <div class="container">
-                                        <div class="columns">
+                                        <div class="columns is-mobile">
                                             <div class="column">
                                                 <label class="label is-pulled-left mt-2">Comments</label>
                                             </div>
@@ -115,7 +115,7 @@ include_once('Utils/snackbar.php');
                                 echo '<hr>';
                             echo '
                                     <div class="container">
-                                        <div class="columns">
+                                        <div class="columns is-mobile">
                                             <div class="column is-3">
                                                 <label id="comment-user-' . $post['id'] . '" class="label">' . $comment->getUsername() . ':</label>
                                             </div>
@@ -125,13 +125,13 @@ include_once('Utils/snackbar.php');
                                         </div>
                                     </div>
                                 ';
-                                $i++;
+                            $i++;
                         }
                         echo '  </div>
                                 <hr>
                                 <div class="container comment-input">';
                         if ($user != NULL) {
-                            echo '<div class="columns">
+                            echo '<div class="columns is-mobile">
                                     <div class="column">
                                         <div class="field">
                                             <div class="control">

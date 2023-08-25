@@ -202,7 +202,7 @@ function addComment(postId) {
                 if (countComments !== 0)
                     comments.insertAdjacentHTML('beforeend', '<hr>');
                 commentContainer.innerHTML = `
-                    <div class="columns">
+                    <div class="columns is-mobile">
                         <div class="column is-3">
                             <label class="label">${response.user}:</label>
                         </div>

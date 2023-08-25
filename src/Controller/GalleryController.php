@@ -239,9 +239,9 @@ class GalleryController extends BaseController
                                 <div class="level is-mobile mb-1">
                                     <div class="level-left">
                                         ' . (($user != NULL) ? '<button class="button mr-2" onclick="likePost(' . $post->getId() . ')">' . (($liked) ? '<i id="unlike-' . $post->getId() . '" class="fa-solid fa-heart"></i>'
-                                        . '<i id="like-' . $post->getId() . '" class="fa-regular fa-heart is-hidden"></i></button>' : '<i id="like-' . $post->getId() . '" class="fa-regular fa-heart"></i>'
-                                        . '<i id="unlike-' . $post->getId() . '" class="fa-solid fa-heart is-hidden"></i></button>') : '')
-                                        . '
+                    . '<i id="like-' . $post->getId() . '" class="fa-regular fa-heart is-hidden"></i></button>' : '<i id="like-' . $post->getId() . '" class="fa-regular fa-heart"></i>'
+                    . '<i id="unlike-' . $post->getId() . '" class="fa-solid fa-heart is-hidden"></i></button>') : '')
+                . '
                                         <button class="button" onclick="showComments(' . $post->getId() . ')">
                                             <i class="fa-regular fa-comment"></i>
                                         </button>
@@ -260,7 +260,7 @@ class GalleryController extends BaseController
                     </div>
                     <div class="media-comments is-hidden" id="media-comments-' . $post->getId() . '">
                         <div class="container">
-                            <div class="columns">
+                            <div class="columns is-mobile">
                                 <div class="column">
                                     <label class="label is-pulled-left mt-2">Comments</label>
                                 </div>
@@ -279,7 +279,7 @@ class GalleryController extends BaseController
                     $postHTML .= '<hr>';
                 $postHTML .= '
                             <div class="container">
-                                <div class="columns">
+                                <div class="columns is-mobile">
                                     <div class="column is-3">
                                         <label class="label">' . $comment->getUsername() . ':</label>
                                     </div>
@@ -288,7 +288,7 @@ class GalleryController extends BaseController
                                     </div>
                                 </div>
                             </div>';
-                            $i++;
+                $i++;
             }
             $postHTML .= '
                         </div>
@@ -296,7 +296,7 @@ class GalleryController extends BaseController
                         <div class="container comment-input">';
             if ($user != NULL) {
                 $postHTML .= '
-                            <div class="columns">
+                            <div class="columns is-mobile">
                                 <div class="column">
                                     <div class="field">
                                         <div class="control">

@@ -126,7 +126,7 @@ include_once('Utils/snackbar.php');
                                                     </div>
                                                     <div id="comments_' . $post["id"] . '" class="comments is-hidden">
                                                         <div class="container">
-                                                            <div class="columns">
+                                                            <div class="columns is-mobile">
                                                                 <div class="column">
                                                                     <label class="label is-pulled-left mt-3">Comments</label>
                                                                 </div>
@@ -146,7 +146,7 @@ include_once('Utils/snackbar.php');
                                                 echo '<hr>';
                                             echo '
                                                 <div class="comments container">
-                                                    <div class="columns">
+                                                    <div class="columns is-mobile">
                                                         <div class="column is-3">
                                                             <label id="comment-user-' . $post['id'] . '" class="label">' . $comment->getUsername() . ':</label>
                                                         </div>
@@ -156,11 +156,11 @@ include_once('Utils/snackbar.php');
                                                     </div>
                                                 </div>
                                                 ';
-                                                $i++;
+                                            $i++;
                                         }
                                         echo '
                                                     </div>
-                                                    <div class="columns">
+                                                    <div class="columns is-mobile">
                                                         <div class="column">
                                                             <div class="field">
                                                                 <div class="control">

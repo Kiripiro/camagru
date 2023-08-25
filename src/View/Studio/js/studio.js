@@ -51,7 +51,7 @@ navigator.mediaDevices.enumerateDevices()
         });
         if (videoDevices.length > 0) {
             navigator.mediaDevices.getUserMedia = navigator.mediaDevices.getUserMedia ||
-            navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+                navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
             navigator.mediaDevices.getUserMedia({ video: true })
                 .then(function (stream) {
                     if (stream) {
@@ -317,6 +317,10 @@ const deleteFilter = () => {
         filters.splice(index, 1);
     }
     isFilterClicked = false;
+    if (filters.length === 0) {
+        deleteFilterButton.setAttribute("disabled", "disabled");
+        takeSnapshotButton.setAttribute("disabled", "disabled");
+    }
 }
 
 const deletePhoto = () => {

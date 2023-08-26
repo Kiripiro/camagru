@@ -239,9 +239,9 @@ class GalleryController extends BaseController
                                 <div class="level is-mobile mb-1">
                                     <div class="level-left">
                                         ' . (($user != NULL) ? '<button class="button mr-2" onclick="likePost(' . $post->getId() . ')">' . (($liked) ? '<i id="unlike-' . $post->getId() . '" class="fa-solid fa-heart"></i>'
-                    . '<i id="like-' . $post->getId() . '" class="fa-regular fa-heart is-hidden"></i></button>' : '<i id="like-' . $post->getId() . '" class="fa-regular fa-heart"></i>'
-                    . '<i id="unlike-' . $post->getId() . '" class="fa-solid fa-heart is-hidden"></i></button>') : '')
-                . '
+                                        . '<i id="like-' . $post->getId() . '" class="fa-regular fa-heart is-hidden"></i></button>' : '<i id="like-' . $post->getId() . '" class="fa-regular fa-heart"></i>'
+                                        . '<i id="unlike-' . $post->getId() . '" class="fa-solid fa-heart is-hidden"></i></button>') : '')
+                                        . '
                                         <button class="button" onclick="showComments(' . $post->getId() . ')">
                                             <i class="fa-regular fa-comment"></i>
                                         </button>
@@ -288,7 +288,7 @@ class GalleryController extends BaseController
                                     </div>
                                 </div>
                             </div>';
-                $i++;
+                        $i++;
             }
             $postHTML .= '
                         </div>
@@ -328,6 +328,4 @@ class GalleryController extends BaseController
             http_response_code(204);
         }
     }
-
-
 }

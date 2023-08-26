@@ -121,7 +121,7 @@ include_once('Utils/snackbar.php');
                                                     </div>
                                                         <div class="control">
                                                             <label class="label mt-2">Description</label>
-                                                            <label class="text is-6">' . $post["description"] . '</label>
+                                                            <label class="description is-6">' . $post["description"] . '</label>
                                                         </div>
                                                     </div>
                                                     <div id="comments_' . $post["id"] . '" class="comments is-hidden">
@@ -160,6 +160,7 @@ include_once('Utils/snackbar.php');
                                         }
                                         echo '
                                                     </div>
+                                                    <hr>
                                                     <div class="columns is-mobile">
                                                         <div class="column">
                                                             <div class="field">

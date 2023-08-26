@@ -1,5 +1,9 @@
 .media-comments-content {
     overflow-y: scroll;
+    height: 25vh;
+    width: 100%;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 
 .media-comments-content::-webkit-scrollbar {
@@ -7,6 +11,10 @@
 }
 
 .media-comments-content .comment {
+    word-break: break-all;
+}
+
+.description {
     word-break: break-all;
 }
 

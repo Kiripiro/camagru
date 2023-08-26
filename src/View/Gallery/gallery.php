@@ -84,7 +84,7 @@ include_once('Utils/snackbar.php');
                                 $time = $date_post->format('h:i A');
                                 $date = $date_post->format('j F Y');
                                 if (!empty($post["description"])) {
-                                    echo '<p class="text">' . $post["description"] . '</p>';
+                                    echo '<p class="description">' . $post["description"] . '</p>';
                                     echo '<p class="date">' . $time . ' - ' . $date . '</p>';
                                 } else {
                                     echo ' <br>';
@@ -136,7 +136,7 @@ include_once('Utils/snackbar.php');
                                         <div class="field">
                                             <div class="control">
                                                 <input type="hidden" name="pictureId" value="' . $post["id"] . '" />
-                                                <input id="new-comment-' . $post['id'] . '" class="input" name="comment" type="text" placeholder="Comment" onkeypress="handleKeyPressComment(event, ' . $post['id'] . ' )">
+                                                <input id="new-comment-' . $post['id'] . '" class="input" name="comment" type="text" maxlength="255" placeholder="Comment" onkeypress="handleKeyPressComment(event, ' . $post['id'] . ' )">
                                             </div>
                                         </div>
                                     </div>

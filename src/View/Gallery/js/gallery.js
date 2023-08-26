@@ -1,4 +1,3 @@
-
 const showComments = (index) => {
     const mediaBottom = document.getElementById(`media-bottom-${index}`);
     const mediaComments = document.getElementById(`media-comments-${index}`);

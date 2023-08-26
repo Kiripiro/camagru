@@ -138,6 +138,12 @@ class GalleryController extends BaseController
             echo json_encode(array("error" => "Please enter a comment."));
             exit;
         }
+        if (strlen($comment) > 255) {
+            http_response_code(400);
+            header('Content-Type: application/json');
+            echo json_encode(array("error" => "Comment too long."));
+            exit;
+        }
         $comment = htmlspecialchars($comment);
         $return = $this->CommentsManager->addComment($comment, $postId, $user->getId());
         if ($return === false) {
@@ -254,7 +260,7 @@ class GalleryController extends BaseController
                             </div>
                         </div>
                         <div class="content">
-                            ' . (($post->getDescription()) ? '<p class="text">' . $post->getDescription() . '</p>' : '<br>') . '
+                            ' . (($post->getDescription()) ? '<p class="description">' . $post->getDescription() . '</p>' : '<br>') . '
                             <p class="mt-4 date">' . (new DateTime($post->getDate()))->format('h:i A') . ' - ' . (new DateTime($post->getDate()))->format('j F Y') . '</p>
                         </div>
                     </div>
@@ -301,7 +307,7 @@ class GalleryController extends BaseController
                                     <div class="field">
                                         <div class="control">
                                             <input type="hidden" name="pictureId" value="' . $post->getId() . '" />
-                                            <input id="new-comment-' . $post->getId() . '" class="input" name="comment" type="text" placeholder="Comments" onkeypress="handleKeyPressComment(event, ' . $post->getId() . ' )">
+                                            <input id="new-comment-' . $post->getId() . '" class="input" name="comment" type="text" maxlength="255" placeholder="Comments" onkeypress="handleKeyPressComment(event, ' . $post->getId() . ' )">
                                         </div>
                                     </div>
                                 </div>

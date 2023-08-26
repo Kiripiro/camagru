@@ -176,7 +176,7 @@ function addComment(postId) {
     if (comment === "") {
         showSnackbar("Empty comment", "danger");
         return;
-    } else if (comment.length >= 255) {
+    } else if (comment.length > 255) {
         showSnackbar("Comment too long (max 255 char.)", "danger");
         return;
     }

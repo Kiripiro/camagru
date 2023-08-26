@@ -2,14 +2,12 @@
     overflow-y: scroll;
     height: 25vh;
     width: 100%;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
 }
 .media-comments-content::-webkit-scrollbar {
     display: none;
-}
-
-.media-comments-content {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
 }
 
 .comment {
@@ -17,7 +15,7 @@
     overflow-wrap: break-word;
 }
 
-.media-comments-content .text {
+.media-bottom .description {
     word-break: break-all;
 }
 

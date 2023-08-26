@@ -379,6 +379,11 @@ class UserController extends BaseController
             $session->set("error_page", "/settings");
             $this->redirect("/settings");
         }
+        if (strlen($biography) > 255) {
+            $session->set("error_message", "Your biography is too long.");
+            $session->set("error_page", "/settings");
+            $this->redirect("/settings");
+        }
         $biography = htmlspecialchars($biography);
         if ($this->UserManager->updateBiography($user, $biography)) {
             $user->setBiography($biography);

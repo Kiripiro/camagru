@@ -40,6 +40,16 @@
     background-color: white;
 }
 
+.filters-container {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.recent-pics {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
 .filters-container::-webkit-scrollbar {
     display: none;
 }

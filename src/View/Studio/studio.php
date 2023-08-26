@@ -144,7 +144,7 @@ include_once('Utils/snackbar.php');
                     <div class="field">
                         <label class="label">Description</label>
                         <div class="control">
-                            <textarea class="textarea" name="description" placeholder="Description"></textarea>
+                            <textarea class="textarea" name="description" maxlength="255" placeholder="Description"></textarea>
                         </div>
                     </div>
                     <div class="field">

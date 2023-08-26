@@ -79,12 +79,14 @@ navigator.mediaDevices.enumerateDevices()
     });
 
 const input = document.querySelector('#file-upload input[type=file]');
-input.addEventListener("change", function (event) {
-    if (event.target.files[0].type !== "image/png" && event.target.files[0].type !== "image/jpeg" && event.target.files[0].type !== "image/jpg") {
+input.addEventListener("change", async function (event) {
+    let res = await loadMime(event.target.files[0]);
+    if (!res) {
         showSnackbar('The image\'s format should be PNG or JPEG.', "danger");
         event.target.files[0].value = null;
-        return;
+        return ;
     }
+
     if (input.files.length > 0) {
         const fileName = document.querySelector('#file-upload .file-name');
         fileName.textContent = input.files[0].name;

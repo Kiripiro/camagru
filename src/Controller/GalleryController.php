@@ -290,7 +290,7 @@ class GalleryController extends BaseController
                                         <label class="label">' . $comment->getUsername() . ':</label>
                                     </div>
                                     <div class="column is-7">
-                                        <p class="text">' . $comment->getComment() . '</p>
+                                        <p class="comment">' . $comment->getComment() . '</p>
                                     </div>
                                 </div>
                             </div>';

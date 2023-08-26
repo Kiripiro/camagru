@@ -57,12 +57,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const fileInput = document.querySelector('#file-upload input[type=file]');
-    fileInput.onchange = () => {
-        if (fileInput.files[0].type !== 'image/png' && fileInput.files[0].type !== 'image/jpeg' && fileInput.files[0].type !== 'image/jpg') {
-            showSnackbar('The image\'s format should be PNG or JPEG.', 'danger');
+    fileInput.onchange = async () => {
+        let res = await loadMime(fileInput.files[0]);
+        if (!res) {
+            showSnackbar('The image\'s format should be PNG or JPEG.', "danger");
             fileInput.files[0].value = null;
-            return;
+            return ;
         }
+
         if (fileInput.files[0].size > 2 * 1024 * 1024) {
             showSnackbar('The image\'s size shouldn\'t be above 2 Mo.', 'danger');
             fileInput.files[0].value = null;

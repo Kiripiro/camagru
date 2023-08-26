@@ -47,35 +47,31 @@ class UserController extends BaseController
             "password" => htmlspecialchars($password),
             "verificationToken" => $verificationToken = bin2hex(random_bytes(16))
         );
+        $session = new Session();
         $emptyFields = array_filter($user, function ($field) {
             return empty($field);
         });
         if (!empty($emptyFields)) {
-            $sesion = new Session();
             $sesion->set("error_message", "Please fill in all the fields.");
             $sesion->set("error_page", "/register");
             throw new EmptyFieldsException(implode(', ', array_keys($emptyFields)));
         }
         if ($this->UserManager->getBy($key = "username", $username)) {
-            $session = new Session();
             $session->set("error_message", "Username already exists.");
             $session->set("error_page", "/register");
             throw new UserAlreadyExistsException($key, $username);
         } else if ($this->UserManager->getBy($key = "email", $email)) {
-            $session = new Session();
             $session->set("error_message", "Email already in use.");
             $session->set("error_page", "/register");
             throw new UserAlreadyExistsException($key, $email);
         }
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $session = new Session();
             $session->set("error_message", "Please use a valid email.");
             $session->set("error_page", "/register");
             throw new InvalidEmailException();
         }
         $passwordValidator = PasswordValidator::validate($password, $confirmPassword);
         if ($passwordValidator !== true) {
-            $session = new Session();
             $session->set("error_message", $passwordValidator);
             $session->set("error_page", "/register");
             throw new Exception($passwordValidator);
@@ -269,7 +265,7 @@ class UserController extends BaseController
         $session = new Session();
         $user = $session->get("user");
         if (!$user) {
-            throw new UserNotFoundException();
+            $this->redirect('/login');
         }
         if ($user->getTokenExp() <= date('Y-m-d H:i:s')) {
             $this->redirect("/login");
@@ -328,14 +324,16 @@ class UserController extends BaseController
 
     public function SettingsEmail($email)
     {
+        $session = new Session();
 
         if (!isset($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            throw new InvalidEmailException();
+            $session->set("error_message", "Please enter a valid email.");
+            $session->set("error_page", "/settings");
+            $this->redirect("/settings");
         }
-        $session = new Session();
         $user = $session->get("user");
         if (!$user) {
-            throw new UserNotFoundException();
+            $this->redirect('/login');
         }
         if ($user->getTokenExp() <= date('Y-m-d H:i:s')) {
             $this->redirect("/login");
@@ -501,7 +499,7 @@ class UserController extends BaseController
         $session = new Session();
         $user = $session->get("user");
         if (!$user) {
-            throw new UserNotFoundException();
+            $this->redirect('/login');
         }
         if ($user->getTokenExp() <= date('Y-m-d H:i:s')) {
             $this->redirect("/login");
@@ -617,10 +615,5 @@ class UserController extends BaseController
             echo json_encode($response);
             exit;
         }
-    }
-
-    public function IsAccountActivated()
-    {
-
     }
 }

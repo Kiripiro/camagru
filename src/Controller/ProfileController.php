@@ -6,7 +6,7 @@ class ProfileController extends BaseController
         $session = new Session();
         $user = $session->get("user");
         if (!$user) {
-            throw new UserNotFoundException();
+            $this->redirect('/login');
         }
         if ($user->getTokenExp() <= date('Y-m-d H:i:s')) {
             $this->redirect("/login");

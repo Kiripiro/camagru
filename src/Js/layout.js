@@ -231,3 +231,53 @@ function handleKeyPressComment(event, postId) {
         addComment(postId);
     }
 }
+
+async function loadMime(file) {
+    var mimes = [
+        {
+            mime: 'image/jpeg',
+            pattern: [0xFF, 0xD8, 0xFF],
+        },
+        {
+            mime: 'image/png',
+            pattern: [0x89, 0x50, 0x4E, 0x47],
+        }
+    ];
+
+    function convertToHex(bytes)
+    {
+        var arr = [];
+        bytes.forEach(function(byte) {
+            arr.push('0x' + ('0' + (byte & 0xFF).toString(16).toLocaleUpperCase()).slice(-2));
+        });
+        return arr;
+    }
+
+    function checkTypes(hexBytes)
+    {
+        for(i = 0; i < 2; i++) {
+            if (mimes[i].mime == file.type)
+                if (hexBytes.toString() == convertToHex(mimes[i].pattern).toString())
+                    return true;
+            return false;
+        }
+    }
+
+    if (file.type == 'image/jpeg')
+        var blob = file.slice(0, 3);
+    else
+        var blob = file.slice(0, 4);
+
+    let hexBytesPromise = new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.addEventListener("loadend", () => {
+            var bytes = new Uint8Array(reader.result);
+            let hexBytes = convertToHex(bytes);
+            resolve(hexBytes);
+        });
+        reader.readAsArrayBuffer(blob);
+    });
+    let hexBytes = await hexBytesPromise;
+
+    return checkTypes(hexBytes);
+}
